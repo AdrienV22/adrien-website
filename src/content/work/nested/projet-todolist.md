@@ -17,14 +17,14 @@ tags:
 
 ##### Grâce à LocalStorage et la méthode setItem(), l'application garde en mémoire les tâches enregistrées même lorsque l'on raffraichi la page. 
 
-*Pour rappel, la méthode setItem() de l'interface Storage, lorsque lui sont passées le duo clé-valeur, les ajoute à l'emplacement de stockage, sinon elle met à jour la valeur si la clé existe déjà. Ici la clé n'existe pas déjà, nous allons donc la crééer et l'appeler "data".*
+*Pour rappel, la méthode setItem() de l'interface Storage, lorsque lui sont passées le duo clé-valeur, les ajoute à l'emplacement de stockage, sinon elle met à jour la valeur si la clé existe déjà. Ici la clé n'existe pas déjà, nous allons donc la créer et l'appeler "data".*
 
 
 ```javascript
-// Pour conserver les tâches même si l'on raffraichi la page, je définis la fonction saveData()
+// Pour conserver les tâches même si l'on raffraichit la page, je définis la fonction saveData()
 
 function saveData(){
-    // Ici grâce à  la méthode de stockage de données locale localStorage et la méthode setItem(), on peut conserver tout le contenu html qui se trouve dans le listContainer (donc nos tâches)
+    // Ici grâce à  la méthode de stockage de données locale localStorage et la méthode setItem(), on peut conserver tout le contenu html qui se trouve dans le listContainer (donc nos tâches).
     // Ici la méthode prend en paramètre "data", c'est le nom de la clé que l'on souhaite créer et list.Container.innerHTML, c'est la valeur associée au nom de clé que l'on souhaite créer.
     localStorage.setItem("data", listContainer.innerHTML)
 }
