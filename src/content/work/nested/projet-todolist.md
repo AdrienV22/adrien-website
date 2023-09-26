@@ -33,7 +33,7 @@ function saveData(){
 ```
 <br>
 
-**Ensuite, la fonction showTask permet grâce à la méthode getItem de récupérer et d'afficher les données sauvegardées précédemment.** 
+**Ensuite, la fonction showTask permet grâce à la méthode getItem de récupérer et d'afficher les données sauvegardées précédemment grâce à la clé "data.** 
 ```javascript
 function showTask(){
     listContainer.innerHTML = localStorage.getItem("data");
