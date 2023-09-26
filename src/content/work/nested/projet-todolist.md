@@ -25,7 +25,7 @@ tags:
 
 function saveData(){
     // Ici grâce à  la méthode de stockage de données locale localStorage et la méthode setItem(), on peut conserver tout le contenu html qui se trouve dans le listContainer (donc nos tâches).
-    // Ici la méthode prend en paramètre "data", c'est le nom de la clé que l'on souhaite créer et list.Container.innerHTML, c'est la valeur associée au nom de clé que l'on souhaite créer.
+    // Ici la méthode prend en paramètre "data", c'est le nom de la clé que l'on souhaite créer et list.Container.innerHTML, c'est la valeur associée au nom de clé que l'on souhaite créer. listContainer est le nom de l'id de l'élément HTML qui contient nos tâches. 
     localStorage.setItem("data", listContainer.innerHTML)
 }
 // A chaque fois que l'on rajoute une nouvelle tâche, je veux conserver les informations, donc il est nécessaire de rappeler la fonction. 
