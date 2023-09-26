@@ -8,7 +8,7 @@ description: |
 tags:
   - Javascript
   - HTML
-  - LocalStore
+  - LocalStorage
 ---
 
 <img src="/assets/screenshottodo.JPG">
