@@ -1,5 +1,5 @@
 ---
-title: Site web Marketplace - Django, Python, HTML & TailwindCSS
+title: Application Météo - HTML, CSS & Javascript
 publishDate: 2023-22-09 
 
 img: "/assets/tokyo.png"
