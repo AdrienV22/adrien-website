@@ -1,0 +1,107 @@
+---
+interface Props {
+  title: string;
+  subtitle?: string;
+  description?: string;
+  link?: string;
+  tags?: string[];
+}
+
+const { title, subtitle, description, link, tags = [] } = Astro.props;
+---
+
+<article class="card">
+  <div class="card-header">
+    <h3>{title}</h3>
+    {subtitle && <p class="card-subtitle">{subtitle}</p>}
+  </div>
+
+  {description && <p class="card-description">{description}</p>}
+
+  {tags.length > 0 && (
+    <ul class="card-tags">
+      {tags.map((tag) => (
+        <li>{tag}</li>
+      ))}
+    </ul>
+  )}
+
+  {link && (
+    <a class="card-link" href={link} target="_blank" rel="noreferrer">
+      Voir le projet →
+    </a>
+  )}
+</article>
+
+<style>
+  .card {
+    position: relative;
+    padding: 1.75rem;
+    border-radius: 1rem;
+    background: radial-gradient(circle at top left, var(--gray-800), var(--gray-900));
+    border: 1px solid hsla(var(--gray-999-basis), 0.06);
+    box-shadow: var(--shadow-sm);
+    transition:
+      transform var(--theme-transition),
+      box-shadow var(--theme-transition),
+      border-color var(--theme-transition),
+      background var(--theme-transition);
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+    border-color: hsla(var(--gray-999-basis), 0.18);
+    background: linear-gradient(
+      150deg,
+      var(--gradient-stop-1),
+      var(--gradient-stop-2),
+      var(--gradient-stop-3)
+    );
+  }
+
+  .card-header h3 {
+    font-size: var(--text-xl);
+    color: var(--gray-0);
+  }
+
+  .card-subtitle {
+    font-size: var(--text-sm);
+    color: var(--gray-600);
+  }
+
+  .card-description {
+    font-size: var(--text-sm);
+    color: var(--gray-200);
+  }
+
+  .card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 0.25rem;
+  }
+
+  .card-tags li {
+    font-size: 0.75rem;
+    padding: 0.15rem 0.5rem;
+    border-radius: 999px;
+    background: hsla(var(--gray-999-basis), 0.08);
+    color: var(--gray-300);
+  }
+
+  .card-link {
+    margin-top: auto;
+    font-size: var(--text-sm);
+    color: var(--accent-regular);
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .card-link:hover {
+    text-decoration: underline;
+  }
+</style>
