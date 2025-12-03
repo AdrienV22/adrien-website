@@ -17,8 +17,8 @@ tags:
 ---
 
 
-<img src="/assets/Brest.png">
+<!-- <img src="/assets/Brest.png">
 
 ##### Si le nom de la ville n'est pas valide, l'application affiche un message d'erreur.
 
-<img src="/assets/erreur-ville.png">
+<img src="/assets/erreur-ville.png"> -->

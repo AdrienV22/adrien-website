@@ -10,7 +10,7 @@ tags:
   - HTML
   - LocalStorage
 ---
-
+<!-- 
 <img src="/assets/screenshottodo.JPG">
 
 ##### Grâce à LocalStorage et la méthode setItem(), l’application garde en mémoire les tâches enregistrées même lorsque l’on raffraichi la page.
@@ -19,4 +19,4 @@ tags:
 
 
 
-**Ensuite, la fonction showTask permet grâce à la méthode getItem() de récupérer et d’afficher les données sauvegardées précédemment grâce à la clé “data.**
+**Ensuite, la fonction showTask permet grâce à la méthode getItem() de récupérer et d’afficher les données sauvegardées précédemment grâce à la clé “data.** -->

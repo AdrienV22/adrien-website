@@ -16,7 +16,7 @@ tags:
 
 ---
 
-<img src="/assets/music_shop/navbar.png">
+<!-- <img src="/assets/music_shop/navbar.png">
 
 *La navbar du site contient un bouton pour accéder au dashboard des articles de l'utilisateur, un bouton pour parcourir les articles ou pour en ajouter un autre*
 
@@ -47,4 +47,4 @@ tags:
 
 #### En tant qu'admin, via une page superuser créée avec Django, nous pouvons gérer la base de données du site et les utilisateurs directement via Django. 
 
-<img src="/assets/music_shop/admin.png">
+<img src="/assets/music_shop/admin.png"> -->

@@ -17,8 +17,8 @@ tags:
 ---
 
 
-<img src="/assets/youtube-dl/first_step.JPG">
+<!-- <img src="/assets/youtube-dl/first_step.JPG">
 
 ##### La vidéo se retrouve ensuite dans le dossier du projet.
 
-<img src="/assets/youtube-dl/dossier.JPG">
+<img src="/assets/youtube-dl/dossier.JPG"> -->
