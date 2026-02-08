@@ -25,10 +25,15 @@ function getExcerpt(markdown: string, length = 220) {
 const projects = entries
   .map((entry) => ({
     href: `/work/${entry.slug}/`,
-    excerpt: getExcerpt(entry.body),
+    excerpt: getExcerpt((entry.data as any).description ?? entry.body),
     ...entry.data,
+
+    
+    image: (entry.data as any).img,
+    imageAlt: (entry.data as any).img_alt,
   }))
   .sort((a, b) => b.publishDate.valueOf() - a.publishDate.valueOf());
+
 ---
 
 <BaseLayout title="Mes projets | Adrien Valo" description="tous mes projets">
@@ -40,13 +45,15 @@ const projects = entries
         {
           projects.map((project) => (
             <li class="workGridItem">
-              <WorkCard
-                href={project.href}
-                title={project.title}
-                publishDate={project.publishDate}
-                tags={project.tags}
-                excerpt={project.excerpt}
-              />
+             <WorkCard
+ 				 href={project.href}
+  				title={project.title}
+  				publishDate={project.publishDate}
+  				tags={project.tags}
+  				excerpt={project.excerpt}
+  				image={project.image}
+  				imageAlt={project.imageAlt}
+/>
             </li>
           ))
         }
