@@ -1,0 +1,187 @@
+---
+type Props = {
+  href: string;
+  title: string;
+  publishDate: Date;
+  tags: string[];
+  excerpt: string;
+  image?: string;
+  imageAlt?: string;
+};
+
+const {
+  href,
+  title,
+  publishDate,
+  tags,
+  excerpt,
+  image,
+  imageAlt = "",
+} = Astro.props as Props;
+---
+
+<article>
+  <a class="card" href={href} aria-label={`Ouvrir le projet : ${title}`}>
+    {image && (
+      <div class="media">
+        <img
+          src={image}
+          alt={imageAlt || `Aperçu du projet ${title}`}
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+    )}
+
+    <header class="head">
+      <h3 class="title">{title}</h3>
+
+      <time class="date" datetime={publishDate.toISOString()}>
+        {publishDate.toLocaleDateString("fr-FR")}
+      </time>
+    </header>
+
+    <p class="excerpt clamp">{excerpt}</p>
+
+    <ul class="tags" aria-label="Tags">
+      {tags.map((t) => <li class="tag">{t}</li>)}
+    </ul>
+
+    <div class="read" aria-hidden="true">
+      Lire le projet <span>→</span>
+    </div>
+  </a>
+</article>
+
+<style>
+  /* Le lien EST la card -> tout est cliquable + cursor pointer */
+  .card {
+    position: relative;
+    display: grid;
+    gap: 0.75rem;
+    padding: 1.25rem;
+    border: 1px solid var(--gray-800);
+    border-radius: 1.25rem;
+    overflow: hidden;
+
+    background: var(--gray-999_40);
+    box-shadow: var(--shadow-sm);
+    color: var(--gray-100);
+
+    text-decoration: none;
+    cursor: pointer;
+
+    transition:
+      transform var(--theme-transition),
+      box-shadow var(--theme-transition),
+      border-color var(--theme-transition),
+      background-color var(--theme-transition);
+  }
+
+  .card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--accent-overlay);
+  }
+
+  .card:focus-visible {
+    outline: 2px solid var(--accent-regular);
+    outline-offset: 4px;
+  }
+
+  .media {
+    position: relative;
+    border-radius: 1rem;
+    overflow: hidden;
+    border: 1px solid var(--gray-800);
+    background: radial-gradient(var(--gray-900), var(--gray-800) 150%);
+  }
+
+  .media::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.55),
+      rgba(0, 0, 0, 0.25) 35%,
+      rgba(0, 0, 0, 0) 70%
+    );
+  }
+
+  .media img {
+    display: block;
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    transform: scale(1);
+    transition: transform var(--theme-transition);
+  }
+
+  .card:hover .media img {
+    transform: scale(1.02);
+  }
+
+  .head {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.75rem;
+    align-items: baseline;
+  }
+
+  .title {
+    margin: 0;
+    font-size: var(--text-md);
+    line-height: 1.2;
+    color: var(--gray-0);
+  }
+
+  .date {
+    font-size: var(--text-sm);
+    color: var(--gray-400);
+    white-space: nowrap;
+  }
+
+  .excerpt {
+    margin: 0;
+    color: var(--gray-300);
+    line-height: 1.5;
+  }
+
+  .clamp {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+  }
+
+  .tags {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .tag {
+    border: 1px solid var(--gray-800);
+    background: radial-gradient(var(--gray-900), var(--gray-800) 150%);
+    color: var(--gray-100);
+    border-radius: 999px;
+    padding: 0.2rem 0.65rem;
+    font-size: var(--text-xs);
+    line-height: 1.2;
+  }
+
+  .read {
+    justify-self: start;
+    font-size: var(--text-sm);
+    color: var(--accent-text-over);
+    padding: 0.35rem 0.6rem;
+    border-radius: 999px;
+    background: var(--accent-subtle-overlay);
+    border: 1px solid transparent;
+  }
+</style>

@@ -1,6 +1,6 @@
 ---
 title: Site web Marketplace - Django, Python, HTML & TailwindCSS
-publishDate: 2023-22-09 
+publishDate: 2023-09-22 
 
 img: "/assets/music_shop/main.png"
 card: website
