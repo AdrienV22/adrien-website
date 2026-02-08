@@ -6,13 +6,14 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 
 import ContactCTA from "../components/ContactCTA.astro";
 import Hero from "../components/Hero.astro";
-import Grid from "../components/Grid.astro";
 
 const entries = await getCollection("work");
 
 function getExcerpt(markdown: string, length = 220) {
   const clean = markdown
-    .replace(/!\[.*?\]\(.*?\)/g, "") // images
+    .replace(/<!--[\s\S]*?-->/g, "") // commentaires HTML
+    .replace(/<\/?[^>]+>/g, "") // balises HTML
+    .replace(/!\[.*?\]\(.*?\)/g, "") // images markdown
     .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1") // liens -> texte
     .replace(/[#>*_`]/g, "") // markdown simple
     .replace(/\s+/g, " ")
@@ -30,18 +31,15 @@ const projects = entries
   .sort((a, b) => b.publishDate.valueOf() - a.publishDate.valueOf());
 ---
 
-<BaseLayout
-  title="Mes projets | Adrien Valo"
-  description="tous mes projets"
->
+<BaseLayout title="Mes projets | Adrien Valo" description="tous mes projets">
   <div class="stack gap-20">
     <main class="wrapper stack gap-8">
       <Hero title="Tous mes projets" tagline="" align="start" />
 
-      <Grid variant="offset">
+      <ul class="workGrid">
         {
           projects.map((project) => (
-            <li>
+            <li class="workGridItem">
               <WorkCard
                 href={project.href}
                 title={project.title}
@@ -52,9 +50,25 @@ const projects = entries
             </li>
           ))
         }
-      </Grid>
+      </ul>
     </main>
 
     <ContactCTA />
   </div>
 </BaseLayout>
+
+<style>
+  .workGrid {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 24px;
+    grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+    align-items: start;
+  }
+
+  .workGridItem {
+    margin: 0;
+  }
+</style>
