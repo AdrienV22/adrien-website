@@ -1,0 +1,92 @@
+---
+type Props = {
+  href: string;
+  title: string;
+  publishDate: Date;
+  tags: string[];
+  excerpt: string;
+};
+
+const { href, title, publishDate, tags, excerpt } = Astro.props;
+---
+
+<article class="card">
+  <header class="head">
+    <h3 class="title">
+      <a href={href}>{title}</a>
+    </h3>
+
+    <time datetime={publishDate.toISOString()}>
+      {publishDate.toLocaleDateString("fr-FR")}
+    </time>
+  </header>
+
+  <p class="excerpt">{excerpt}</p>
+
+  <ul class="tags" aria-label="Tags">
+    {tags.map((t) => <li class="tag">{t}</li>)}
+  </ul>
+
+  <a class="read" href={href}>Lire le projet →</a>
+</article>
+
+<style>
+  .card {
+    border: 1px solid rgba(0,0,0,.1);
+    border-radius: 16px;
+    padding: 16px;
+    display: grid;
+    gap: 12px;
+    background: white;
+  }
+
+  .head {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    align-items: baseline;
+  }
+
+  .title {
+    margin: 0;
+    font-size: 1.05rem;
+  }
+
+  .title a {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  time {
+    font-size: .9rem;
+    opacity: .75;
+    white-space: nowrap;
+  }
+
+  .excerpt {
+    margin: 0;
+    opacity: .9;
+    line-height: 1.5;
+  }
+
+  .tags {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .tag {
+    border: 1px solid rgba(0,0,0,.12);
+    border-radius: 999px;
+    padding: 3px 10px;
+    font-size: .85rem;
+  }
+
+  .read {
+    font-size: .95rem;
+    align-self: flex-start;
+  }
+</style>
