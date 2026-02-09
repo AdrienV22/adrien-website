@@ -115,6 +115,19 @@
 		0px 16px 16px rgba(255, 255, 255, 0.1), 0px 4px 9px rgba(255, 255, 255, 0.12);
 }
 
+:root {
+	--skill-bg: rgba(56, 139, 253, 0.08);
+	--skill-border: rgba(56, 139, 253, 0.25);
+	--skill-text: #8cb4ff;
+  }
+  
+  :root.theme-dark {
+	--skill-bg: rgba(56, 139, 253, 0.12);
+	--skill-border: rgba(56, 139, 253, 0.35);
+	--skill-text: #9ec1ff;
+  }
+  
+
 
 html,
 body {
