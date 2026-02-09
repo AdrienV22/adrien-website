@@ -1,4 +1,6 @@
 ---
+import { slugifyTag } from "../lib/tags";
+
 type Props = {
   href: string;
   title: string;
@@ -18,58 +20,98 @@ const {
   image,
   imageAlt = "",
 } = Astro.props as Props;
+
+// Catégorisation simple (tu peux enrichir quand tu veux)
+const getTagCategory = (raw: string) => {
+  const t = raw.trim().toLowerCase();
+
+  // Frontend
+  if (
+    ["javascript", "js", "typescript", "ts", "react", "react.js", "astro", "html", "html5", "css", "css3"].includes(t) ||
+    t.includes("frontend")
+  ) return "frontend";
+
+  // Backend
+  if (
+    ["node", "node.js", "express", "java", "spring", "spring boot", "django", "php"].includes(t) ||
+    t.includes("backend")
+  ) return "backend";
+
+  // Data
+  if (
+    ["sql", "postgresql", "mysql", "mongodb", "database", "db"].includes(t)
+  ) return "data";
+
+  // Tooling
+  if (
+    ["git", "github", "docker", "uipath", "ssis", "power bi", "jira", "trello", "figma"].includes(t)
+  ) return "tooling";
+
+  // Cloud
+  if (["aws", "azure", "gcp", "netlify"].includes(t)) return "cloud";
+
+  return "other";
+};
 ---
 
-<article>
-  <a class="card" href={href} aria-label={`Ouvrir le projet : ${title}`}>
-    {image && (
-      <div class="media">
-        <img
-          src={image}
-          alt={imageAlt || `Aperçu du projet ${title}`}
-          loading="lazy"
-          decoding="async"
-        />
-      </div>
-    )}
+<article class="card">
+  <!-- lien overlay : toute la card cliquable (sans imbriquer des <a>) -->
+  <a class="cardLink" href={href} aria-label={`Ouvrir le projet : ${title}`}></a>
 
-    <header class="head">
-      <h3 class="title">{title}</h3>
-
-      <time class="date" datetime={publishDate.toISOString()}>
-        {publishDate.toLocaleDateString("fr-FR")}
-      </time>
-    </header>
-
-    <p class="excerpt clamp">{excerpt}</p>
-
-    <ul class="tags" aria-label="Tags">
-      {tags.map((t) => <li class="tag">{t}</li>)}
-    </ul>
-
-    <div class="read" aria-hidden="true">
-      Lire le projet <span>→</span>
+  {image && (
+    <div class="media">
+      <img
+        src={image}
+        alt={imageAlt || `Aperçu du projet ${title}`}
+        loading="lazy"
+        decoding="async"
+      />
     </div>
-  </a>
+  )}
+
+  <header class="head">
+    <h3 class="title">{title}</h3>
+
+    <time class="date" datetime={publishDate.toISOString()}>
+      {publishDate.toLocaleDateString("fr-FR")}
+    </time>
+  </header>
+
+  <p class="excerpt clamp">{excerpt}</p>
+
+  <ul class="tags" aria-label="Tags">
+    {tags.map((t) => (
+      <li class="tag" data-cat={getTagCategory(t)}>
+        <a
+          class="tagLink"
+          href={`/skills/${slugifyTag(t)}/`}
+          aria-label={`Voir les projets liés à ${t}`}
+        >
+          {t}
+        </a>
+      </li>
+    ))}
+  </ul>
+
+  <div class="read" aria-hidden="true">
+    Lire le projet <span>→</span>
+  </div>
 </article>
 
 <style>
-  /* Le lien EST la card -> tout est cliquable + cursor pointer */
   .card {
     position: relative;
-    display: grid;
-    gap: 0.75rem;
-    padding: 1.25rem;
     border: 1px solid var(--gray-800);
     border-radius: 1.25rem;
     overflow: hidden;
 
+    padding: 1.25rem;
+    display: grid;
+    gap: 0.75rem;
+
     background: var(--gray-999_40);
     box-shadow: var(--shadow-sm);
     color: var(--gray-100);
-
-    text-decoration: none;
-    cursor: pointer;
 
     transition:
       transform var(--theme-transition),
@@ -78,17 +120,38 @@ const {
       background-color var(--theme-transition);
   }
 
+  /* Hover sobre + élégant */
   .card:hover {
     transform: translateY(-2px);
     box-shadow: var(--shadow-md);
     border-color: var(--accent-overlay);
   }
 
-  .card:focus-visible {
+  /* lien overlay */
+  .cardLink {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    border-radius: inherit;
+  }
+
+  /* focus accessible */
+  .cardLink:focus-visible {
     outline: 2px solid var(--accent-regular);
     outline-offset: 4px;
   }
 
+  /* contenu au-dessus de l'overlay */
+  .media,
+  .head,
+  .excerpt,
+  .tags,
+  .read {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Image */
   .media {
     position: relative;
     border-radius: 1rem;
@@ -97,8 +160,9 @@ const {
     background: radial-gradient(var(--gray-900), var(--gray-800) 150%);
   }
 
+  /* Surcouche gradient pour lisibilité */
   .media::after {
-    content: '';
+    content: "";
     position: absolute;
     inset: 0;
     pointer-events: none;
@@ -156,6 +220,7 @@ const {
     overflow: hidden;
   }
 
+  /* ===== Tags (premium + safe) ===== */
   .tags {
     list-style: none;
     padding: 0;
@@ -163,25 +228,94 @@ const {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
+
+    position: relative;
+    z-index: 2; /* au-dessus de l'overlay */
   }
+
+  /* Teintes sobres par type (sans color-mix) */
+  .tag[data-cat="frontend"] { --tag-tint: rgba(120, 170, 255, 0.18); }
+  .tag[data-cat="backend"]  { --tag-tint: rgba(160, 140, 255, 0.18); }
+  .tag[data-cat="tooling"]  { --tag-tint: rgba(255, 200, 120, 0.16); }
+  .tag[data-cat="data"]     { --tag-tint: rgba(120, 255, 210, 0.16); }
+  .tag[data-cat="cloud"]    { --tag-tint: rgba(180, 220, 255, 0.16); }
+  .tag[data-cat="other"]    { --tag-tint: rgba(255, 255, 255, 0.12); }
 
   .tag {
     border: 1px solid var(--gray-800);
-    background: radial-gradient(var(--gray-900), var(--gray-800) 150%);
-    color: var(--gray-100);
     border-radius: 999px;
-    padding: 0.2rem 0.65rem;
-    font-size: var(--text-xs);
-    line-height: 1.2;
+    overflow: hidden;
+
+    background:
+      radial-gradient(var(--gray-900), var(--gray-800) 150%),
+      linear-gradient(180deg, var(--tag-tint), transparent);
+
+    box-shadow:
+      inset 0 0 0 1px rgba(255, 255, 255, 0.03);
+
+    transition:
+      box-shadow var(--theme-transition),
+      transform var(--theme-transition),
+      border-color var(--theme-transition);
   }
 
-  .read {
-    justify-self: start;
-    font-size: var(--text-sm);
-    color: var(--accent-text-over);
-    padding: 0.35rem 0.6rem;
-    border-radius: 999px;
+  .tag:hover {
+    transform: translateY(-1px);
+    border-color: var(--accent-overlay);
+    box-shadow:
+      0 4px 14px rgba(0, 0, 0, 0.18),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+  }
+
+  .tagLink {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    /* padding symétrique = centrage optique */
+    padding: 0.32rem 0.75rem;
+
+    font-size: var(--text-xs);
+    line-height: 1.2;
+    color: var(--gray-200);
+    text-decoration: none;
+
+    position: relative;
+    transition:
+      color var(--theme-transition),
+      background-color var(--theme-transition);
+  }
+
+  /* underline subtil, discret */
+  .tagLink::after {
+    content: "";
+    position: absolute;
+    left: 0.75rem;
+    right: 0.75rem;
+    bottom: 0.25rem;
+    height: 1px;
+
+    background: currentColor;
+    opacity: 0;
+    transform: translateY(2px);
+    transition:
+      opacity var(--theme-transition),
+      transform var(--theme-transition);
+  }
+
+  .tagLink:hover {
+    color: var(--gray-0);
     background: var(--accent-subtle-overlay);
-    border: 1px solid transparent;
+  }
+
+  .tagLink:hover::after {
+    opacity: 0.28;
+    transform: translateY(0);
+  }
+
+  .tagLink:focus-visible {
+    outline: 2px solid var(--accent-regular);
+    outline-offset: 2px;
+    border-radius: 999px;
   }
 </style>
