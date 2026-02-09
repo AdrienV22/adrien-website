@@ -1,0 +1,89 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Hero from "../../components/Hero.astro";
+import ContactCTA from "../../components/ContactCTA.astro";
+import { slugifyTag } from "../../lib/tags";
+
+const entries = await getCollection("work");
+
+// Récupère tous les tags, nettoie, déduplique, trie
+const tagSet = new Set<string>();
+for (const entry of entries) {
+  const tags = (entry.data as any).tags ?? [];
+  for (const t of tags) {
+    if (typeof t === "string" && t.trim()) tagSet.add(t.trim());
+  }
+}
+
+const tags = Array.from(tagSet).sort((a, b) =>
+  a.localeCompare(b, "fr", { sensitivity: "base" })
+);
+---
+
+<BaseLayout title="Compétences | Adrien Valo" description="Technologies et compétences liées à mes projets">
+  <div class="stack gap-20">
+    <main class="wrapper stack gap-8">
+      <Hero title="Compétences" tagline="Clique sur une compétence pour voir les projets associés." align="start" />
+
+      <section class="skills">
+        <ul class="tagGrid" aria-label="Liste des compétences">
+          {tags.map((tag) => {
+            const slug = slugifyTag(tag);
+            return (
+              <li>
+                <a class="chip" href={`/skills/${slug}/`}>
+                  {tag}
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+      </section>
+    </main>
+
+    <ContactCTA />
+  </div>
+</BaseLayout>
+
+<style>
+  .skills {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .tagGrid {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.35rem 0.75rem;
+    border-radius: 999px;
+
+    border: 1px solid var(--gray-800);
+    background: radial-gradient(var(--gray-900), var(--gray-800) 150%);
+    color: var(--gray-100);
+    text-decoration: none;
+
+    transition:
+      transform var(--theme-transition),
+      box-shadow var(--theme-transition),
+      border-color var(--theme-transition);
+  }
+
+  .chip:hover,
+  .chip:focus-visible {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
+    border-color: var(--accent-overlay);
+    outline: none;
+  }
+</style>
