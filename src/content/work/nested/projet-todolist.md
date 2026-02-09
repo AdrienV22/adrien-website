@@ -1,5 +1,5 @@
 ---
-title: Application To-Do List - HTML, CSS & Javascript
+title: Application To-Do List 
 publishDate: 2023-08-25 
 img: /assets/screenshot1.JPG
 img_alt: Screenshot de l'application de To-Do List
@@ -8,7 +8,6 @@ description: |
 tags:
   - Javascript
   - HTML
-  - LocalStorage
 ---
 <!-- 
 <img src="/assets/screenshottodo.JPG">

@@ -1,5 +1,5 @@
 ---
-title: Youtube Video Downloader - Python, Tkinter, PyTube
+title: Youtube Video Downloader 
 publishDate: 2023-09-21 
 
 img: "/assets/youtube-dl/main.JPG"
