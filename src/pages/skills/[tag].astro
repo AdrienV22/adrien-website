@@ -1,0 +1,90 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Hero from "../../components/Hero.astro";
+import ContactCTA from "../../components/ContactCTA.astro";
+import WorkCard from "../../components/WorkCard.astro";
+import { slugifyTag } from "../../lib/tags";
+
+export async function getStaticPaths() {
+  const entries = await getCollection("work");
+
+  const tagSlugs = new Set<string>();
+  for (const entry of entries) {
+    const tags = ((entry.data as any).tags ?? []) as string[];
+    for (const t of tags) tagSlugs.add(slugifyTag(t));
+  }
+
+  return [...tagSlugs].map((tag) => ({ params: { tag } }));
+}
+
+const { tag } = Astro.params;
+
+const entries = await getCollection("work");
+
+const projects = entries
+  .filter((entry) => {
+    const tags = ((entry.data as any).tags ?? []) as string[];
+    return tags.some((t) => slugifyTag(t) === tag);
+  })
+  .map((entry) => ({
+    href: `/work/${entry.slug}/`,
+    title: entry.data.title,
+    publishDate: entry.data.publishDate,
+    tags: entry.data.tags,
+    excerpt: (entry.data as any).description ?? entry.body,
+    image: (entry.data as any).img,
+    imageAlt: (entry.data as any).img_alt,
+  }))
+  .sort((a, b) => b.publishDate.valueOf() - a.publishDate.valueOf());
+---
+
+<BaseLayout
+  title={`Compétence : ${tag}`}
+  description={`Projets utilisant la compétence ${tag}`}
+>
+  <div class="stack gap-20">
+    <main class="wrapper stack gap-8 skills-tag-page">
+      <Hero
+        title={`Compétence : ${tag}`}
+        tagline="Projets associés"
+        align="start"
+      />
+
+      {projects.length === 0 ? (
+        <p>Aucun projet trouvé pour cette compétence.</p>
+      ) : (
+        <ul class="work-grid">
+          {projects.map((project) => (
+            <li class="work-grid-item">
+              <WorkCard {...project} />
+            </li>
+          ))}
+        </ul>
+      )}
+    </main>
+
+    <ContactCTA />
+  </div>
+</BaseLayout>
+
+<style>
+  .work-grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 24px;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    align-items: start;
+  }
+
+  .work-grid-item {
+    margin: 0;
+  }
+
+  /* Hero.tagline en gras, uniquement sur cette page */
+  .skills-tag-page :global(.tagline) {
+    font-weight: 700;
+  }
+</style>
