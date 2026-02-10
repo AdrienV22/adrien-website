@@ -1,5 +1,9 @@
 // src/lib/tags.ts
 
+/* =========================================================
+ * Utils
+ * ======================================================= */
+
 export function slugifyTag(tag: string) {
   return tag
     .trim()
@@ -11,43 +15,117 @@ export function slugifyTag(tag: string) {
     .replace(/(^-|-$)/g, "");
 }
 
-export type TagCategory = "frontend" | "backend" | "tooling" | "data" | "cloud" | "other";
+/* =========================================================
+ * Skill categories (page Compétences)
+ * ======================================================= */
 
-const FRONTEND = new Set([
-  "javascript", "typescript", "react", "astro", "html", "css", "tailwind",
-  "angular", "vue", "svelte", "nextjs", "nodejs" // (nodejs peut être “backend” aussi, mais on garde simple)
+export type SkillCategory = "language" | "technology" | "tool";
+
+/* -------------------------
+ * LANGAGES
+ * ----------------------- */
+const LANGUAGES = new Set([
+  "javascript",
+  "typescript",
+  "python",
+  "java",
+  "php",
+  "c",
+  "csharp",
+  "cpp",
+  "go",
+  "rust",
+  "kotlin",
+  "swift",
+  "ruby",
+  "sql",
+  "bash",
+  "powershell",
+  "html",
+  "css",
 ]);
 
-const BACKEND = new Set([
-  "java", "spring", "spring-boot", "django", "python", "php", "api", "rest",
-  "graphql", "express", "nestjs"
+/* -------------------------
+ * OUTILS
+ * ----------------------- */
+const TOOLS = new Set([
+  "git",
+  "github",
+  "gitlab",
+  "docker",
+  "docker-compose",
+  "uipath",
+  "ssis",
+  "jira",
+  "trello",
+  "figma",
+  "postman",
+  "swagger",
+  "vscode",
+  "linux",
+  "power-bi",
+  "notion",
 ]);
 
-const TOOLING = new Set([
-  "git", "github", "docker", "uipath", "ssis", "jira", "trello", "figma",
-  "power-bi", "vscode", "postman", "linux"
+/* -------------------------
+ * TECHNOLOGIES
+ * (frameworks, libs, DB, cloud…)
+ * ----------------------- */
+const TECHNOLOGIES = new Set([
+  // Front / fullstack
+  "react",
+  "angular",
+  "vue",
+  "svelte",
+  "astro",
+  "nextjs",
+  "nodejs",
+  "express",
+  "nestjs",
+
+  // Backend / frameworks
+  "spring",
+  "spring-boot",
+  "django",
+
+  // Data
+  "postgresql",
+  "mysql",
+  "mongodb",
+  "redis",
+  "etl",
+  "database",
+
+  // Cloud / plateformes
+  "netlify",
+  "vercel",
+  "aws",
+  "azure",
+  "gcp",
 ]);
 
-const DATA = new Set([
-  "sql", "postgresql", "mysql", "mongodb", "redis", "etl", "database"
-]);
+/* =========================================================
+ * Public API
+ * ======================================================= */
 
-const CLOUD = new Set([
-  "netlify", "aws", "azure", "gcp", "vercel"
-]);
-
-export function tagCategory(tag: string): TagCategory {
+/**
+ * Retourne la catégorie principale d'une compétence
+ * - language
+ * - technology
+ * - tool
+ *
+ * Safe : fallback = "technology"
+ */
+export function getSkillCategory(tag: string): SkillCategory {
   const s = slugifyTag(tag);
 
-  if (FRONTEND.has(s)) return "frontend";
-  if (BACKEND.has(s)) return "backend";
-  if (DATA.has(s)) return "data";
-  if (CLOUD.has(s)) return "cloud";
-  if (TOOLING.has(s)) return "tooling";
+  if (LANGUAGES.has(s)) return "language";
+  if (TOOLS.has(s)) return "tool";
+  if (TECHNOLOGIES.has(s)) return "technology";
 
-  // heuristiques simples (au cas où)
-  if (s.includes("sql")) return "data";
-  if (s.includes("api")) return "backend";
+  // Heuristiques légères (optionnelles mais utiles)
+  if (s.includes("sql")) return "language";
+  if (s.includes("api")) return "technology";
 
-  return "other";
+  return "technology";
 }
