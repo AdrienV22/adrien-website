@@ -102,9 +102,6 @@ const getTagCategory = (raw: string) => {
     ))}
   </ul>
 
-  <div class="read" aria-hidden="true">
-    Lire le projet <span>→</span>
-  </div>
 </article>
 
 <style>
@@ -115,8 +112,11 @@ const getTagCategory = (raw: string) => {
     overflow: hidden;
 
     padding: 1.25rem;
-    display: grid;
+    display: flex;
+    flex-direction: column;
     gap: 0.75rem;
+    min-height: 420px;
+  
 
     background: var(--gray-999_40);
     box-shadow: var(--shadow-sm);
@@ -154,8 +154,7 @@ const getTagCategory = (raw: string) => {
   .media,
   .head,
   .excerpt,
-  .tags,
-  .read {
+  .tag {
     position: relative;
     z-index: 1;
   }
