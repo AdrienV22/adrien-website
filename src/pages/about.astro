@@ -55,20 +55,48 @@ import Icon from '../components/Icon.astro';
 			</section>
 			
 			<section>
-				<h2 class="section-title">Diplômes <Icon icon='diplome-logo'/></h2>
-				<div class="content">
-					<p>• Diplôme d'expert en ingénierie logicielle - ISCOD (2024 - 2026) </p>
-					<br>
-					<p>• Master 2 Cinéma & Audiovisuel : Spécialité Médias -  Sorbonne Nouvelle (Paris)</p>
-					<br>
-					<p>• Japanese Language Proficiency Test N2 |
-The Japan Foundation</p>
-<br>
-					<p> • Master Cinéma & Audiovisuel : Spécialité Médias - Sorbonne Nouvelle (Paris) </p>
-					<tagline>dont 6 mois en échange international à la Tokyo University of Foreign Studies (Tokyo, Japon)</tagline>
-					
+				<h2 class="section-title">
+				  Diplômes <Icon icon="diplome-logo" />
+				</h2>
+			  
+				<div class="content diplomas">
+				  <div class="diploma">
+					<p class="diploma-title">
+					  Diplôme d’Expert en Ingénierie Logicielle
+					</p>
+					<p class="diploma-meta">
+					  ISCOD
+					</p>
+					<p class="diploma-meta">
+						2024 - 2026
+					  </p>
+				  </div>
+			  
+				  <div class="diploma">
+					<p class="diploma-title">
+					  Master Cinéma & Audiovisuel — Spécialité Médias
+					</p>
+					<p class="diploma-meta">
+					  Université Sorbonne Nouvelle (Paris)
+					</p>
+					<p class="diploma-highlight">
+						6 mois d’échange international à la Tokyo University of Foreign Studies
+						<span>(Tokyo, Japon)</span>
+					  </p>
+					  
+				  </div>
+			  
+				  <div class="diploma">
+					<p class="diploma-title">
+					  Japanese Language Proficiency Test — Niveau N2
+					</p>
+					<p class="diploma-meta">
+					  The Japan Foundation
+					</p>
+				  </div>
 				</div>
-			</section>
+			  </section>
+			  
 
 			<section>
 				<h2 class="section-title">Centre d'intérêts <Icon icon='loupe-logo'/></h2>
@@ -143,4 +171,47 @@ The Japan Foundation</p>
 			font-size: var(--text-lg);
 		}
 	}
+
+	.diplomas {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.diploma-title {
+  margin: 0;
+  font-weight: 500;
+  color: var(--gray-0);
+}
+
+.diploma-meta {
+  margin: 0;
+  font-size: var(--text-md);
+  color: var(--gray-400);
+}
+
+.diploma-detail {
+  margin: 0.25rem 0 0;
+  font-size: var(--text-sm);
+  color: var(--white);
+}
+
+.diploma-highlight {
+  margin: 0.5rem 0 0;
+  padding-left: 0.75rem;
+
+  font-size: var(--text-md);
+  font-style: bold;
+  font-weight: 500;
+  color: var(--gray-200);
+
+  border-left: 2px solid var(--accent-regular);
+}
+
+.diploma-highlight span {
+  color: var(--gray-400);
+  font-weight: 400;
+}
+
+
 </style>
