@@ -17,26 +17,35 @@ import Icon from '../components/Icon.astro';
 			</Hero>
 
 			<section>
-				<h2 class="section-title">Présentation <Icon icon='text-presentation'/></h2>
+				<h2 class="section-title">Présentation <Icon icon="text-presentation" /></h2>
+			  
 				<div class="content">
-					<p>
-						Fort de 5 années d’expérience dans la gestion de projets en marketing digital, j’ai donné un nouvel élan à ma carrière en me tournant vers le développement logiciel. Depuis près de deux ans, j’évolue en alternance au sein d’ADENTAL GROUP en tant que développeur, où je mets en pratique chaque jour mes compétences techniques et mon goût pour la résolution de problèmes.
-<!-- <br> Attiré depuis longtemps par l’informatique et le développement back-end, j’ai choisi cette transition par conviction, motivé par l’envie de construire des solutions fiables et de progresser dans un environnement qui me passionne profondément. -->
-					</p>
-
-					<p>
-						
-					</p>
-					<p>
-						
-					</p>
+				  <p>
+					Après 5 années d’expérience en gestion de projets (marketing digital), j’ai choisi de me
+					réorienter vers le développement logiciel. Depuis près de deux ans en alternance chez
+					ADENTAL GROUP, je conçois et maintiens des solutions orientées back-end, automatisation
+					et data, avec une attention particulière portée à la fiabilité et à la qualité d’exécution.
+				  </p>
+			  
+				  <p>
+					Attiré de longue date par l’informatique et la résolution de problèmes, je m’épanouis dans
+					des contextes où l’on combine rigueur, pragmatisme et amélioration continue — du design
+					d’une API à l’automatisation d’un processus.
+				  </p>
+			  
+				  <ul class="highlights" aria-label="Points clés">
+					<li>Automatisation de processus (RPA) et logique métier</li>
+					<li>ETL / data : intégration, transformation, fiabilisation</li>
+					<li>Back-end : APIs, architecture, bonnes pratiques</li>
+				  </ul>
 				</div>
-			</section>
+			  </section>
+			  
 
 			<section>
 				<h2 class="section-title">Technologies <Icon icon='outil-logo'/></h2>
 				<div class="content">
-					<p>• Python • Django • Javascript • Typescript • React • Node.js • HTML5 • CSS3 • Git • PHP & MySQL • MongoDB • Astro •</p>
+					<p>• Python • Django • Javascript • Typescript • React • Node.js • HTML5 • CSS3 • Git • PHP & MySQL • MongoDB • Astro • UIPath • SSIS •</p>
 				</div>
 			</section>
 			
@@ -91,7 +100,7 @@ import Icon from '../components/Icon.astro';
 					  Japanese Language Proficiency Test — Niveau N2
 					</p>
 					<p class="diploma-meta">
-					  The Japan Foundation
+					  <a href="https://www.jpf.go.jp/e/" target="_blank">The Japan Foundation</a>
 					</p>
 				  </div>
 				</div>
@@ -171,6 +180,26 @@ import Icon from '../components/Icon.astro';
 			font-size: var(--text-lg);
 		}
 	}
+
+	.highlights {
+  margin: 1rem 0 0;
+  padding-left: 1.15rem;
+  display: grid;
+  gap: 0.4rem;
+
+  color: var(--gray-200);
+}
+
+.highlights li {
+  line-height: 1.5;
+}
+
+@media (min-width: 50em) {
+  .highlights {
+    margin-top: 1.25rem;
+  }
+}
+
 
 	.diplomas {
   display: flex;
