@@ -61,10 +61,11 @@ const TOOLS = new Set([
   "figma",
   "postman",
   "swagger",
-  "vscode",
+  "vs-code",
   "linux",
   "power-bi",
   "notion",
+  "netlify",
 ]);
 
 /* -------------------------
