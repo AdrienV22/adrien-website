@@ -3,11 +3,11 @@ import { getCollection } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Hero from "../../components/Hero.astro";
 import ContactCTA from "../../components/ContactCTA.astro";
-import { slugifyTag } from "../../lib/tags";
+import { slugifyTag, getSkillCategory } from "../../lib/tags";
 
 const entries = await getCollection("work");
 
-// Récupère tous les tags, nettoie, déduplique, trie
+// 1) Récupère tous les tags, nettoie, déduplique
 const tagSet = new Set<string>();
 for (const entry of entries) {
   const tags = (entry.data as any).tags ?? [];
@@ -16,29 +16,78 @@ for (const entry of entries) {
   }
 }
 
-const tags = Array.from(tagSet).sort((a, b) =>
+// 2) Liste unique + tri
+const allTags = Array.from(tagSet).sort((a, b) =>
   a.localeCompare(b, "fr", { sensitivity: "base" })
 );
+
+// 3) Groupement par catégories via getSkillCategory()
+type CategoryKey = "language" | "technology" | "tool";
+
+const grouped: Record<CategoryKey, string[]> = {
+  language: [],
+  technology: [],
+  tool: [],
+};
+
+for (const tag of allTags) {
+  const cat = getSkillCategory(tag);
+  grouped[cat].push(tag);
+}
+
+// Tri dans chaque catégorie (lisible)
+for (const key of Object.keys(grouped) as CategoryKey[]) {
+  grouped[key].sort((a, b) => a.localeCompare(b, "fr", { sensitivity: "base" }));
+}
+
+// 4) Titres
+const CATEGORY_TITLES: Record<CategoryKey, string> = {
+  language: "Langages",
+  technology: "Technologies",
+  tool: "Outils",
+};
+
+const ORDER: CategoryKey[] = ["language", "technology", "tool"];
 ---
 
-<BaseLayout title="Compétences | Adrien Valo" description="Technologies et compétences liées à mes projets">
+<BaseLayout
+  title="Compétences | Adrien Valo"
+  description="Technologies et compétences liées à mes projets"
+>
   <div class="stack gap-20">
-    <main class="wrapper stack gap-8">
-      <Hero title="Compétences" tagline="Technologies et compétences liées à mes projets." align="start" />
+    <main class="wrapper stack gap-10">
+      <Hero
+        title="Compétences"
+        tagline="Technologies et compétences liées à mes projets."
+        align="start"
+      />
 
-      <section class="skills">
-        <ul class="tagGrid" aria-label="Liste des compétences">
-          {tags.map((tag) => {
-            const slug = slugifyTag(tag);
-            return (
-              <li>
-                <a class="chip" href={`/skills/${slug}/`}>
-                  {tag}
-                </a>
-              </li>
-            );
-          })}
-        </ul>
+      <section class="skills stack gap-10" aria-label="Compétences par catégorie">
+        {ORDER.map((key) =>
+          grouped[key].length ? (
+            <div class="skills-block stack gap-4">
+              <header class="skills-header">
+                <h2 class="skills-title">{CATEGORY_TITLES[key]}</h2>
+              </header>
+
+              <ul
+                class="tagGrid"
+                aria-label={`Liste des compétences : ${CATEGORY_TITLES[key]}`}
+              >
+                {grouped[key].map((tag) => {
+                  const slug = slugifyTag(tag);
+                  return (
+                    <li>
+                      <a class="chip" href={`/skills/${slug}/`}>
+                        {tag}
+                      </a>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          ) : null
+        )}
       </section>
     </main>
 
@@ -52,6 +101,11 @@ const tags = Array.from(tagSet).sort((a, b) =>
     gap: 1rem;
   }
 
+  .skills-header {
+    display: flex;
+    align-items: center;
+  }
+
   .tagGrid {
     list-style: none;
     padding: 0;
@@ -62,28 +116,64 @@ const tags = Array.from(tagSet).sort((a, b) =>
   }
 
   .chip {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.35rem;
-    padding: 0.35rem 0.75rem;
-    border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
 
-    border: 1px solid var(--gray-800);
-    background: radial-gradient(var(--gray-900), var(--gray-800) 150%);
-    color: var(--gray-100);
-    text-decoration: none;
+  border: 1px solid var(--gray-700);
+  background: radial-gradient(
+    var(--gray-900),
+    var(--gray-800) 150%
+  );
+  color: var(--gray-100);
 
-    transition:
-      transform var(--theme-transition),
-      box-shadow var(--theme-transition),
-      border-color var(--theme-transition);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+
+  text-decoration: none;
+
+  transition:
+    transform var(--theme-transition),
+    box-shadow var(--theme-transition),
+    border-color var(--theme-transition);
+}
+
+
+
+.chip:hover,
+.chip:focus-visible {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+  border-color: var(--gray-600);
+  outline: none;
+}
+
+
+  .skills-header {
+  display: flex;
+  align-items: center;
+}
+
+.skills-title {
+  margin: 0;
+  font-size: var(--text-xl);
+  letter-spacing: -0.02em;
+  color: var(--gray-100);
+}
+
+/* Mode clair : renforcer la lisibilité des pills */
+@media (prefers-color-scheme: light) {
+  .chip {
+    border-color: var(--black-900);
+    background: radial-gradient(var(--gray-100), var(--gray-200) 160%);
+    color: var(--black-900);
   }
 
   .chip:hover,
   .chip:focus-visible {
-    transform: translateY(-1px);
-    box-shadow: var(--shadow-sm);
-    border-color: var(--accent-overlay);
-    outline: none;
+    border-color: var(--gray-600);
   }
+}
+
 </style>
