@@ -26,10 +26,22 @@ const iconLinks: { label: string; href: string; icon: keyof typeof iconPaths }[]
 
 <nav>
 	<div class="menu-header">
-		<a href="/" class="site-title">
+		<a href="/" class="site-title" aria-label="Accueil">
+			<span class="avatar" aria-hidden="true">
+			  <img
+				src="/assets/Avatar.jpeg"
+				alt=""
+				loading="lazy"
+				decoding="async"
+				width="80"
+				height="80"
+			  />
+			</span>
+		  
 			<Icon icon="terminal-window" color="var(--accent-regular)" size="1.6em" gradient />
-			 Adrien Valo
-		</a>
+			<span class="site-name">Adrien Valo</span>
+		  </a>
+		  
 		<menu-button>
 			<template>
 				<button class="menu-button" aria-expanded="false">
@@ -124,11 +136,11 @@ const iconLinks: { label: string; href: string; icon: keyof typeof iconPaths }[]
 		constructor() {
 			super();
 
-			// Inject menu toggle button when JS runs.
+			
 			this.appendChild(this.querySelector('template')!.content.cloneNode(true));
 			const btn = this.querySelector('button')!;
 
-			// Hide menu (shown by default to support no-JS browsers).
+			
 			const menu = document.getElementById('menu-content')!;
 			menu.hidden = true;
 			// Add "menu-content" class in JS to avoid covering content in non-JS browsers.
@@ -180,6 +192,63 @@ const iconLinks: { label: string; href: string; icon: keyof typeof iconPaths }[]
 		color: var(--gray-0);
 		text-decoration: none;
 	}
+
+	.avatar {
+  flex: 0 0 auto;
+  width: 46px;
+  height: 46px;
+  border-radius: 999px;
+  overflow: hidden;
+  position: relative;
+  background: radial-gradient(var(--gray-900), var(--gray-800) 150%);
+  border: 1px solid var(--gray-700);
+
+  /* cadre interne + présence */
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.06),
+    0 2px 8px rgba(0, 0, 0, 0.25);
+
+  transition:
+    transform var(--theme-transition),
+    border-color var(--theme-transition),
+    box-shadow var(--theme-transition);
+}
+
+.avatar::before {
+  content: "";
+  position: relative;
+  inset: -1px;
+  border-radius: inherit;
+  background: var(--gradient-stroke);
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 32%;
+  display: block;
+}
+
+
+/* micro feedback, cohérent avec tes hovers */
+.site-title:hover .avatar,
+.site-title:focus-visible .avatar {
+  transform: translateY(-1px);
+  border-color: var(--accent-overlay);
+  box-shadow:
+    var(--shadow-sm),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+}
+
+.site-name {
+  white-space: nowrap;
+}
+
 
 	.menu-button {
 		position: relative;
@@ -359,7 +428,10 @@ const iconLinks: { label: string; href: string; icon: keyof typeof iconPaths }[]
 		.socials {
 			display: flex;
 			justify-content: flex-end;
-			gap: 0;
+			gap: 0;}
+		.avatar {
+			width: 64px;
+			height: 64px;
 		}
 	}
 	@media (forced-colors: active) {
@@ -367,4 +439,28 @@ const iconLinks: { label: string; href: string; icon: keyof typeof iconPaths }[]
 			color: SelectedItem;
 		}
 	}
+
+	.site-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Avatar à droite */
+.site-title .avatar {
+  order: 3;
+}
+
+/* Icône terminal au milieu */
+.site-title svg,
+.site-title .icon {
+  order: 1;
+}
+
+/* Nom à gauche */
+.site-title .site-name {
+  order: 2;
+}
+
+	
 </style>
