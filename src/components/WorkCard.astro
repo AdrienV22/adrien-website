@@ -4,22 +4,14 @@ import { slugifyTag } from "../lib/tags";
 type Props = {
   href: string;
   title: string;
-  publishDate: Date;
   tags: string[];
   excerpt: string;
   image?: string;
   imageAlt?: string;
 };
 
-const {
-  href,
-  title,
-  publishDate,
-  tags,
-  excerpt,
-  image,
-  imageAlt = "",
-} = Astro.props as Props;
+const { href, title, tags, excerpt, image, imageAlt = "" } =
+  Astro.props as Props;
 
 // Catégorisation simple (tu peux enrichir quand tu veux)
 const getTagCategory = (raw: string) => {
@@ -28,28 +20,45 @@ const getTagCategory = (raw: string) => {
   // Frontend
   if (
     [
-      "javascript", "js", "typescript", "ts",
-      "react", "react.js", "astro",
-      "html", "html5", "css", "css3"
+      "javascript",
+      "js",
+      "typescript",
+      "ts",
+      "react",
+      "react.js",
+      "astro",
+      "html",
+      "html5",
+      "css",
+      "css3",
     ].includes(t) || t.includes("frontend")
-  ) return "frontend";
+  )
+    return "frontend";
 
   // Backend
   if (
     [
-      "node", "node.js", "express",
-      "java", "spring", "spring boot",
-      "django", "php"
+      "node",
+      "node.js",
+      "express",
+      "java",
+      "spring",
+      "spring boot",
+      "django",
+      "php",
     ].includes(t) || t.includes("backend")
-  ) return "backend";
+  )
+    return "backend";
 
   // Data
-  if (["sql", "postgresql", "mysql", "mongodb", "database", "db"].includes(t)) return "data";
+  if (["sql", "postgresql", "mysql", "mongodb", "database", "db"].includes(t))
+    return "data";
 
   // Tooling
   if (
     ["git", "github", "docker", "uipath", "ssis", "power bi", "jira", "trello", "figma"].includes(t)
-  ) return "tooling";
+  )
+    return "tooling";
 
   // Cloud
   if (["aws", "azure", "gcp", "netlify"].includes(t)) return "cloud";
@@ -75,10 +84,6 @@ const getTagCategory = (raw: string) => {
 
   <header class="head">
     <h3 class="title">{title}</h3>
-
-    <time class="date" datetime={publishDate.toISOString()}>
-      {publishDate.toLocaleDateString("fr-FR")}
-    </time>
   </header>
 
   <p class="excerpt clamp">{excerpt}</p>
@@ -193,8 +198,6 @@ const getTagCategory = (raw: string) => {
 
   .head {
     display: flex;
-    justify-content: space-between;
-    gap: 0.75rem;
     align-items: baseline;
   }
 
@@ -203,12 +206,6 @@ const getTagCategory = (raw: string) => {
     font-size: var(--text-md);
     line-height: 1.2;
     color: var(--gray-0);
-  }
-
-  .date {
-    font-size: var(--text-sm);
-    color: var(--gray-400);
-    white-space: nowrap;
   }
 
   .excerpt {
@@ -238,17 +235,29 @@ const getTagCategory = (raw: string) => {
   }
 
   /* ✅ les tags restent cliquables même avec l'overlay */
-  .tag, .tagLink {
+  .tag,
+  .tagLink {
     pointer-events: auto;
   }
 
-  /* Teintes sobres par type (sans color-mix) */
-  .tag[data-cat="frontend"] { --tag-tint: rgba(120, 170, 255, 0.18); }
-  .tag[data-cat="backend"]  { --tag-tint: rgba(160, 140, 255, 0.18); }
-  .tag[data-cat="tooling"]  { --tag-tint: rgba(255, 200, 120, 0.16); }
-  .tag[data-cat="data"]     { --tag-tint: rgba(120, 255, 210, 0.16); }
-  .tag[data-cat="cloud"]    { --tag-tint: rgba(180, 220, 255, 0.16); }
-  .tag[data-cat="other"]    { --tag-tint: rgba(255, 255, 255, 0.12); }
+  .tag[data-cat="frontend"] {
+    --tag-tint: rgba(120, 170, 255, 0.18);
+  }
+  .tag[data-cat="backend"] {
+    --tag-tint: rgba(160, 140, 255, 0.18);
+  }
+  .tag[data-cat="tooling"] {
+    --tag-tint: rgba(255, 200, 120, 0.16);
+  }
+  .tag[data-cat="data"] {
+    --tag-tint: rgba(120, 255, 210, 0.16);
+  }
+  .tag[data-cat="cloud"] {
+    --tag-tint: rgba(180, 220, 255, 0.16);
+  }
+  .tag[data-cat="other"] {
+    --tag-tint: rgba(255, 255, 255, 0.12);
+  }
 
   .tag {
     border: 1px solid var(--gray-800);
