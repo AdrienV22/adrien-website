@@ -7,12 +7,17 @@ endDate: 2026-12-31
 organization: "ISCOD"
 role: "Diplôme d’Expert en Ingénierie Logicielle"
 logo: "/assets/logos/iscod.svg"
-skills: [
-  "Architecture logicielle",
-  "Développement Full-Stack",
-  "Sécurisation des applications",
-  "Gestion de projet"
-]
+
+skills:
+  - "Architecture logicielle"
+  - "Développement Full-Stack"
+  - "Sécurisation des applications"
+  - "Gestion de projet"
+
+relatedWorks:
+  - "application-gestion-de-projet"
+  - "nested/projet-todolist"
+  - "portfolio"
 ---
 
 ## Description de la formation

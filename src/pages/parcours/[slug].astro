@@ -2,6 +2,7 @@
 import { getCollection } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Hero from "../../components/Hero.astro";
+import WorkCard from "../../components/WorkCard.astro";
 
 export async function getStaticPaths() {
   const entries = await getCollection("parcours");
@@ -21,9 +22,32 @@ const TYPE_LABEL: Record<string, string> = {
 };
 
 const typeLabel = TYPE_LABEL[d.type] ?? "Parcours";
+
+/* =========================
+   Projets associés (relatedWorks)
+========================= */
+const workEntries = await getCollection("work");
+const relatedSlugs = (d.relatedWorks ?? []) as string[];
+
+const workBySlug = new Map<string, (typeof workEntries)[number]>(
+  workEntries.map((w) => [String(w.slug), w])
+);
+
+const relatedWorks = relatedSlugs
+  .map((s) => workBySlug.get(String(s)))
+  .filter((x): x is (typeof workEntries)[number] => Boolean(x));
+
+
+const excerptOf = (w: any) => {
+  const text = String(w.data?.description ?? "").trim();
+  return text.length > 220 ? text.slice(0, 217) + "…" : text;
+};
 ---
 
-<BaseLayout title={`${d.title} | Parcours`} description={`${typeLabel} — ${d.organization}`}>
+<BaseLayout
+  title={`${d.title} | Parcours`}
+  description={`${typeLabel} — ${d.organization}`}
+>
   <main class="wrapper stack gap-10">
     <a class="back" href="/parcours/">← Retour au parcours</a>
 
@@ -106,6 +130,27 @@ const typeLabel = TYPE_LABEL[d.type] ?? "Parcours";
         <div set:html={entry.body} />
       </article>
 
+      {/* ✅ Projets associés */}
+      {relatedWorks.length ? (
+        <section class="related" aria-label="Projets associés">
+          <h2>Projets associés</h2>
+
+          <div class="relatedGrid">
+            {relatedWorks.map((w: any) => (
+              <WorkCard
+                href={`/work/${w.slug}/`}
+                title={w.data.title}
+                tags={w.data.tags ?? []}
+                excerpt={excerptOf(w)}
+                image={w.data.img}
+                imageAlt={w.data.img_alt ?? ""}
+              />
+            ))}
+          </div>
+        </section>
+      ) : null}
+
+      {/* Skills */}
       {d.skills?.length ? (
         <footer class="skills">
           <h2>Compétences mises en œuvre</h2>
@@ -129,7 +174,8 @@ const typeLabel = TYPE_LABEL[d.type] ?? "Parcours";
     border-radius: 999px;
     padding: 0.35rem 0.75rem;
     background: var(--gray-999_40);
-    transition: border-color var(--theme-transition), transform var(--theme-transition);
+    transition: border-color var(--theme-transition),
+      transform var(--theme-transition);
   }
   .back:hover,
   .back:focus-visible {
@@ -300,6 +346,34 @@ const typeLabel = TYPE_LABEL[d.type] ?? "Parcours";
     color: var(--gray-400);
   }
 
+  /* ✅ Projets associés */
+  .related {
+    margin-top: 1.75rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--gray-800);
+  }
+
+  .related h2 {
+    margin: 0 0 1rem;
+    font-size: var(--text-lg);
+    color: var(--gray-0);
+  }
+
+  .relatedGrid {
+    display: grid;
+    gap: 1rem;
+  }
+
+  @media (min-width: 50em) {
+    .grid {
+      grid-template-columns: 1fr 1fr;
+    }
+    .relatedGrid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.25rem;
+    }
+  }
+
   /* skills */
   .skills {
     margin-top: 1.75rem;
@@ -329,12 +403,6 @@ const typeLabel = TYPE_LABEL[d.type] ?? "Parcours";
     background: radial-gradient(var(--gray-900), var(--gray-800) 150%);
     color: var(--gray-200);
     font-size: var(--text-sm);
-  }
-
-  @media (min-width: 50em) {
-    .grid {
-      grid-template-columns: 1fr 1fr;
-    }
   }
 
   @media (max-width: 40em) {

@@ -20,7 +20,7 @@ keyAchievements:
   - "Fiabilisation de traitements et gestion de cas d’erreurs."
   - "Amélioration continue et documentation des flux."
 skills: ["Python", "SQL", "SSIS", "UIPath", "Git"]
-relatedWorks: []
+relatedWorks: [portfolio, youtube-dl]
 ---
 
 ## Détail des missions
