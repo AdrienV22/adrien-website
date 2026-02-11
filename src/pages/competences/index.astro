@@ -1,0 +1,165 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Hero from "../../components/Hero.astro";
+import ContactCTA from "../../components/ContactCTA.astro";
+
+const entries = await getCollection("skills");
+
+// Tri simple : techniques puis humaines, puis par niveau desc, puis alpha
+const typeOrder = { technique: 0, humaine: 1 } as const;
+
+const items = [...entries].sort((a, b) => {
+  const ta = typeOrder[a.data.type];
+  const tb = typeOrder[b.data.type];
+  if (ta !== tb) return ta - tb;
+  if (a.data.level !== b.data.level) return b.data.level - a.data.level;
+  return a.data.title.localeCompare(b.data.title, "fr", { sensitivity: "base" });
+});
+---
+
+<BaseLayout
+  title="Compétences | Adrien Valo"
+  description="Compétences techniques et humaines"
+>
+  <div class="stack gap-20">
+    <main class="wrapper stack gap-16">
+      <Hero
+        title="Compétences"
+        tagline="Compétences techniques et humaines, illustrées par des preuves concrètes."
+        align="start"
+      />
+
+      {items.length ? (
+        <section class="grid" aria-label="Liste des compétences">
+          {items.map((entry) => (
+            <article class="card">
+              <div class="meta">
+                <span class={`badge badge--${entry.data.type}`}>
+                  {entry.data.type === "technique" ? "Technique" : "Humaine"}
+                </span>
+                <span class="level">Niveau {entry.data.level}/10</span>
+              </div>
+
+              <h2 class="title">{entry.data.title}</h2>
+              <p class="summary">{entry.data.summary}</p>
+
+              <a class="link" href={`/competences/${entry.slug}/`}>
+                Voir le détail
+              </a>
+            </article>
+          ))}
+        </section>
+      ) : (
+        <section class="empty">
+          <p>Aucune compétence pour l’instant. Ajoute des fichiers dans <code>src/content/skills/</code>.</p>
+        </section>
+      )}
+    </main>
+
+    <ContactCTA />
+  </div>
+</BaseLayout>
+
+<style>
+  .grid {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .card {
+    border: 1px solid var(--gray-800);
+    border-radius: 1.5rem;
+    padding: 1.25rem;
+    background: var(--gray-999_40);
+    box-shadow: var(--shadow-sm);
+    display: grid;
+    gap: 0.6rem;
+  }
+
+  .meta {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+  }
+
+  .badge {
+    border: 1px solid var(--gray-800);
+    border-radius: 999px;
+    padding: 0.25rem 0.55rem;
+    background: radial-gradient(var(--gray-900), var(--gray-800) 150%);
+    color: var(--gray-200);
+    font-size: var(--text-xs);
+    line-height: 1;
+  }
+
+  .badge--technique {
+    border-color: color-mix(in srgb, var(--accent-regular) 45%, var(--gray-800));
+  }
+
+  .badge--humaine {
+    border-color: color-mix(in srgb, var(--gray-200) 25%, var(--gray-800));
+  }
+
+  .level {
+    color: var(--gray-400);
+    font-size: var(--text-sm);
+  }
+
+  .title {
+    margin: 0.1rem 0 0;
+    color: var(--gray-0);
+    font-size: var(--text-lg);
+  }
+
+  .summary {
+    margin: 0;
+    color: var(--gray-200);
+    line-height: 1.7;
+    max-width: 75ch;
+  }
+
+  .link {
+    width: fit-content;
+    margin-top: 0.35rem;
+    text-decoration: none;
+    color: var(--gray-0);
+
+    border: 1px solid var(--gray-700);
+    border-radius: 999px;
+    padding: 0.35rem 0.75rem;
+    background: radial-gradient(var(--gray-900), var(--gray-800) 150%);
+
+    transition: transform var(--theme-transition), border-color var(--theme-transition);
+  }
+
+  .link:hover,
+  .link:focus-visible {
+    transform: translateY(-1px);
+    border-color: var(--gray-600);
+    outline: none;
+  }
+
+  .empty {
+    border: 1px solid var(--gray-800);
+    border-radius: 1.25rem;
+    padding: 1.25rem;
+    background: var(--gray-999_40);
+    color: var(--gray-200);
+  }
+
+  code {
+    color: var(--gray-0);
+  }
+
+  @media (min-width: 50em) {
+    .grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.25rem;
+    }
+    .card {
+      padding: 1.5rem;
+    }
+  }
+</style>
