@@ -2,6 +2,8 @@
 title: "ISCOD"
 type: "formation"
 period: "2024 — 2026"
+startDate: 2024-01-01
+endDate: 2026-12-31
 organization: "ISCOD"
 role: "Diplôme d’Expert en Ingénierie Logicielle"
 logo: "/assets/logos/iscod.svg"

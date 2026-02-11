@@ -21,10 +21,18 @@ const TYPE_DETAIL_LABEL: Record<ItemType, string> = {
 // 1) Récupération des entrées
 const entries = await getCollection("parcours");
 
-// 2) Tri anti-chronologique (simple et robuste)
-// On ne fait pas une date exacte ici : on trie en gardant ton ordre “récent d'abord” si besoin.
-// Si tu veux un tri strict par date plus tard, on ajoutera startDate/endDate au frontmatter.
-const items = entries.sort((a, b) => (a.data.period < b.data.period ? 1 : -1));
+// 2) Tri anti-chronologique strict : startDate desc, puis endDate desc
+const items = entries.sort((a, b) => {
+  const aStart = a.data.startDate?.getTime?.() ?? 0;
+  const bStart = b.data.startDate?.getTime?.() ?? 0;
+
+  if (aStart !== bStart) return bStart - aStart;
+
+  const aEnd = a.data.endDate?.getTime?.() ?? 0;
+  const bEnd = b.data.endDate?.getTime?.() ?? 0;
+
+  return bEnd - aEnd;
+});
 ---
 
 <BaseLayout

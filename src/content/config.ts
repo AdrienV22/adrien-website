@@ -23,7 +23,11 @@ const parcours = defineCollection({
 	  title: z.string(),
 	  type: z.enum(["experience", "formation", "certification"]),
 	  period: z.string(),
+	  startDate: z.coerce.date(),
+	  endDate: z.coerce.date().optional(),
+  
 	  organization: z.string(),
+	  url: z.string().optional(),
   
 	  role: z.string().optional(),
 	  status: z.string().optional(),
@@ -32,12 +36,17 @@ const parcours = defineCollection({
 	  logo: z.string().optional(),
 	  highlight: z.string().optional(),
   
-	  url: z.string().optional(), // ← AJOUT ICI
+	  about: z.string().optional(),
+	  mission: z.string().optional(),
+	  positioning: z.string().optional(),
+	  keyAchievements: z.array(z.string()).default([]),
   
 	  skills: z.array(z.string()).default([]),
 	  relatedWorks: z.array(z.string()).default([]),
 	}),
   });
+  
+  
   
 
 /* =========================

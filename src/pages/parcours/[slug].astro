@@ -1,0 +1,350 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Hero from "../../components/Hero.astro";
+
+export async function getStaticPaths() {
+  const entries = await getCollection("parcours");
+  return entries.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const d = entry.data;
+
+const TYPE_LABEL: Record<string, string> = {
+  experience: "Expérience",
+  formation: "Formation",
+  certification: "Certification",
+};
+
+const typeLabel = TYPE_LABEL[d.type] ?? "Parcours";
+---
+
+<BaseLayout title={`${d.title} | Parcours`} description={`${typeLabel} — ${d.organization}`}>
+  <main class="wrapper stack gap-10">
+    <a class="back" href="/parcours/">← Retour au parcours</a>
+
+    <Hero
+      title={d.role ?? d.title}
+      tagline={`${typeLabel} • ${d.period}`}
+      align="start"
+    />
+
+    <section class="card">
+      <header class="head">
+        {d.logo ? (
+          <div class="logoWrap" aria-hidden="true">
+            <img src={d.logo} alt="" loading="lazy" decoding="async" />
+          </div>
+        ) : null}
+
+        <div class="meta">
+          <p class="org">
+            {d.url ? (
+              <a href={d.url} target="_blank" rel="noopener">
+                {d.organization}
+              </a>
+            ) : (
+              d.organization
+            )}
+          </p>
+
+          {(d.status || d.location || d.mode) ? (
+            <p class="sub">
+              {d.status ? d.status : null}
+              {d.status && (d.location || d.mode) ? " • " : null}
+              {d.location ? d.location : null}
+              {d.location && d.mode ? " • " : null}
+              {d.mode ? d.mode : null}
+            </p>
+          ) : null}
+
+          {d.highlight ? <p class="highlight">{d.highlight}</p> : null}
+        </div>
+      </header>
+
+      {/* Bloc “Fiche” (structure comme l’inspiration) */}
+      <div class="grid">
+        {d.about ? (
+          <section class="block">
+            <h2>À propos</h2>
+            <p>{d.about}</p>
+          </section>
+        ) : null}
+
+        {d.mission ? (
+          <section class="block">
+            <h2>Mission</h2>
+            <p>{d.mission}</p>
+          </section>
+        ) : null}
+
+        {d.positioning ? (
+          <section class="block">
+            <h2>Mon positionnement</h2>
+            <p>{d.positioning}</p>
+          </section>
+        ) : null}
+
+        {d.keyAchievements?.length ? (
+          <section class="block">
+            <h2>Réalisations clés</h2>
+            <ul class="list">
+              {d.keyAchievements.map((x) => (
+                <li>{x}</li>
+              ))}
+            </ul>
+          </section>
+        ) : null}
+      </div>
+
+      {/* Markdown libre (si tu veux détailler davantage) */}
+      <article class="content">
+        <div set:html={entry.body} />
+      </article>
+
+      {d.skills?.length ? (
+        <footer class="skills">
+          <h2>Compétences mises en œuvre</h2>
+          <ul class="skillList" aria-label="Compétences">
+            {d.skills.map((s) => (
+              <li class="skill">{s}</li>
+            ))}
+          </ul>
+        </footer>
+      ) : null}
+    </section>
+  </main>
+</BaseLayout>
+
+<style>
+  .back {
+    width: fit-content;
+    color: var(--gray-300);
+    text-decoration: none;
+    border: 1px solid var(--gray-800);
+    border-radius: 999px;
+    padding: 0.35rem 0.75rem;
+    background: var(--gray-999_40);
+    transition: border-color var(--theme-transition), transform var(--theme-transition);
+  }
+  .back:hover,
+  .back:focus-visible {
+    border-color: var(--gray-600);
+    transform: translateY(-1px);
+    outline: none;
+  }
+
+  .card {
+    border: 1px solid var(--gray-800);
+    border-radius: 1.5rem;
+    padding: 1.75rem;
+    background: var(--gray-999_40);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .head {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    padding-bottom: 1.25rem;
+    margin-bottom: 1.25rem;
+    border-bottom: 1px solid var(--gray-800);
+  }
+
+  .logoWrap {
+    width: 56px;
+    height: 56px;
+    border-radius: 1rem;
+    overflow: hidden;
+    border: 1px solid var(--gray-800);
+    background: radial-gradient(var(--gray-900), var(--gray-800) 150%);
+    display: grid;
+    place-items: center;
+    flex: 0 0 auto;
+    box-shadow: var(--shadow-sm);
+  }
+  .logoWrap img {
+    width: 72%;
+    height: 72%;
+    object-fit: contain;
+    display: block;
+    opacity: 0.95;
+  }
+
+  .meta {
+    display: grid;
+    gap: 0.35rem;
+    min-width: 0;
+  }
+
+  .org {
+    margin: 0;
+    color: var(--gray-0);
+    font-size: var(--text-lg);
+  }
+
+  .org :global(a) {
+    color: inherit;
+    text-decoration: 1px solid underline transparent;
+    text-underline-offset: 0.25em;
+    transition: text-decoration-color var(--theme-transition);
+  }
+  .org :global(a:hover),
+  .org :global(a:focus) {
+    text-decoration-color: currentColor;
+  }
+
+  .sub {
+    margin: 0;
+    color: var(--gray-400);
+    font-size: var(--text-sm);
+  }
+
+  .highlight {
+    margin: 0.65rem 0 0;
+    padding-left: 0.75rem;
+    font-weight: 500;
+    border-left: 2px solid var(--accent-regular);
+    color: var(--gray-100);
+  }
+
+  /* blocs structurés */
+  .grid {
+    display: grid;
+    gap: 1rem;
+    margin: 0.75rem 0 1.5rem;
+  }
+
+  .block {
+    border: 1px solid var(--gray-800);
+    border-radius: 1.25rem;
+    padding: 1.25rem;
+    background: radial-gradient(var(--gray-900), var(--gray-800) 150%);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.03);
+  }
+
+  .block h2 {
+    margin: 0 0 0.5rem;
+    font-size: var(--text-lg);
+    color: var(--gray-0);
+  }
+
+  .block p {
+    margin: 0;
+    line-height: 1.7;
+    color: var(--gray-200);
+  }
+
+  .list {
+    margin: 0.35rem 0 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 0.45rem;
+    color: var(--gray-200);
+  }
+
+  .list li {
+    position: relative;
+    padding-left: 1rem;
+    line-height: 1.65;
+  }
+
+  .list li::before {
+    content: "–";
+    position: absolute;
+    left: 0;
+    color: var(--gray-400);
+  }
+
+  /* markdown */
+  .content {
+    max-width: 75ch;
+  }
+
+  .content :global(h2) {
+    margin: 1.75rem 0 0.75rem;
+    font-size: var(--text-xl);
+    color: var(--gray-0);
+  }
+
+  .content :global(p) {
+    margin: 0.65rem 0;
+    line-height: 1.7;
+    color: var(--gray-200);
+  }
+
+  .content :global(ul) {
+    margin: 0.6rem 0 1rem;
+    padding-left: 0;
+    list-style: none;
+    display: grid;
+    gap: 0.45rem;
+    color: var(--gray-200);
+  }
+
+  .content :global(li) {
+    position: relative;
+    padding-left: 1rem;
+    line-height: 1.65;
+  }
+
+  .content :global(li)::before {
+    content: "–";
+    position: absolute;
+    left: 0;
+    color: var(--gray-400);
+  }
+
+  /* skills */
+  .skills {
+    margin-top: 1.75rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--gray-800);
+  }
+
+  .skills h2 {
+    margin: 0 0 0.75rem;
+    font-size: var(--text-lg);
+    color: var(--gray-0);
+  }
+
+  .skillList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .skill {
+    border: 1px solid var(--gray-800);
+    border-radius: 999px;
+    padding: 0.35rem 0.75rem;
+    background: radial-gradient(var(--gray-900), var(--gray-800) 150%);
+    color: var(--gray-200);
+    font-size: var(--text-sm);
+  }
+
+  @media (min-width: 50em) {
+    .grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (max-width: 40em) {
+    .card {
+      padding: 1.25rem;
+    }
+    .logoWrap {
+      width: 48px;
+      height: 48px;
+      border-radius: 0.9rem;
+    }
+  }
+</style>
