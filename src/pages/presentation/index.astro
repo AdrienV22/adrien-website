@@ -1,0 +1,192 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Hero from "../../components/Hero.astro";
+import ContactCTA from "../../components/ContactCTA.astro";
+---
+
+<BaseLayout
+  title="Présentation | Adrien Valo"
+  description="Présentation générale, valeurs et projet professionnel"
+>
+  <div class="stack gap-20">
+    <main class="wrapper stack gap-16">
+
+      <Hero
+        title="Présentation"
+        tagline="Une trajectoire structurée entre exigence technique, responsabilité et ouverture internationale."
+        align="start"
+      />
+
+      <section class="content">
+
+
+        <!-- Introduction -->
+        <article class="block">
+          <h2>Présentation générale</h2>
+          <p>
+            Actuellement en alternance au sein de Dentego en tant que développeur informatique orienté automatisation et RPA, j’évolue dans un environnement où la fiabilisation des traitements, l’optimisation des processus et la qualité des systèmes d’information occupent une place centrale.
+          </p>
+          <p>
+            Engagé dans un Mastère d’Expert en Ingénierie Logicielle, mon parcours s’inscrit dans une volonté de concevoir des solutions robustes, durables et structurées, en lien direct avec les enjeux techniques et organisationnels des entreprises.
+          </p>
+        </article>
+
+        <!-- Valeurs -->
+        <article class="block">
+          <h2>Mes valeurs</h2>
+          <p>
+            L’ingénierie logicielle ne se limite pas à produire du code fonctionnel. Elle implique une responsabilité : concevoir des systèmes fiables, maintenables et compréhensibles.
+          </p>
+          <p>
+            La rigueur, la clarté des architectures et la recherche d’amélioration continue structurent ma manière de travailler. La dimension humaine demeure essentielle : collaborer efficacement, documenter et sécuriser les processus sont des éléments fondamentaux d’un système durable.
+          </p>
+        </article>
+
+        <!-- Projet professionnel -->
+        <article class="block">
+          <h2>Projet professionnel</h2>
+          <p>
+            Mon projet professionnel s’oriente vers une expertise approfondie en ingénierie logicielle, avec un intérêt particulier pour l’automatisation des processus, l’architecture des systèmes et la fiabilisation des flux de données.
+          </p>
+          <p>
+            À moyen terme, je souhaite renforcer mes compétences en conception d’architectures logicielles robustes et évoluer dans des environnements techniques exigeants où la qualité et la performance sont structurantes.
+          </p>
+          <p>
+            L’ouverture internationale, notamment en lien avec le Japon, constitue également un axe cohérent de mon parcours.
+          </p>
+        </article>
+
+        <!-- Qualités humaines -->
+        <article class="block">
+          <h2>Qualités humaines</h2>
+          <ul class="list">
+            <li>Autonomie et sens des responsabilités dans la conduite de projets.</li>
+            <li>Capacité d’analyse et de structuration face à des problématiques complexes.</li>
+            <li>Adaptabilité dans des environnements variés, y compris à l’international.</li>
+            <li>Travail collaboratif et communication claire au sein d’équipes pluridisciplinaires.</li>
+          </ul>
+        </article>
+
+        <!-- Centres d’intérêt -->
+        <article class="block">
+          <h2>Centres d’intérêt</h2>
+          <p>
+            L’apprentissage des langues et la culture japonaise ont structuré mon ouverture internationale. La pratique musicale et la production assistée par ordinateur développent rigueur, écoute et sens de la structure.
+          </p>
+          <p>
+            L’intérêt pour les systèmes complexes — qu’ils soient informatiques, narratifs ou stratégiques — alimente une approche analytique et structurée des problématiques rencontrées.
+          </p>
+        </article>
+
+      </section>
+    </main>
+
+    <ContactCTA />
+  </div>
+</BaseLayout>
+
+<style>
+.content {
+  margin-top: clamp(2.5rem, 6vw, 4.5rem);
+  padding-top: clamp(1.5rem, 3vw, 2.5rem);
+  border-top: 1px solid var(--gray-800);
+}
+
+
+
+.block {
+  position: relative;
+
+  border: 1px solid var(--gray-800);
+  border-radius: clamp(1rem, 2vw, 1.5rem);
+  padding: clamp(1.25rem, 3vw, 2rem);
+
+  background: var(--gray-999_40);
+  box-shadow: var(--shadow-sm);
+
+  overflow: hidden;
+
+  transition:
+    transform var(--theme-transition),
+    box-shadow var(--theme-transition),
+    border-color var(--theme-transition);
+}
+
+/* Accent “frise” à gauche */
+.block::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 14%;
+  bottom: 14%;
+  width: 2px;
+
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    color-mix(in srgb, var(--accent-regular) 35%, var(--gray-700)) 18%,
+    var(--accent-regular) 50%,
+    color-mix(in srgb, var(--accent-regular) 35%, var(--gray-700)) 82%,
+    transparent 100%
+  );
+
+  opacity: 0.7;
+}
+
+/* Hover très discret */
+.block:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--accent-overlay);
+}
+
+.block h2 {
+  margin: 0 0 0.75rem;
+  font-size: clamp(1.15rem, 2vw, 1.4rem);
+  letter-spacing: -0.02em;
+  color: var(--gray-0);
+}
+
+.block p {
+  margin: 0.65rem 0;
+  line-height: 1.75;
+  color: var(--gray-200);
+  max-width: 78ch;
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0.75rem 0 0;
+  display: grid;
+  gap: 0.55rem;
+  color: var(--gray-200);
+  max-width: 78ch;
+}
+
+.list li {
+  position: relative;
+  padding-left: 1rem;
+  line-height: 1.7;
+}
+
+.list li::before {
+  content: "–";
+  position: absolute;
+  left: 0;
+  color: var(--gray-400);
+}
+
+/* Accessibilité */
+.block:focus-within {
+  border-color: var(--accent-overlay);
+}
+
+/* Respect des préférences */
+@media (prefers-reduced-motion: reduce) {
+  .block {
+    transition: none;
+  }
+}
+
+</style>

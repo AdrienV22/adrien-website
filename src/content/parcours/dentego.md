@@ -9,7 +9,7 @@ role: "Développeur informatique / RPA"
 status: "Alternant"
 location: "Boulogne-Billancourt, Île-de-France"
 mode: "Sur site"
-logo: "/assets/logos/dentego.svg"
+logo: "/assets/logos/dentego.jpeg"
 highlight: "Automatisation de processus et fiabilisation de traitements orientés data."
 url: ""
 about: "Groupe spécialisé dans les soins dentaires, avec un SI interne soutenant les opérations et la donnée."
@@ -22,9 +22,3 @@ keyAchievements:
 skills: ["Python", "SQL", "SSIS", "UIPath", "Git"]
 relatedWorks: [portfolio, youtube-dl]
 ---
-
-## Détail des missions
-
-- Automatisation de processus robotisés
-- Développement d’outils internes
-- Fiabilisation de flux de données

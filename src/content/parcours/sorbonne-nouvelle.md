@@ -7,7 +7,7 @@ endDate: 2021-06-30
 
 organization: "Université Sorbonne Nouvelle – Paris 3"
 url: "https://www.sorbonne-nouvelle.fr/"
-logo: "/assets/logos/sorbonne-nouvelle.svg"
+logo: "/assets/logos/sorbonne-nouvelle.jpeg"
 
 role: "Master Cinéma & Audiovisuel — Spécialité Médias"
 status: "Diplômé"

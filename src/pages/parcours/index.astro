@@ -113,26 +113,103 @@ const items = entries.sort((a, b) => {
 </BaseLayout>
 
 <style>
-  .timeline {
-    position: relative;
-    margin-top: 1rem;
-    padding-left: 2rem;
-    border-left: 2px solid var(--gray-700);
-  }
+.timeline {
+  position: relative;
+  margin-top: 6rem;
+  padding-top: 0.95rem;
+  padding-left: 2.25rem;
+
+}
+
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: 1.05rem; /* ajuste si besoin selon ton alignement */
+  top: 0;
+  bottom: 0;
+  width: 2px;
+
+  /* ligne élégante : dégradé + contraste doux */
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    color-mix(in srgb, var(--gray-800) 65%, var(--gray-600)) 12%,
+    var(--gray-700) 50%,
+    color-mix(in srgb, var(--gray-800) 65%, var(--gray-600)) 88%,
+    transparent 100%
+  );
+
+  border-radius: 999px;
+  opacity: 0.95;
+}
+
+/* glow subtil (premium, pas “néon”) */
+.timeline::after {
+  content: "";
+  position: absolute;
+  left: 1.05rem;
+  top: 0;
+  bottom: 0;
+  width: 10px;
+  transform: translateX(-4px);
+
+  background: radial-gradient(
+    closest-side,
+    color-mix(in srgb, var(--accent-regular) 18%, transparent),
+    transparent 70%
+  );
+
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+
+
 
   .timeline-item {
-    position: relative;
-    margin-bottom: 2.75rem;
-  }
+  position: relative;
+  margin-bottom: 2.25rem; /* légèrement plus compact */
+  padding-left: 0.25rem;  /* petit équilibre visuel avec la ligne */
+}
+
+.timeline-item:hover .timeline-marker {
+  background: var(--accent-overlay);
+}
+
+.timeline-item:hover ~ .timeline::after {
+  opacity: 0.45;
+}
+
+
+/* améliore l'alignement vertical du marker */
+.timeline-marker {
+  top: 1.35rem; /* aligne avec la card plutôt qu’avec le texte brut */
+}
+
+
+  .timeline-content {
+  border: 1px solid var(--gray-800);
+  border-radius: 1.25rem;
+  padding: 1.25rem;
+
+  background: var(--gray-999_40);
+  box-shadow: var(--shadow-sm);
+
+  transition:
+    transform var(--theme-transition),
+    box-shadow var(--theme-transition),
+    border-color var(--theme-transition);
+}
+
+.timeline-item:hover .timeline-content {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--accent-overlay);
+}
+
 
   .timeline-marker {
-    position: absolute;
-    left: -11px;
-    top: 1.1rem;
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
-    background: var(--accent-regular);
+    display: none;
   }
 
   .topRow {
@@ -168,7 +245,7 @@ const items = entries.sort((a, b) => {
   .main {
     min-width: 0;
     display: grid;
-    gap: 0.35rem;
+    gap: 0.45rem;
   }
 
   .metaRow {
@@ -179,9 +256,23 @@ const items = entries.sort((a, b) => {
   }
 
   .period {
-    font-size: var(--text-sm);
-    color: var(--gray-400);
-  }
+  font-size: 0.95rem;             /* si var(--text-md) est trop gros */
+  font-weight: 700;
+  text-transform: uppercase;      /* optionnel mais très propre */
+  letter-spacing: 0.06em;
+  color: var(--gray-100);
+}
+
+
+
+.timeline-item:hover .period {
+  color: var(--gray-0);
+}
+
+.timeline-item:hover .period::before {
+  opacity: 1;
+}
+
 
   .badge {
     display: inline-flex;
@@ -196,6 +287,19 @@ const items = entries.sort((a, b) => {
     font-size: var(--text-xs);
     line-height: 1;
   }
+
+  .timeline-item[data-type="experience"] .badge {
+  border-color: color-mix(in srgb, var(--accent-regular) 35%, var(--gray-800));
+}
+
+.timeline-item[data-type="formation"] .badge {
+  border-color: color-mix(in srgb, var(--accent-regular) 22%, var(--gray-800));
+}
+
+.timeline-item[data-type="certification"] .badge {
+  border-color: color-mix(in srgb, var(--accent-regular) 15%, var(--gray-800));
+}
+
 
   .title {
     margin: 0.1rem 0 0;
@@ -234,7 +338,7 @@ const items = entries.sort((a, b) => {
   }
 
   .actions {
-    margin-top: 0.75rem;
+    margin-top: 0.95rem;
   }
 
   .detailLink {
@@ -273,6 +377,49 @@ const items = entries.sort((a, b) => {
     outline: none;
   }
 
+  .timeline {
+  list-style: none;
+  margin: 0;
+  padding-left: 2rem; /* on garde ton alignement frise */
+}
+
+.timeline-item {
+  list-style: none;
+}
+
+.timeline-item::marker {
+  content: none;
+}
+
+.timeline,
+.timeline * {
+  list-style: none;
+}
+
+.logoWrap {
+  width: clamp(42px, 6vw, 48px);
+  height: clamp(42px, 6vw, 48px);
+  border-radius: 1rem;
+  overflow: hidden;
+
+  border: 1px solid var(--gray-800);
+  background: radial-gradient(var(--gray-900), var(--gray-800) 150%);
+  display: grid;
+  place-items: center;
+  box-shadow: var(--shadow-sm);
+}
+
+.logoWrap img {
+  max-width: 70%;
+  max-height: 70%;
+  object-fit: contain;
+
+  /* Harmonisation visuelle */
+  filter: grayscale(100%) contrast(1.1);
+  opacity: 0.95;
+}
+
+
   @media (max-width: 30em) {
     .logoWrap {
       width: 38px;
@@ -280,4 +427,6 @@ const items = entries.sort((a, b) => {
       border-radius: 0.8rem;
     }
   }
+
+  
 </style>

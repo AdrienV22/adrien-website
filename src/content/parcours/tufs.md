@@ -1,39 +1,39 @@
 ---
 title: "Tokyo University of Foreign Studies"
 type: "formation"
-period: "2019 — 2020"
-startDate: 2019-09-01
-endDate: 2020-03-31
+period: "2019 — 2019"
+startDate: 2019-03-01
+endDate: 2019-09-01
 
 organization: "Tokyo University of Foreign Studies"
-url: "https://www.tufs.ac.jp/english/"
-logo: "/assets/logos/tufs.svg"
-
-role: "Échange international à Tokyo"
-status: "Semestre international"
+role: "Echange international universitaire à Tokyo"
+status: "Programme international"
 location: "Tokyo, Japon"
 mode: "Présentiel"
+international: true
+logo: "/assets/logos/tufs.jpeg"
 
-highlight: "Échange international à Tokyo"
+highlight: "Immersion académique et culturelle au Japon dans un environnement universitaire international."
 
-about: "Université japonaise spécialisée dans les études internationales et linguistiques, reconnue pour son ouverture sur le monde."
+url: "https://www.tufs.ac.jp/english/"
 
-mission: "Approfondir mes compétences linguistiques et interculturelles dans un environnement académique japonais."
+about: "Université japonaise spécialisée dans les langues, les relations internationales et les études culturelles."
 
-positioning: "Étudiant en échange intégré au cursus local, avec immersion totale en langue japonaise."
+mission: "Approfondir la maîtrise du japonais et développer une compréhension interculturelle dans un contexte académique international."
+
+positioning: "Immersion totale dans un environnement universitaire japonais, favorisant autonomie, adaptation et ouverture internationale."
 
 keyAchievements:
-  - "Cours suivis intégralement en japonais."
-  - "Participation au club de jazz universitaire."
-  - "Renforcement du niveau linguistique en contexte natif."
-  - "Adaptation à un environnement académique international."
+  - "Suivi de cours universitaires en japonais."
+  - "Intégration dans un environnement académique multiculturel."
+  - "Participation à des activités étudiantes locales."
+  - "Renforcement significatif des compétences linguistiques."
 
 skills:
-  - "Communication interculturelle"
-  - "Autonomie"
-  - "Adaptabilité"
   - "Japonais avancé"
-  - "Travail en contexte international"
+  - "Adaptabilité interculturelle"
+  - "Communication internationale"
+  - "Autonomie"
 
 relatedWorks: []
 ---
