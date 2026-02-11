@@ -45,6 +45,37 @@ const parcours = defineCollection({
 	  relatedWorks: z.array(z.string()).default([]),
 	}),
   });
+
+  /* =========================
+   Collection : Skills (Compétences)
+========================= */
+const skills = defineCollection({
+	schema: z.object({
+	  title: z.string(),
+	  type: z.enum(["technique", "humaine"]),
+	  level: z.number().min(1).max(10),
+	  summary: z.string(),
+  
+	  // Optionnels (pour ta page détail premium)
+	  evidence: z
+		.array(
+		  z.object({
+			title: z.string(),
+			context: z.string().optional(),
+			result: z.string().optional(),
+			link: z.string().optional(),
+		  })
+		)
+		.optional(),
+  
+	  selfCritique: z.string().optional(),
+	  growth: z.array(z.string()).optional(),
+  
+	  // Optionnel : si tu veux relier à tes projets work
+	  relatedWorks: z.array(z.string()).optional(),
+	}),
+  });
+  
   
   
   
@@ -55,4 +86,5 @@ const parcours = defineCollection({
 export const collections = {
   work,
   parcours,
+  skills,
 };

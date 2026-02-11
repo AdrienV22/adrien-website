@@ -1,0 +1,306 @@
+---
+import { getCollection, type CollectionEntry } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Hero from "../../components/Hero.astro";
+
+type SkillEntry = CollectionEntry<"skills">;
+
+export async function getStaticPaths() {
+  const entries = (await getCollection("skills")) as SkillEntry[];
+
+  return entries.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+type Props = { entry: SkillEntry };
+const { entry } = Astro.props as Props;
+const d = entry.data;
+
+// Typage local des preuves (évite le implicit any)
+type Evidence = {
+  title: string;
+  context?: string;
+  result?: string;
+  link?: string;
+};
+
+const evidence = (d.evidence ?? []) as Evidence[];
+
+const typeLabel =
+  d.type === "technique" ? "Compétence technique" : "Compétence humaine";
+---
+
+<BaseLayout title={`${d.title} | Compétences`} description={d.summary}>
+  <main class="wrapper stack gap-10">
+    <a class="back" href="/competences/">← Retour aux compétences</a>
+
+    <Hero
+      title={d.title}
+      tagline={`${typeLabel} • Niveau ${d.level}/10`}
+      align="start"
+    />
+
+    <section class="card">
+      <header class="head">
+        <p class="summary">{d.summary}</p>
+
+        <div class="meter" aria-label={`Niveau ${d.level} sur 10`}>
+          <span class="meterLabel">Niveau</span>
+          <span class="meterValue">{d.level}/10</span>
+          <div class="meterBar" aria-hidden="true">
+            <span style={`width:${Math.min(100, (d.level / 10) * 100)}%`}></span>
+          </div>
+        </div>
+      </header>
+
+      {/* Markdown libre */}
+      <article class="content">
+        <div set:html={entry.body} />
+      </article>
+
+      {/* Preuves structurées */}
+      {evidence.length ? (
+        <section class="evidence" aria-label="Éléments de preuve">
+          <h2>Éléments de preuve</h2>
+          <ul class="evidenceList">
+            {evidence.map((ev: Evidence) => (
+              <li class="evidenceItem">
+                <h3>{ev.title}</h3>
+                {ev.context ? <p class="muted">{ev.context}</p> : null}
+                {ev.result ? <p>{ev.result}</p> : null}
+                {ev.link ? (
+                  <p class="linkRow">
+                    <a class="link" href={ev.link}>Voir le lien</a>
+                  </p>
+                ) : null}
+              </li>
+            ))}
+          </ul>
+        </section>
+      ) : null}
+
+      {/* Auto-évaluation */}
+      {d.selfCritique ? (
+        <section class="block" aria-label="Auto-évaluation">
+          <h2>Auto-évaluation</h2>
+          <p>{d.selfCritique}</p>
+        </section>
+      ) : null}
+
+      {/* Évolution */}
+      {d.growth?.length ? (
+        <section class="block" aria-label="Axes de progression">
+          <h2>Évolution</h2>
+          <ul class="list">
+            {d.growth.map((g: string) => (
+              <li>{g}</li>
+            ))}
+          </ul>
+        </section>
+      ) : null}
+    </section>
+  </main>
+</BaseLayout>
+
+<style>
+  .back {
+    width: fit-content;
+    color: var(--gray-300);
+    text-decoration: none;
+    border: 1px solid var(--gray-800);
+    border-radius: 999px;
+    padding: 0.35rem 0.75rem;
+    background: var(--gray-999_40);
+    transition: border-color var(--theme-transition), transform var(--theme-transition);
+  }
+  .back:hover,
+  .back:focus-visible {
+    border-color: var(--gray-600);
+    transform: translateY(-1px);
+    outline: none;
+  }
+
+  .card {
+    border: 1px solid var(--gray-800);
+    border-radius: 1.5rem;
+    padding: clamp(1.25rem, 3vw, 1.9rem);
+    background: var(--gray-999_40);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .head {
+    display: grid;
+    gap: 1rem;
+    padding-bottom: 1.25rem;
+    margin-bottom: 1.25rem;
+    border-bottom: 1px solid var(--gray-800);
+  }
+
+  .summary {
+    margin: 0;
+    color: var(--gray-200);
+    line-height: 1.7;
+    max-width: 80ch;
+  }
+
+  .meter {
+    display: grid;
+    gap: 0.4rem;
+    max-width: 420px;
+  }
+
+  .meterLabel {
+    color: var(--gray-400);
+    font-size: var(--text-sm);
+  }
+
+  .meterValue {
+    color: var(--gray-0);
+    font-weight: 500;
+  }
+
+  .meterBar {
+    height: 8px;
+    border-radius: 999px;
+    overflow: hidden;
+    background: color-mix(in srgb, var(--gray-800) 70%, transparent);
+  }
+
+  .meterBar > span {
+    display: block;
+    height: 100%;
+    border-radius: inherit;
+    background: color-mix(in srgb, var(--accent-regular) 70%, var(--gray-700));
+  }
+
+  /* Markdown */
+  .content {
+    max-width: 78ch;
+  }
+
+  .content :global(h2) {
+    margin: 1.75rem 0 0.75rem;
+    font-size: var(--text-xl);
+    color: var(--gray-0);
+  }
+
+  .content :global(p) {
+    margin: 0.65rem 0;
+    line-height: 1.75;
+    color: var(--gray-200);
+  }
+
+  .content :global(ul) {
+    margin: 0.6rem 0 1rem;
+    padding-left: 0;
+    list-style: none;
+    display: grid;
+    gap: 0.45rem;
+    color: var(--gray-200);
+  }
+
+  .content :global(li) {
+    position: relative;
+    padding-left: 1rem;
+    line-height: 1.7;
+  }
+
+  .content :global(li)::before {
+    content: "–";
+    position: absolute;
+    left: 0;
+    color: var(--gray-400);
+  }
+
+  .evidence {
+    margin-top: 1.75rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--gray-800);
+  }
+
+  .evidence h2,
+  .block h2 {
+    margin: 0 0 0.75rem;
+    font-size: var(--text-lg);
+    color: var(--gray-0);
+  }
+
+  .evidenceList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 0.85rem;
+  }
+
+  .evidenceItem {
+    border: 1px solid var(--gray-800);
+    border-radius: 1.25rem;
+    padding: 1rem 1.1rem;
+    background: radial-gradient(var(--gray-900), var(--gray-800) 150%);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.03);
+  }
+
+  .evidenceItem h3 {
+    margin: 0 0 0.35rem;
+    color: var(--gray-0);
+    font-size: var(--text-md);
+  }
+
+  .evidenceItem p {
+    margin: 0.35rem 0 0;
+    color: var(--gray-200);
+    line-height: 1.7;
+  }
+
+  .muted {
+    color: var(--gray-400);
+    font-size: var(--text-sm);
+  }
+
+  .linkRow {
+    margin-top: 0.65rem;
+  }
+
+  .link {
+    color: var(--gray-0);
+    text-decoration: 1px solid underline transparent;
+    text-underline-offset: 0.25em;
+    transition: text-decoration-color var(--theme-transition);
+  }
+  .link:hover,
+  .link:focus {
+    text-decoration-color: currentColor;
+  }
+
+  .block {
+    margin-top: 1.75rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--gray-800);
+    max-width: 78ch;
+  }
+
+  .list {
+    list-style: none;
+    padding: 0;
+    margin: 0.5rem 0 0;
+    display: grid;
+    gap: 0.45rem;
+    color: var(--gray-200);
+  }
+
+  .list li {
+    position: relative;
+    padding-left: 1rem;
+    line-height: 1.7;
+  }
+
+  .list li::before {
+    content: "–";
+    position: absolute;
+    left: 0;
+    color: var(--gray-400);
+  }
+</style>
