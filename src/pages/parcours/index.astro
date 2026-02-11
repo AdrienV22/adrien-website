@@ -1,0 +1,275 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Hero from "../../components/Hero.astro";
+import ContactCTA from "../../components/ContactCTA.astro";
+
+type ItemType = "experience" | "formation" | "certification";
+
+const TYPE_LABEL: Record<ItemType, string> = {
+  experience: "Expérience",
+  formation: "Formation",
+  certification: "Certification",
+};
+
+const TYPE_DETAIL_LABEL: Record<ItemType, string> = {
+  experience: "Détail de l’expérience",
+  formation: "Détail de la formation",
+  certification: "Détail de la certification",
+};
+
+// 1) Récupération des entrées
+const entries = await getCollection("parcours");
+
+// 2) Tri anti-chronologique (simple et robuste)
+// On ne fait pas une date exacte ici : on trie en gardant ton ordre “récent d'abord” si besoin.
+// Si tu veux un tri strict par date plus tard, on ajoutera startDate/endDate au frontmatter.
+const items = entries.sort((a, b) => (a.data.period < b.data.period ? 1 : -1));
+---
+
+<BaseLayout
+  title="Mon Parcours | Adrien Valo"
+  description="Parcours académique et professionnel"
+>
+  <div class="stack gap-20">
+    <main class="wrapper stack gap-16">
+      <Hero
+        title="Mon Parcours"
+        tagline="Une trajectoire construite entre humanités, international et ingénierie logicielle."
+        align="start"
+      />
+
+      <section class="timeline" aria-label="Parcours (chronologie)">
+        {items.map((entry) => {
+          const d = entry.data;
+          const type = d.type as ItemType;
+
+          return (
+            <article class="timeline-item" data-type={type}>
+              <div class="timeline-marker" aria-hidden="true"></div>
+
+              <div class="timeline-content">
+                <div class="topRow">
+                  {d.logo ? (
+                    <div class="logoWrap" aria-hidden="true">
+                      <img src={d.logo} alt="" loading="lazy" decoding="async" />
+                    </div>
+                  ) : null}
+
+                  <div class="main">
+                    <div class="metaRow">
+                      <span class="period">{d.period}</span>
+                      <span class="badge">{TYPE_LABEL[type]}</span>
+                    </div>
+
+                    <h3 class="title">{d.role ?? d.title}</h3>
+
+                    <p class="org">
+                      {d.url ? (
+                        <a href={d.url} target="_blank" rel="noopener">
+                          {d.organization}
+                        </a>
+                      ) : (
+                        d.organization
+                      )}
+                    </p>
+
+                    {(d.location || d.mode || d.status) ? (
+                      <p class="sub">
+                        {d.status ? d.status : null}
+                        {d.status && (d.location || d.mode) ? " • " : null}
+                        {d.location ? d.location : null}
+                        {d.location && d.mode ? " • " : null}
+                        {d.mode ? d.mode : null}
+                      </p>
+                    ) : null}
+
+                    {d.highlight ? <p class="highlight">{d.highlight}</p> : null}
+
+                    <div class="actions">
+                      <a class="detailLink" href={`/parcours/${entry.slug}/`}>
+                        {TYPE_DETAIL_LABEL[type]}
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </article>
+          );
+        })}
+      </section>
+    </main>
+
+    <ContactCTA />
+  </div>
+</BaseLayout>
+
+<style>
+  .timeline {
+    position: relative;
+    margin-top: 1rem;
+    padding-left: 2rem;
+    border-left: 2px solid var(--gray-700);
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 2.75rem;
+  }
+
+  .timeline-marker {
+    position: absolute;
+    left: -11px;
+    top: 1.1rem;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--accent-regular);
+  }
+
+  .topRow {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .logoWrap {
+    width: 44px;
+    height: 44px;
+    border-radius: 0.9rem;
+    overflow: hidden;
+
+    border: 1px solid var(--gray-800);
+    background: radial-gradient(var(--gray-900), var(--gray-800) 150%);
+    box-shadow: var(--shadow-sm);
+
+    display: grid;
+    place-items: center;
+    flex: 0 0 auto;
+    margin-top: 0.2rem;
+  }
+
+  .logoWrap img {
+    width: 70%;
+    height: 70%;
+    object-fit: contain;
+    display: block;
+    opacity: 0.95;
+  }
+
+  .main {
+    min-width: 0;
+    display: grid;
+    gap: 0.35rem;
+  }
+
+  .metaRow {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+  }
+
+  .period {
+    font-size: var(--text-sm);
+    color: var(--gray-400);
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.55rem;
+    border-radius: 999px;
+
+    border: 1px solid var(--gray-800);
+    background: radial-gradient(var(--gray-900), var(--gray-800) 150%);
+    color: var(--gray-200);
+
+    font-size: var(--text-xs);
+    line-height: 1;
+  }
+
+  .title {
+    margin: 0.1rem 0 0;
+    color: var(--gray-0);
+  }
+
+  .org {
+    margin: 0;
+    color: var(--gray-200);
+  }
+
+  .org :global(a) {
+    color: inherit;
+    text-decoration: 1px solid underline transparent;
+    text-underline-offset: 0.25em;
+    transition: text-decoration-color var(--theme-transition);
+  }
+
+  .org :global(a:hover),
+  .org :global(a:focus) {
+    text-decoration-color: currentColor;
+  }
+
+  .sub {
+    margin: 0;
+    color: var(--gray-400);
+    font-size: var(--text-sm);
+  }
+
+  .highlight {
+    margin: 0.5rem 0 0;
+    padding-left: 0.75rem;
+    font-weight: 500;
+    border-left: 2px solid var(--accent-regular);
+    color: var(--gray-100);
+  }
+
+  .actions {
+    margin-top: 0.75rem;
+  }
+
+  .detailLink {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+
+    padding: 0.35rem 0.75rem;
+    border-radius: 999px;
+
+    border: 1px solid var(--gray-700);
+    background: radial-gradient(var(--gray-900), var(--gray-800) 150%);
+    color: var(--gray-100);
+
+    font-size: var(--text-sm);
+    line-height: 1;
+    text-decoration: none;
+
+    transition:
+      transform var(--theme-transition),
+      box-shadow var(--theme-transition),
+      border-color var(--theme-transition);
+  }
+
+  .detailLink::after {
+    content: "›";
+    transform: translateY(-0.5px);
+    opacity: 0.85;
+  }
+
+  .detailLink:hover,
+  .detailLink:focus-visible {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
+    border-color: var(--gray-600);
+    outline: none;
+  }
+
+  @media (max-width: 30em) {
+    .logoWrap {
+      width: 38px;
+      height: 38px;
+      border-radius: 0.8rem;
+    }
+  }
+</style>
