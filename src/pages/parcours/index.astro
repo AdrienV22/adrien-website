@@ -213,10 +213,68 @@ const items = entries.sort((a, b) => {
   }
 
   .topRow {
-    display: flex;
-    gap: 1rem;
-    align-items: flex-start;
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  min-width: 0; /* ✅ évite le débordement */
+}
+
+.title,
+.org,
+.sub,
+.highlight {
+  min-width: 0; /* ✅ le texte peut se “rétrécir” sans casser */
+  overflow-wrap: anywhere; /* ✅ pas de débordement */
+}
+
+.title {
+  font-size: clamp(1.05rem, 2.4vw, 1.35rem);
+  line-height: 1.25;
+}
+
+.org {
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;         
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.highlight {
+  line-height: 1.55;
+  max-width: 70ch;
+}
+
+.timeline-content {
+  padding: clamp(1rem, 3.2vw, 1.35rem);
+}
+
+.main {
+  gap: 0.4rem;
+}
+
+.actions {
+  margin-top: 0.8rem;
+}
+
+.period {
+  font-size: clamp(0.85rem, 2.2vw, 0.95rem);
+  letter-spacing: 0.05em;
+}
+
+
+
+@media (max-width: 40em) {
+  .topRow {
+    flex-direction: column;
+    gap: 0.75rem;
   }
+
+  .logoWrap {
+    margin-top: 0;
+  }
+}
+
 
   .logoWrap {
     width: 44px;
@@ -256,9 +314,9 @@ const items = entries.sort((a, b) => {
   }
 
   .period {
-  font-size: 0.95rem;             /* si var(--text-md) est trop gros */
+  font-size: 0.95rem;             
   font-weight: 700;
-  text-transform: uppercase;      /* optionnel mais très propre */
+  text-transform: uppercase;      
   letter-spacing: 0.06em;
   color: var(--gray-100);
 }
