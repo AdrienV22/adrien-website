@@ -1,7 +1,7 @@
 ---
 title: "Capacité d’auto-analyse"
 type: "humaine"
-level: 9
+level: 8
 summary: "Évaluer objectivement ses compétences et structurer un plan de progression mesurable."
 evidence:
   - title: "Portfolio structuré avec auto-évaluation"

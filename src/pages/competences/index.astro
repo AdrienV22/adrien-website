@@ -13,6 +13,14 @@ const technicalSkills = skills
 const softSkills = skills
   .filter((s) => s.data.type === "humaine")
   .sort((a, b) => b.data.level - a.data.level);
+
+const allSkills = [...technicalSkills, ...softSkills].sort(
+  (a, b) => (b.data.level ?? 0) - (a.data.level ?? 0)
+);
+
+const hrefOf = (entry: (typeof skills)[number]) => `/competences/${entry.slug}/`;
+const typeLabelOf = (type: string) => (type === "technique" ? "Technique" : "Humaine");
+const pctOf = (level: number) => Math.max(0, Math.min(100, (Number(level) / 10) * 100));
 ---
 
 <BaseLayout title="Compétences">
@@ -26,22 +34,74 @@ const softSkills = skills
           </p>
         </div>
 
-        <!-- <details class="methodDetails" aria-label="Méthode d’évaluation">
+        <!-- Option B : méthode repliable (réactivable si besoin) -->
+        <!--
+        <details class="methodDetails" aria-label="Méthode d’évaluation">
           <summary class="methodSummary">
             <span class="methodTitle">Méthode d’évaluation</span>
             <span class="hint" aria-hidden="true">ouvrir</span>
-          </summary> -->
+          </summary>
 
-          <!-- <div class="methodBody">
+          <div class="methodBody">
             <ul class="methodList">
               <li><strong>Niveau 1–10</strong> basé sur la pratique en projet.</li>
               <li>Chaque compétence comporte des <strong>preuves</strong> et une <strong>auto-analyse</strong>.</li>
               <li>Un <strong>axe de progression</strong> explicite est indiqué pour rester crédible.</li>
             </ul>
-          </div> -->
+          </div>
         </details>
+        -->
       </div>
     </header>
+
+    <section class="overview" aria-label="Schéma comparatif des compétences">
+      <header class="overviewHead">
+        <div class="overviewTitle">
+          <h2>Schéma synthétique</h2>
+          <p>Comparaison des niveaux (échelle 1–10) pour situer chaque compétence par rapport aux autres.</p>
+        </div>
+
+        <div class="filters" role="tablist" aria-label="Filtrer le schéma">
+          <button class="chip is-active" type="button" data-filter="all" role="tab" aria-selected="true">
+            Toutes <span class="chipCount">({allSkills.length})</span>
+          </button>
+          <button class="chip" type="button" data-filter="tech" role="tab" aria-selected="false">
+            Techniques <span class="chipCount">({technicalSkills.length})</span>
+          </button>
+          <button class="chip" type="button" data-filter="soft" role="tab" aria-selected="false">
+            Humaines <span class="chipCount">({softSkills.length})</span>
+          </button>
+        </div>
+      </header>
+
+      <ul class="overviewList">
+        {allSkills.map((entry) => {
+          const d = entry.data as any;
+          const level = Number(d.level ?? 0);
+          const pct = pctOf(level);
+          const type = String(d.type ?? "");
+          const typeLabel = typeLabelOf(type);
+
+          return (
+            <li class="row" data-type={type}>
+              <a class="rowLink" href={hrefOf(entry)} aria-label={`Voir la compétence : ${d.title}`}>
+                <div class="rowLeft">
+                  <span class="pill" data-type={type}>{typeLabel}</span>
+                  <span class="name">{d.title}</span>
+                </div>
+
+                <div class="rowRight">
+                  <div class="bar" aria-hidden="true">
+                    <span class="fill" style={`width:${pct}%`}></span>
+                  </div>
+                  <span class="score">{level}/10</span>
+                </div>
+              </a>
+            </li>
+          );
+        })}
+      </ul>
+    </section>
 
     <div class="split" aria-label="Compétences techniques et humaines">
       <section class="skills-section" aria-label="Compétences techniques">
@@ -81,9 +141,48 @@ const softSkills = skills
   </main>
 </BaseLayout>
 
+<script>
+  const root = (document.currentScript?.closest("main") as HTMLElement | null) ?? document.body;
+
+  const chips = Array.from(root.querySelectorAll<HTMLButtonElement>(".filters .chip"));
+  const rows = Array.from(root.querySelectorAll<HTMLElement>(".overviewList .row"));
+
+  const setActive = (target: HTMLButtonElement) => {
+    chips.forEach((b) => {
+      const active = b === target;
+      b.classList.toggle("is-active", active);
+      b.setAttribute("aria-selected", active ? "true" : "false");
+    });
+  };
+
+  type Filter = "all" | "tech" | "soft";
+
+  const applyFilter = (filter: Filter) => {
+    rows.forEach((r) => {
+      const type = r.getAttribute("data-type");
+      const show =
+        filter === "all" ||
+        (filter === "tech" && type === "technique") ||
+        (filter === "soft" && type === "humaine");
+
+      r.style.display = show ? "" : "none";
+    });
+  };
+
+  chips.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const raw = (btn.getAttribute("data-filter") ?? "all") as Filter;
+      const filter: Filter = raw === "tech" || raw === "soft" || raw === "all" ? raw : "all";
+      setActive(btn);
+      applyFilter(filter);
+    });
+  });
+</script>
+
 <style>
+  /* Plus d’air entre le hero et le schéma */
   .hero {
-    margin-bottom: 0.25rem;
+    margin-bottom: 1.75rem;
   }
 
   .heroInner {
@@ -100,93 +199,226 @@ const softSkills = skills
   .heroText h1 {
     margin: 0;
     letter-spacing: -0.02em;
+    font-size: clamp(2rem, 6vw, 3rem);
+    line-height: 1.05;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    hyphens: auto;
   }
 
   .lead {
-    margin: 0.75rem 0 0;
-    max-width: 70ch;
+    margin: 0.95rem 0 0;
+    max-width: 72ch;
     color: var(--gray-200);
     line-height: 1.7;
     overflow-wrap: anywhere;
-  }
-
-  /* Option B : méthode repliable */
-  .methodDetails {
-    border: 1px solid var(--gray-800);
-    border-radius: 1.25rem;
-    background: var(--gray-999_40);
-    box-shadow: var(--shadow-sm);
-    overflow: hidden;
-    min-width: 0;
-  }
-
-  .methodSummary {
-    cursor: pointer;
-    list-style: none;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-
-    padding: 1rem 1.15rem;
-    color: var(--gray-0);
-    min-width: 0;
-  }
-
-  .methodSummary::-webkit-details-marker {
-    display: none;
-  }
-
-  .methodTitle {
-    font-size: var(--text-md);
-    color: var(--gray-0);
-    overflow-wrap: anywhere;
-  }
-
-  .hint {
-    color: var(--gray-400);
-    font-size: var(--text-sm);
-    flex: 0 0 auto;
-  }
-
-  .methodDetails[open] .hint {
-    opacity: 0.75;
-  }
-
-  .methodBody {
-    padding: 0 1.15rem 1.05rem;
-    border-top: 1px solid var(--gray-800);
-  }
-
-  .methodList {
-    margin: 0.85rem 0 0;
-    padding: 0;
-    list-style: none;
-
-    display: grid;
-    gap: 0.5rem;
-    color: var(--gray-200);
-  }
-
-  .methodList li {
-    position: relative;
-    padding-left: 1rem;
-    line-height: 1.6;
-    min-width: 0;
-    overflow-wrap: anywhere;
-  }
-
-  .methodList li::before {
-    content: "–";
-    position: absolute;
-    left: 0;
-    color: var(--gray-400);
   }
 
   @media (min-width: 55em) {
     .heroInner {
       grid-template-columns: 1.2fr 0.9fr;
       gap: 1.5rem;
+    }
+  }
+
+  .overview {
+    margin-top: 0.75rem;
+    border: 1px solid var(--gray-800);
+    border-radius: 1.5rem;
+    padding: clamp(1rem, 3vw, 1.4rem);
+    background: var(--gray-999_40);
+    box-shadow: var(--shadow-sm);
+    min-width: 0;
+  }
+
+  .overviewHead {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid var(--gray-800);
+  }
+
+  .overviewTitle {
+    min-width: 0;
+  }
+
+  .overviewTitle h2 {
+    margin: 0;
+    color: var(--gray-0);
+    font-size: var(--text-lg);
+    overflow-wrap: anywhere;
+  }
+
+  .overviewTitle p {
+    margin: 0.35rem 0 0;
+    color: var(--gray-400);
+    line-height: 1.6;
+    max-width: 85ch;
+    overflow-wrap: anywhere;
+  }
+
+  .filters {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .chip {
+    border: 1px solid var(--gray-800);
+    border-radius: 999px;
+    padding: 0.38rem 0.7rem;
+    background: radial-gradient(var(--gray-900), var(--gray-800) 150%);
+    color: var(--gray-200);
+    font-size: var(--text-sm);
+    line-height: 1;
+    cursor: pointer;
+    transition:
+      transform var(--theme-transition),
+      border-color var(--theme-transition),
+      box-shadow var(--theme-transition),
+      color var(--theme-transition);
+  }
+
+  .chipCount {
+    color: var(--gray-400);
+    font-weight: 500;
+  }
+
+  .chip:hover,
+  .chip:focus-visible {
+    transform: translateY(-1px);
+    border-color: var(--gray-600);
+    box-shadow: var(--shadow-sm);
+    outline: none;
+  }
+
+  .chip.is-active {
+    color: var(--accent-text-over);
+    border-color: var(--accent-overlay);
+    background: linear-gradient(180deg, var(--accent-subtle-overlay), transparent),
+      radial-gradient(var(--gray-900), var(--gray-800) 150%);
+  }
+
+  .overviewList {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.65rem;
+  }
+
+  .row {
+    min-width: 0;
+  }
+
+  .rowLink {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.9rem;
+    padding: 0.7rem 0.85rem;
+    border-radius: 1.1rem;
+    border: 1px solid var(--gray-800);
+    background: radial-gradient(var(--gray-900), var(--gray-800) 150%);
+    text-decoration: none;
+    color: inherit;
+    min-width: 0;
+
+    transition:
+      transform var(--theme-transition),
+      box-shadow var(--theme-transition),
+      border-color var(--theme-transition);
+  }
+
+  .rowLink:hover,
+  .rowLink:focus-visible {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
+    border-color: var(--accent-overlay);
+    outline: none;
+  }
+
+  .rowLeft {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    min-width: 0;
+  }
+
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.22rem 0.55rem;
+    border-radius: 999px;
+    border: 1px solid var(--gray-800);
+    color: var(--gray-200);
+    font-size: var(--text-xs);
+    line-height: 1;
+    flex: 0 0 auto;
+    background: radial-gradient(var(--gray-900), var(--gray-800) 150%);
+  }
+
+  .pill[data-type="technique"] {
+    border-color: color-mix(in srgb, var(--accent-regular) 30%, var(--gray-800));
+  }
+
+  .pill[data-type="humaine"] {
+    border-color: color-mix(in srgb, var(--accent-regular) 18%, var(--gray-800));
+  }
+
+  .name {
+    color: var(--gray-0);
+    font-weight: 600;
+    overflow-wrap: anywhere;
+    min-width: 0;
+  }
+
+  .rowRight {
+    display: grid;
+    grid-template-columns: minmax(120px, 220px) auto;
+    gap: 0.65rem;
+    align-items: center;
+    flex: 0 0 auto;
+  }
+
+  .bar {
+    height: 7px;
+    border-radius: 999px;
+    overflow: hidden;
+    background: color-mix(in srgb, var(--gray-800) 70%, transparent);
+  }
+
+  .fill {
+    display: block;
+    height: 100%;
+    border-radius: inherit;
+    background: color-mix(in srgb, var(--accent-regular) 70%, var(--gray-700));
+  }
+
+  .score {
+    color: var(--gray-300);
+    font-size: var(--text-sm);
+    white-space: nowrap;
+  }
+
+  @media (max-width: 32em) {
+    .rowLink {
+      align-items: flex-start;
+    }
+
+    .rowRight {
+      grid-template-columns: 1fr;
+      justify-items: end;
+      gap: 0.45rem;
+    }
+
+    .bar {
+      width: min(220px, 54vw);
     }
   }
 
@@ -244,33 +476,20 @@ const softSkills = skills
   }
 
   @media (max-width: 25em) {
-    .methodSummary {
-      padding: 0.9rem 1rem;
-    }
-
-    .methodBody {
-      padding: 0 1rem 0.95rem;
-    }
-
     .lead {
-      margin-top: 0.6rem;
+      margin-top: 0.75rem;
     }
 
     .split {
       gap: 1.5rem;
     }
+
+    .rowRight {
+      justify-items: start;
+    }
+
+    .bar {
+      width: 100%;
+    }
   }
-
-  .heroText h1 {
-  margin: 0;
-  letter-spacing: -0.02em;
-
-  /* Responsive safe */
-  font-size: clamp(2rem, 6vw, 3rem);
-  line-height: 1.05;
-  overflow-wrap: anywhere;
-  word-break: break-word;
-  hyphens: auto;
-}
-
 </style>

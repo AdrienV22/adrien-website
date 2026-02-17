@@ -1,7 +1,7 @@
 ---
 title: "Robotic Process Automation (RPA)"
 type: "technique"
-level: 8
+level: 7.5
 summary: "Concevoir et maintenir des automatisations robustes pour fiabiliser et accélérer des processus métiers."
 
 evidence:
@@ -24,7 +24,7 @@ growth:
   - "Approfondir les architectures d’orchestration complexes"
   - "Renforcer l’intégration RPA avec des API et services back-end"
 
-relatedWorks: ["project-management-tool", "portfolio"]
+relatedWorks: []
 ---
 
 ## Définition

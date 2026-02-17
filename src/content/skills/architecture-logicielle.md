@@ -1,7 +1,7 @@
 ---
 title: "Architecture logicielle"
 type: "technique"
-level: 7
+level: 5
 summary: "Concevoir des structures maintenables et évolutives, en choisissant les bons patterns, découpages et responsabilités."
 evidence:
   - title: "Conception d’API et structuration de modules"

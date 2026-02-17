@@ -1,7 +1,7 @@
 ---
 title: "Développement Back-End"
 type: "technique"
-level: 8
+level: 6
 summary: "Concevoir et implémenter des API REST robustes avec séparation claire des responsabilités et gestion cohérente de la logique métier."
 
 evidence:
