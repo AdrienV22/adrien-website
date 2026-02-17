@@ -56,7 +56,9 @@ const softSkills = skills
 
         <Grid>
           {technicalSkills.map((entry) => (
-            <SkillCard entry={entry} />
+            <li class="gridItem">
+              <SkillCard entry={entry} />
+            </li>
           ))}
         </Grid>
       </section>
@@ -69,7 +71,9 @@ const softSkills = skills
 
         <Grid>
           {softSkills.map((entry) => (
-            <SkillCard entry={entry} />
+            <li class="gridItem">
+              <SkillCard entry={entry} />
+            </li>
           ))}
         </Grid>
       </section>
@@ -106,6 +110,7 @@ const softSkills = skills
     padding: 1.25rem;
     background: var(--gray-999_40);
     box-shadow: var(--shadow-sm);
+    min-width: 0;
   }
 
   .methodTitle {
@@ -128,6 +133,7 @@ const softSkills = skills
     grid-template-columns: 1rem 1fr;
     gap: 0.35rem;
     line-height: 1.65;
+    min-width: 0;
   }
 
   .dash {
@@ -144,6 +150,7 @@ const softSkills = skills
   .split {
     display: grid;
     gap: 2rem;
+    min-width: 0;
   }
 
   @media (min-width: 60em) {
@@ -160,15 +167,18 @@ const softSkills = skills
 
   .skills-section {
     margin-top: 1.75rem;
+    min-width: 0;
   }
 
   .section-head {
     margin-bottom: 1rem;
+    min-width: 0;
   }
 
   .section-head h2 {
     margin: 0;
     color: var(--gray-0);
+    overflow-wrap: anywhere;
   }
 
   .section-head p {
@@ -176,5 +186,40 @@ const softSkills = skills
     color: var(--gray-400);
     line-height: 1.6;
     max-width: 80ch;
+    overflow-wrap: anywhere;
+  }
+
+  /* ✅ UL Grid item wrapper : évite les débordements sur mobile */
+  .gridItem {
+    min-width: 0;
+  }
+
+  @media (max-width: 25em) { /* 400px */
+    .methodCard {
+      padding: 1rem;
+    }
+
+    .methodList li {
+      grid-template-columns: 0.8rem 1fr;
+      gap: 0.3rem;
+    }
+
+    .lead {
+      margin-top: 0.6rem;
+    }
+
+    .split {
+      gap: 1.5rem;
+    }
+  }
+
+  .hero,
+  .heroInner,
+  .heroText {
+    min-width: 0;
+  }
+
+  .hero * {
+    overflow-wrap: anywhere;
   }
 </style>

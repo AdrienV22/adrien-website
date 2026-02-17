@@ -258,4 +258,32 @@ const levelPct = Math.min(100, (d.level / 10) * 100);
     border-color: var(--gray-600);
     outline: none;
   }
+
+    /* Anti débordement mobile (safe) */
+    .card,
+  .head,
+  .body,
+  .metaRow {
+    min-width: 0;
+  }
+
+  .title,
+  .summary,
+  .growthText {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  .card {
+  min-width: 0;
+}
+
+.title,
+.summary,
+.growthText {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+
 </style>
