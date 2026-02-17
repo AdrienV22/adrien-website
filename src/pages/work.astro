@@ -10,11 +10,11 @@ const entries = await getCollection("work");
 
 function getExcerpt(markdown: string, length = 220) {
   const clean = markdown
-    .replace(/<!--[\s\S]*?-->/g, "") // commentaires HTML
-    .replace(/<\/?[^>]+>/g, "") // balises HTML
-    .replace(/!\[.*?\]\(.*?\)/g, "") // images markdown
-    .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1") // liens -> texte
-    .replace(/[#>*_`]/g, "") // markdown simple
+    .replace(/<!--[\s\S]*?-->/g, "")
+    .replace(/<\/?[^>]+>/g, "")
+    .replace(/!\[.*?\]\(.*?\)/g, "")
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
+    .replace(/[#>*_`]/g, "")
     .replace(/\s+/g, " ")
     .trim();
 
@@ -30,27 +30,76 @@ const projects = entries
     imageAlt: (entry.data as any).img_alt,
   }))
   .sort((a, b) => b.publishDate.valueOf() - a.publishDate.valueOf());
+
+const featured = projects.slice(0, 5);
+const others = projects.slice(5);
 ---
 
-<BaseLayout title="Mes projets | Adrien Valo" description="tous mes projets">
+<BaseLayout
+  title="Réalisations | Adrien Valo"
+  description="Sélection de réalisations (projets) illustrant mes compétences et ma progression."
+>
   <div class="stack gap-20">
-    <main class="wrapper stack gap-8">
-      <Hero title="Tous mes projets" tagline="" align="start" />
+    <main class="wrapper stack gap-14">
+      <header class="hero">
+        <Hero
+          title="Réalisations"
+          tagline="Une sélection de projets concrets, avec résultats observables et liens vers le détail."
+          align="start"
+        />
+      </header>
 
-      <ul class="workGrid">
-        {projects.map((project) => (
-          <li class="workGridItem">
-            <WorkCard
-              href={project.href}
-              title={project.title}
-              tags={project.tags}
-              excerpt={project.excerpt}
-              image={project.image}
-              imageAlt={project.imageAlt}
-            />
-          </li>
-        ))}
-      </ul>
+      <section class="section" aria-label="Réalisations principales">
+        <div class="sectionHead">
+          <h2>
+            Réalisations principales <span class="count">({featured.length})</span>
+          </h2>
+        </div>
+
+        <ul class="workGrid">
+          {featured.map((project) => (
+            <li class="workGridItem">
+              <WorkCard
+                href={project.href}
+                title={project.title}
+                tags={project.tags}
+                excerpt={project.excerpt}
+                image={project.image}
+                imageAlt={project.imageAlt}
+              />
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      {others.length ? (
+        <section class="section section--secondary" aria-label="Autres projets">
+          <div class="sectionHead">
+            <h2>
+              Autres projets <span class="count">({others.length})</span>
+            </h2>
+            <p>
+              Projets complémentaires, utiles pour compléter la lecture sans diluer
+              les 5 réalisations phares.
+            </p>
+          </div>
+
+          <ul class="workGrid">
+            {others.map((project) => (
+              <li class="workGridItem">
+                <WorkCard
+                  href={project.href}
+                  title={project.title}
+                  tags={project.tags}
+                  excerpt={project.excerpt}
+                  image={project.image}
+                  imageAlt={project.imageAlt}
+                />
+              </li>
+            ))}
+          </ul>
+        </section>
+      ) : null}
     </main>
 
     <ContactCTA />
@@ -58,19 +107,49 @@ const projects = entries
 </BaseLayout>
 
 <style>
+  .hero {
+    display: grid;
+    gap: 1.25rem;
+    margin-top: 0.25rem;
+  }
+
+  .section {
+    margin-top: 0.25rem;
+  }
+
+  .sectionHead {
+    margin-bottom: 1.1rem;
+  }
+
+  .sectionHead h2 {
+    margin: 0;
+    color: var(--gray-0);
+  }
+
+  .count {
+    color: var(--gray-400);
+    font-weight: 500;
+    font-size: 0.95em;
+    letter-spacing: 0.01em;
+  }
+
+  .sectionHead p {
+    margin: 0.35rem 0 0;
+    color: var(--gray-400);
+    line-height: 1.6;
+    max-width: 85ch;
+  }
+
   .workGrid {
     list-style: none;
     padding: 0;
     margin: 0;
 
     display: grid;
-    gap: 1.5rem;
-
-    /* Mobile-first */
+    gap: 1.75rem;
     grid-template-columns: 1fr;
   }
 
-  /* Tablette et + */
   @media (min-width: 40em) {
     .workGrid {
       grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -80,5 +159,17 @@ const projects = entries
   .workGridItem {
     margin: 0;
     min-width: 0;
+  }
+
+  .section--secondary {
+    margin-top: 6.5rem;
+    padding-top: 3rem;
+    border-top: 1px solid var(--gray-800);
+  }
+
+  @media (min-width: 50em) {
+    .section--secondary {
+      margin-top: 7.5rem;
+    }
   }
 </style>

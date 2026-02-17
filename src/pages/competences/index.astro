@@ -50,7 +50,9 @@ const softSkills = skills
     <div class="split" aria-label="Compétences techniques et humaines">
       <section class="skills-section" aria-label="Compétences techniques">
         <div class="section-head">
-          <h2>Compétences techniques</h2>
+          <h2>
+            Compétences techniques <span class="count">({technicalSkills.length})</span>
+          </h2>          
           <p>Conception, développement, qualité et industrialisation.</p>
         </div>
 
@@ -65,7 +67,9 @@ const softSkills = skills
 
       <section class="skills-section" aria-label="Compétences humaines">
         <div class="section-head">
-          <h2>Compétences humaines</h2>
+          <h2>
+            Compétences humaines <span class="count">({softSkills.length})</span>
+          </h2>          
           <p>Collaboration, communication, organisation et posture professionnelle.</p>
         </div>
 
@@ -222,4 +226,12 @@ const softSkills = skills
   .hero * {
     overflow-wrap: anywhere;
   }
+
+  .count {
+  color: var(--gray-400);
+  font-weight: 500;
+  font-size: 0.95em;
+  letter-spacing: 0.01em;
+}
+
 </style>
