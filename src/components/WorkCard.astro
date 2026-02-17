@@ -56,7 +56,17 @@ const getTagCategory = (raw: string) => {
 
   // Tooling
   if (
-    ["git", "github", "docker", "uipath", "ssis", "power bi", "jira", "trello", "figma"].includes(t)
+    [
+      "git",
+      "github",
+      "docker",
+      "uipath",
+      "ssis",
+      "power bi",
+      "jira",
+      "trello",
+      "figma",
+    ].includes(t)
   )
     return "tooling";
 
@@ -65,10 +75,14 @@ const getTagCategory = (raw: string) => {
 
   return "other";
 };
+
+const MAX_TAGS = 5;
+const visibleTags = tags.slice(0, MAX_TAGS);
+const remainingCount = Math.max(0, tags.length - MAX_TAGS);
 ---
 
 <article class="card">
-  <!-- lien overlay : toute la card cliquable (sans imbriquer des <a>) -->
+  <!-- overlay : toute la card cliquable -->
   <a class="cardLink" href={href} aria-label={`Ouvrir le projet : ${title}`}></a>
 
   {image && (
@@ -89,7 +103,7 @@ const getTagCategory = (raw: string) => {
   <p class="excerpt clamp">{excerpt}</p>
 
   <ul class="tags" aria-label="Tags">
-    {tags.map((t) => (
+    {visibleTags.map((t) => (
       <li class="tag" data-cat={getTagCategory(t)}>
         <a
           class="tagLink"
@@ -100,8 +114,16 @@ const getTagCategory = (raw: string) => {
         </a>
       </li>
     ))}
+
+    {remainingCount > 0 ? (
+      <li class="tag more" aria-hidden="true">
+        <span class="tagLink">+{remainingCount}</span>
+      </li>
+    ) : null}
   </ul>
 
+  <div class="cta" aria-hidden="true">
+  </div>
 </article>
 
 <style>
@@ -115,12 +137,12 @@ const getTagCategory = (raw: string) => {
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
-    min-height: 420px;
-  
 
     background: var(--gray-999_40);
     box-shadow: var(--shadow-sm);
     color: var(--gray-100);
+
+    cursor: pointer;
 
     transition:
       transform var(--theme-transition),
@@ -129,32 +151,30 @@ const getTagCategory = (raw: string) => {
       background-color var(--theme-transition);
   }
 
-  /* Hover sobre + élégant */
   .card:hover {
     transform: translateY(-2px);
     box-shadow: var(--shadow-md);
     border-color: var(--accent-overlay);
   }
 
-  /* lien overlay */
+  /* ✅ overlay au-dessus de tout le contenu */
   .cardLink {
     position: absolute;
     inset: 0;
-    z-index: 0;
+    z-index: 10;
     border-radius: inherit;
   }
 
-  /* focus accessible */
   .cardLink:focus-visible {
     outline: 2px solid var(--accent-regular);
     outline-offset: 4px;
   }
 
-  /* contenu au-dessus de l'overlay */
+  /* ✅ le contenu n'a plus besoin de z-index spécial */
   .media,
   .head,
   .excerpt,
-  .tag {
+  .cta {
     position: relative;
     z-index: 1;
   }
@@ -168,7 +188,6 @@ const getTagCategory = (raw: string) => {
     background: radial-gradient(var(--gray-900), var(--gray-800) 150%);
   }
 
-  /* Surcouche gradient pour lisibilité */
   .media::after {
     content: "";
     position: absolute;
@@ -198,6 +217,7 @@ const getTagCategory = (raw: string) => {
   .head {
     display: flex;
     align-items: baseline;
+    min-width: 0;
   }
 
   .title {
@@ -205,22 +225,27 @@ const getTagCategory = (raw: string) => {
     font-size: var(--text-md);
     line-height: 1.2;
     color: var(--gray-0);
+    overflow-wrap: anywhere;
   }
 
   .excerpt {
     margin: 0;
     color: var(--gray-300);
-    line-height: 1.5;
+    line-height: 1.6;
+    flex: 1;
   }
 
   .clamp {
     display: -webkit-box;
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3;
+    -webkit-line-clamp: 4;
     overflow: hidden;
   }
 
-  /* ===== Tags (premium + safe) ===== */
+  /* ===== Tags =====
+     ✅ les tags doivent passer AU-DESSUS de l’overlay
+     pour rester cliquables individuellement.
+  */
   .tags {
     list-style: none;
     padding: 0;
@@ -230,13 +255,15 @@ const getTagCategory = (raw: string) => {
     gap: 0.5rem;
 
     position: relative;
-    z-index: 2; /* au-dessus de l'overlay */
+    z-index: 20; /* ✅ au-dessus du cardLink (z-index 10) */
   }
 
-  /* ✅ les tags restent cliquables même avec l'overlay */
   .tag,
   .tagLink {
     pointer-events: auto;
+    position: relative;
+    z-index: 21;
+    cursor: pointer;
   }
 
   .tag[data-cat="frontend"] {
@@ -287,16 +314,13 @@ const getTagCategory = (raw: string) => {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-
-    /* centrage optique */
     padding: 0.32rem 0.75rem;
 
     font-size: var(--text-xs);
-    line-height: 1; /* ✅ évite le décalage vertical */
+    line-height: 1;
     color: var(--gray-200);
     text-decoration: none;
 
-    position: relative;
     border-radius: 999px;
 
     transition:
@@ -304,7 +328,6 @@ const getTagCategory = (raw: string) => {
       background-color var(--theme-transition);
   }
 
-  /* underline subtil */
   .tagLink::after {
     content: "";
     position: absolute;
@@ -335,5 +358,37 @@ const getTagCategory = (raw: string) => {
   .tagLink:focus-visible {
     outline: 2px solid var(--accent-regular);
     outline-offset: 2px;
+  }
+
+  /* “+N” discret (non cliquable) */
+  .tag.more {
+    border-color: var(--gray-800);
+    background: radial-gradient(var(--gray-900), var(--gray-800) 150%);
+    opacity: 0.85;
+  }
+
+  .tag.more .tagLink {
+    pointer-events: none;
+    background: transparent;
+    color: var(--gray-300);
+  }
+
+  .tag.more:hover {
+    transform: none;
+    border-color: var(--gray-800);
+    box-shadow: none;
+  }
+
+  /* CTA discret en bas */
+  .cta {
+    margin-top: 0.15rem;
+    font-size: var(--text-sm);
+    color: var(--gray-300);
+    opacity: 0.75;
+    transition: opacity var(--theme-transition);
+  }
+
+  .card:hover .cta {
+    opacity: 1;
   }
 </style>

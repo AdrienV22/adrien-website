@@ -3,7 +3,6 @@ import { getCollection } from "astro:content";
 import WorkCard from "../components/WorkCard.astro";
 
 import BaseLayout from "../layouts/BaseLayout.astro";
-
 import ContactCTA from "../components/ContactCTA.astro";
 import Hero from "../components/Hero.astro";
 
@@ -27,13 +26,10 @@ const projects = entries
     href: `/work/${entry.slug}/`,
     excerpt: getExcerpt((entry.data as any).description ?? entry.body),
     ...entry.data,
-
-    
     image: (entry.data as any).img,
     imageAlt: (entry.data as any).img_alt,
   }))
   .sort((a, b) => b.publishDate.valueOf() - a.publishDate.valueOf());
-
 ---
 
 <BaseLayout title="Mes projets | Adrien Valo" description="tous mes projets">
@@ -42,21 +38,18 @@ const projects = entries
       <Hero title="Tous mes projets" tagline="" align="start" />
 
       <ul class="workGrid">
-        {
-          projects.map((project) => (
-            <li class="workGridItem">
-             <WorkCard
- 				 href={project.href}
-  				title={project.title}
-  				publishDate={project.publishDate}
-  				tags={project.tags}
-  				excerpt={project.excerpt}
-  				image={project.image}
-  				imageAlt={project.imageAlt}
-/>
-            </li>
-          ))
-        }
+        {projects.map((project) => (
+          <li class="workGridItem">
+            <WorkCard
+              href={project.href}
+              title={project.title}
+              tags={project.tags}
+              excerpt={project.excerpt}
+              image={project.image}
+              imageAlt={project.imageAlt}
+            />
+          </li>
+        ))}
       </ul>
     </main>
 
@@ -65,27 +58,27 @@ const projects = entries
 </BaseLayout>
 
 <style>
-.workGrid {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-
-  display: grid;
-  gap: 1.5rem;
-
-  /* Mobile-first */
-  grid-template-columns: 1fr;
-}
-
-/* Tablette et + */
-@media (min-width: 40em) {
   .workGrid {
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  }
-}
+    list-style: none;
+    padding: 0;
+    margin: 0;
 
+    display: grid;
+    gap: 1.5rem;
+
+    /* Mobile-first */
+    grid-template-columns: 1fr;
+  }
+
+  /* Tablette et + */
+  @media (min-width: 40em) {
+    .workGrid {
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    }
+  }
 
   .workGridItem {
     margin: 0;
+    min-width: 0;
   }
 </style>
