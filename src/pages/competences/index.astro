@@ -1,165 +1,180 @@
 ---
 import { getCollection } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import Hero from "../../components/Hero.astro";
-import ContactCTA from "../../components/ContactCTA.astro";
+import Grid from "../../components/Grid.astro";
+import SkillCard from "../../components/SkillCard.astro";
 
-const entries = await getCollection("skills");
+const skills = await getCollection("skills");
 
-// Tri simple : techniques puis humaines, puis par niveau desc, puis alpha
-const typeOrder = { technique: 0, humaine: 1 } as const;
+const technicalSkills = skills
+  .filter((s) => s.data.type === "technique")
+  .sort((a, b) => b.data.level - a.data.level);
 
-const items = [...entries].sort((a, b) => {
-  const ta = typeOrder[a.data.type];
-  const tb = typeOrder[b.data.type];
-  if (ta !== tb) return ta - tb;
-  if (a.data.level !== b.data.level) return b.data.level - a.data.level;
-  return a.data.title.localeCompare(b.data.title, "fr", { sensitivity: "base" });
-});
+const softSkills = skills
+  .filter((s) => s.data.type === "humaine")
+  .sort((a, b) => b.data.level - a.data.level);
 ---
 
-<BaseLayout
-  title="Compétences | Adrien Valo"
-  description="Compétences techniques et humaines"
->
-  <div class="stack gap-20">
-    <main class="wrapper stack gap-16">
-      <Hero
-        title="Compétences"
-        tagline="Compétences techniques et humaines, illustrées par des preuves concrètes."
-        align="start"
-      />
+<BaseLayout title="Compétences">
+  <main class="wrapper stack gap-16">
+    <header class="hero">
+      <div class="heroInner">
+        <div class="heroText">
+          <h1>Compétences</h1>
+          <p class="lead">
+            Compétences techniques et humaines, illustrées par des preuves concrètes et une auto-analyse.
+          </p>
+        </div>
 
-      {items.length ? (
-        <section class="grid" aria-label="Liste des compétences">
-          {items.map((entry) => (
-            <article class="card">
-              <div class="meta">
-                <span class={`badge badge--${entry.data.type}`}>
-                  {entry.data.type === "technique" ? "Technique" : "Humaine"}
-                </span>
-                <span class="level">Niveau {entry.data.level}/10</span>
-              </div>
+        <aside class="methodCard" aria-label="Méthode d’évaluation">
+          <h2 class="methodTitle">Méthode d’évaluation</h2>
 
-              <h2 class="title">{entry.data.title}</h2>
-              <p class="summary">{entry.data.summary}</p>
+          <ul class="methodList">
+            <li>
+              <span class="dash" aria-hidden="true">–</span>
+              <span><strong>Niveau 1–10</strong> basé sur la pratique en projet.</span>
+            </li>
+            <li>
+              <span class="dash" aria-hidden="true">–</span>
+              <span>Chaque compétence comporte des <strong>preuves</strong> et une <strong>auto-analyse</strong>.</span>
+            </li>
+            <li>
+              <span class="dash" aria-hidden="true">–</span>
+              <span>Un <strong>axe de progression</strong> explicite est indiqué pour rester crédible.</span>
+            </li>
+          </ul>
+        </aside>
+      </div>
+    </header>
 
-              <a class="link" href={`/competences/${entry.slug}/`}>
-                Voir le détail
-              </a>
-            </article>
+    <div class="split" aria-label="Compétences techniques et humaines">
+      <section class="skills-section" aria-label="Compétences techniques">
+        <div class="section-head">
+          <h2>Compétences techniques</h2>
+          <p>Conception, développement, qualité et industrialisation.</p>
+        </div>
+
+        <Grid>
+          {technicalSkills.map((entry) => (
+            <SkillCard entry={entry} />
           ))}
-        </section>
-      ) : (
-        <section class="empty">
-          <p>Aucune compétence pour l’instant. Ajoute des fichiers dans <code>src/content/skills/</code>.</p>
-        </section>
-      )}
-    </main>
+        </Grid>
+      </section>
 
-    <ContactCTA />
-  </div>
+      <section class="skills-section" aria-label="Compétences humaines">
+        <div class="section-head">
+          <h2>Compétences humaines</h2>
+          <p>Collaboration, communication, organisation et posture professionnelle.</p>
+        </div>
+
+        <Grid>
+          {softSkills.map((entry) => (
+            <SkillCard entry={entry} />
+          ))}
+        </Grid>
+      </section>
+    </div>
+  </main>
 </BaseLayout>
 
 <style>
-  .grid {
+  .hero {
+    margin-bottom: 0.25rem;
+  }
+
+  .heroInner {
     display: grid;
-    gap: 1rem;
+    gap: 1.25rem;
+    align-items: start;
   }
 
-  .card {
-    border: 1px solid var(--gray-800);
-    border-radius: 1.5rem;
-    padding: 1.25rem;
-    background: var(--gray-999_40);
-    box-shadow: var(--shadow-sm);
-    display: grid;
-    gap: 0.6rem;
-  }
-
-  .meta {
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    flex-wrap: wrap;
-  }
-
-  .badge {
-    border: 1px solid var(--gray-800);
-    border-radius: 999px;
-    padding: 0.25rem 0.55rem;
-    background: radial-gradient(var(--gray-900), var(--gray-800) 150%);
-    color: var(--gray-200);
-    font-size: var(--text-xs);
-    line-height: 1;
-  }
-
-  .badge--technique {
-    border-color: color-mix(in srgb, var(--accent-regular) 45%, var(--gray-800));
-  }
-
-  .badge--humaine {
-    border-color: color-mix(in srgb, var(--gray-200) 25%, var(--gray-800));
-  }
-
-  .level {
-    color: var(--gray-400);
-    font-size: var(--text-sm);
-  }
-
-  .title {
-    margin: 0.1rem 0 0;
-    color: var(--gray-0);
-    font-size: var(--text-lg);
-  }
-
-  .summary {
+  .heroText h1 {
     margin: 0;
+    letter-spacing: -0.02em;
+  }
+
+  .lead {
+    margin: 0.75rem 0 0;
+    max-width: 70ch;
     color: var(--gray-200);
     line-height: 1.7;
-    max-width: 75ch;
   }
 
-  .link {
-    width: fit-content;
-    margin-top: 0.35rem;
-    text-decoration: none;
-    color: var(--gray-0);
-
-    border: 1px solid var(--gray-700);
-    border-radius: 999px;
-    padding: 0.35rem 0.75rem;
-    background: radial-gradient(var(--gray-900), var(--gray-800) 150%);
-
-    transition: transform var(--theme-transition), border-color var(--theme-transition);
-  }
-
-  .link:hover,
-  .link:focus-visible {
-    transform: translateY(-1px);
-    border-color: var(--gray-600);
-    outline: none;
-  }
-
-  .empty {
+  .methodCard {
     border: 1px solid var(--gray-800);
     border-radius: 1.25rem;
     padding: 1.25rem;
     background: var(--gray-999_40);
-    color: var(--gray-200);
+    box-shadow: var(--shadow-sm);
   }
 
-  code {
+  .methodTitle {
+    margin: 0 0 0.75rem;
+    font-size: var(--text-lg);
     color: var(--gray-0);
   }
 
-  @media (min-width: 50em) {
-    .grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 1.25rem;
+  .methodList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 0.55rem;
+    color: var(--gray-200);
+  }
+
+  .methodList li {
+    display: grid;
+    grid-template-columns: 1rem 1fr;
+    gap: 0.35rem;
+    line-height: 1.65;
+  }
+
+  .dash {
+    color: var(--gray-400);
+  }
+
+  @media (min-width: 55em) {
+    .heroInner {
+      grid-template-columns: 1.2fr 0.9fr;
+      gap: 1.5rem;
     }
-    .card {
-      padding: 1.5rem;
+  }
+
+  .split {
+    display: grid;
+    gap: 2rem;
+  }
+
+  @media (min-width: 60em) {
+    .split {
+      grid-template-columns: 1fr 1fr;
+      align-items: start;
+      gap: 2.25rem;
     }
+
+    .skills-section {
+      margin-top: 0;
+    }
+  }
+
+  .skills-section {
+    margin-top: 1.75rem;
+  }
+
+  .section-head {
+    margin-bottom: 1rem;
+  }
+
+  .section-head h2 {
+    margin: 0;
+    color: var(--gray-0);
+  }
+
+  .section-head p {
+    margin: 0.35rem 0 0;
+    color: var(--gray-400);
+    line-height: 1.6;
+    max-width: 80ch;
   }
 </style>

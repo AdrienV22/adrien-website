@@ -1,0 +1,261 @@
+---
+import type { CollectionEntry } from "astro:content";
+
+type SkillEntry = CollectionEntry<"skills">;
+
+const { entry } = Astro.props as { entry: SkillEntry };
+const d = entry.data;
+
+type Evidence = {
+  title: string;
+  context?: string;
+  result?: string;
+  link?: string;
+};
+
+const evidence = (d.evidence ?? []) as Evidence[];
+const href = `/competences/${entry.slug}/`;
+
+const typeLabel = d.type === "technique" ? "Technique" : "Humaine";
+const levelPct = Math.min(100, (d.level / 10) * 100);
+---
+
+<article class="card" data-type={d.type}>
+  <header class="head">
+    <div class="metaRow">
+      <span class="badge">{typeLabel}</span>
+      <span class="level">Niveau {d.level}/10</span>
+    </div>
+
+    <h3 class="title">{d.title}</h3>
+    <p class="summary">{d.summary}</p>
+
+    <div class="meter" aria-label={`Niveau ${d.level} sur 10`}>
+      <div class="meterBar" aria-hidden="true">
+        <span style={`width:${levelPct}%`}></span>
+      </div>
+    </div>
+  </header>
+
+  {/* mini-preuves (style evidenceItem léger) */}
+  <div class="body">
+    {evidence.length ? (
+      <section class="proof">
+        <p class="label">Preuves</p>
+        <ul class="proofList">
+          {evidence.slice(0, 2).map((ev) => (
+            <li class="proofItem">{ev.title}</li>
+          ))}
+        </ul>
+      </section>
+    ) : (
+      <section class="proof warn">
+        <p class="label">Preuves</p>
+        <p class="warnText">À compléter</p>
+      </section>
+    )}
+
+    {d.growth?.length ? (
+      <section class="growth">
+        <p class="label">Évolution</p>
+        <p class="growthText">{d.growth[0]}</p>
+      </section>
+    ) : null}
+
+    <div class="actions">
+      <a class="detailLink" href={href}>Voir le détail</a>
+    </div>
+  </div>
+</article>
+
+<style>
+  .card {
+    border: 1px solid var(--gray-800);
+    border-radius: 1.25rem;
+    padding: 1.15rem;
+    background: var(--gray-999_40);
+    box-shadow: var(--shadow-sm);
+    transition:
+      transform var(--theme-transition),
+      box-shadow var(--theme-transition),
+      border-color var(--theme-transition);
+  }
+
+  .card:hover,
+  .card:focus-within {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--accent-overlay);
+  }
+
+  .head {
+    display: grid;
+    gap: 0.55rem;
+    padding-bottom: 0.9rem;
+    margin-bottom: 0.9rem;
+    border-bottom: 1px solid var(--gray-800);
+  }
+
+  .metaRow {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.55rem;
+    border-radius: 999px;
+    border: 1px solid var(--gray-800);
+    background: radial-gradient(var(--gray-900), var(--gray-800) 150%);
+    color: var(--gray-200);
+    font-size: var(--text-xs);
+    line-height: 1;
+  }
+
+  /* légère différenciation comme ton parcours */
+  .card[data-type="technique"] .badge {
+    border-color: color-mix(in srgb, var(--accent-regular) 30%, var(--gray-800));
+  }
+  .card[data-type="humaine"] .badge {
+    border-color: color-mix(in srgb, var(--accent-regular) 18%, var(--gray-800));
+  }
+
+  .level {
+    color: var(--gray-400);
+    font-size: var(--text-sm);
+  }
+
+  .title {
+    margin: 0.15rem 0 0;
+    color: var(--gray-0);
+    font-size: clamp(1.05rem, 2.2vw, 1.25rem);
+    line-height: 1.2;
+  }
+
+  .summary {
+    margin: 0;
+    color: var(--gray-200);
+    line-height: 1.65;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .meter {
+    display: grid;
+    gap: 0.35rem;
+    max-width: 420px;
+    margin-top: 0.2rem;
+  }
+
+  .meterBar {
+    height: 7px;
+    border-radius: 999px;
+    overflow: hidden;
+    background: color-mix(in srgb, var(--gray-800) 70%, transparent);
+  }
+
+  .meterBar > span {
+    display: block;
+    height: 100%;
+    border-radius: inherit;
+    background: color-mix(in srgb, var(--accent-regular) 70%, var(--gray-700));
+  }
+
+  .body {
+    display: grid;
+    gap: 0.85rem;
+  }
+
+  .label {
+    margin: 0 0 0.35rem;
+    font-size: var(--text-xs);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--gray-400);
+  }
+
+  .proofList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 0.35rem;
+    color: var(--gray-200);
+  }
+
+  .proofItem {
+    position: relative;
+    padding-left: 1rem;
+    line-height: 1.55;
+  }
+
+  .proofItem::before {
+    content: "–";
+    position: absolute;
+    left: 0;
+    color: var(--gray-400);
+  }
+
+  .warnText {
+    margin: 0;
+    color: var(--gray-400);
+    font-size: var(--text-sm);
+  }
+
+  .growthText {
+    margin: 0;
+    color: var(--gray-200);
+    line-height: 1.6;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .actions {
+    margin-top: 0.2rem;
+  }
+
+  .detailLink {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+
+    padding: 0.35rem 0.75rem;
+    border-radius: 999px;
+
+    border: 1px solid var(--gray-700);
+    background: radial-gradient(var(--gray-900), var(--gray-800) 150%);
+    color: var(--gray-100);
+
+    font-size: var(--text-sm);
+    line-height: 1;
+    text-decoration: none;
+
+    transition:
+      transform var(--theme-transition),
+      box-shadow var(--theme-transition),
+      border-color var(--theme-transition);
+  }
+
+  .detailLink::after {
+    content: "›";
+    transform: translateY(-0.5px);
+    opacity: 0.85;
+  }
+
+  .detailLink:hover,
+  .detailLink:focus-visible {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
+    border-color: var(--gray-600);
+    outline: none;
+  }
+</style>
