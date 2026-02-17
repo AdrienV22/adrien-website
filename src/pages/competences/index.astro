@@ -26,24 +26,20 @@ const softSkills = skills
           </p>
         </div>
 
-        <aside class="methodCard" aria-label="Méthode d’évaluation">
-          <h2 class="methodTitle">Méthode d’évaluation</h2>
+        <!-- <details class="methodDetails" aria-label="Méthode d’évaluation">
+          <summary class="methodSummary">
+            <span class="methodTitle">Méthode d’évaluation</span>
+            <span class="hint" aria-hidden="true">ouvrir</span>
+          </summary> -->
 
-          <ul class="methodList">
-            <li>
-              <span class="dash" aria-hidden="true">–</span>
-              <span><strong>Niveau 1–10</strong> basé sur la pratique en projet.</span>
-            </li>
-            <li>
-              <span class="dash" aria-hidden="true">–</span>
-              <span>Chaque compétence comporte des <strong>preuves</strong> et une <strong>auto-analyse</strong>.</span>
-            </li>
-            <li>
-              <span class="dash" aria-hidden="true">–</span>
-              <span>Un <strong>axe de progression</strong> explicite est indiqué pour rester crédible.</span>
-            </li>
-          </ul>
-        </aside>
+          <!-- <div class="methodBody">
+            <ul class="methodList">
+              <li><strong>Niveau 1–10</strong> basé sur la pratique en projet.</li>
+              <li>Chaque compétence comporte des <strong>preuves</strong> et une <strong>auto-analyse</strong>.</li>
+              <li>Un <strong>axe de progression</strong> explicite est indiqué pour rester crédible.</li>
+            </ul>
+          </div> -->
+        </details>
       </div>
     </header>
 
@@ -52,7 +48,7 @@ const softSkills = skills
         <div class="section-head">
           <h2>
             Compétences techniques <span class="count">({technicalSkills.length})</span>
-          </h2>          
+          </h2>
           <p>Conception, développement, qualité et industrialisation.</p>
         </div>
 
@@ -69,7 +65,7 @@ const softSkills = skills
         <div class="section-head">
           <h2>
             Compétences humaines <span class="count">({softSkills.length})</span>
-          </h2>          
+          </h2>
           <p>Collaboration, communication, organisation et posture professionnelle.</p>
         </div>
 
@@ -94,6 +90,11 @@ const softSkills = skills
     display: grid;
     gap: 1.25rem;
     align-items: start;
+    min-width: 0;
+  }
+
+  .heroText {
+    min-width: 0;
   }
 
   .heroText h1 {
@@ -106,41 +107,79 @@ const softSkills = skills
     max-width: 70ch;
     color: var(--gray-200);
     line-height: 1.7;
+    overflow-wrap: anywhere;
   }
 
-  .methodCard {
+  /* Option B : méthode repliable */
+  .methodDetails {
     border: 1px solid var(--gray-800);
     border-radius: 1.25rem;
-    padding: 1.25rem;
     background: var(--gray-999_40);
     box-shadow: var(--shadow-sm);
+    overflow: hidden;
     min-width: 0;
   }
 
-  .methodTitle {
-    margin: 0 0 0.75rem;
-    font-size: var(--text-lg);
+  .methodSummary {
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+
+    padding: 1rem 1.15rem;
     color: var(--gray-0);
+    min-width: 0;
+  }
+
+  .methodSummary::-webkit-details-marker {
+    display: none;
+  }
+
+  .methodTitle {
+    font-size: var(--text-md);
+    color: var(--gray-0);
+    overflow-wrap: anywhere;
+  }
+
+  .hint {
+    color: var(--gray-400);
+    font-size: var(--text-sm);
+    flex: 0 0 auto;
+  }
+
+  .methodDetails[open] .hint {
+    opacity: 0.75;
+  }
+
+  .methodBody {
+    padding: 0 1.15rem 1.05rem;
+    border-top: 1px solid var(--gray-800);
   }
 
   .methodList {
-    list-style: none;
+    margin: 0.85rem 0 0;
     padding: 0;
-    margin: 0;
+    list-style: none;
+
     display: grid;
-    gap: 0.55rem;
+    gap: 0.5rem;
     color: var(--gray-200);
   }
 
   .methodList li {
-    display: grid;
-    grid-template-columns: 1rem 1fr;
-    gap: 0.35rem;
-    line-height: 1.65;
+    position: relative;
+    padding-left: 1rem;
+    line-height: 1.6;
     min-width: 0;
+    overflow-wrap: anywhere;
   }
 
-  .dash {
+  .methodList li::before {
+    content: "–";
+    position: absolute;
+    left: 0;
     color: var(--gray-400);
   }
 
@@ -193,19 +232,24 @@ const softSkills = skills
     overflow-wrap: anywhere;
   }
 
-  /* ✅ UL Grid item wrapper : évite les débordements sur mobile */
   .gridItem {
     min-width: 0;
   }
 
-  @media (max-width: 25em) { /* 400px */
-    .methodCard {
-      padding: 1rem;
+  .count {
+    color: var(--gray-400);
+    font-weight: 500;
+    font-size: 0.95em;
+    letter-spacing: 0.01em;
+  }
+
+  @media (max-width: 25em) {
+    .methodSummary {
+      padding: 0.9rem 1rem;
     }
 
-    .methodList li {
-      grid-template-columns: 0.8rem 1fr;
-      gap: 0.3rem;
+    .methodBody {
+      padding: 0 1rem 0.95rem;
     }
 
     .lead {
@@ -217,21 +261,16 @@ const softSkills = skills
     }
   }
 
-  .hero,
-  .heroInner,
-  .heroText {
-    min-width: 0;
-  }
+  .heroText h1 {
+  margin: 0;
+  letter-spacing: -0.02em;
 
-  .hero * {
-    overflow-wrap: anywhere;
-  }
-
-  .count {
-  color: var(--gray-400);
-  font-weight: 500;
-  font-size: 0.95em;
-  letter-spacing: 0.01em;
+  /* Responsive safe */
+  font-size: clamp(2rem, 6vw, 3rem);
+  line-height: 1.05;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  hyphens: auto;
 }
 
 </style>

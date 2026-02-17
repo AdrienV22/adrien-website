@@ -37,7 +37,6 @@ const levelPct = Math.min(100, (d.level / 10) * 100);
     </div>
   </header>
 
-  {/* mini-preuves (style evidenceItem léger) */}
   <div class="body">
     {evidence.length ? (
       <section class="proof">
@@ -79,6 +78,12 @@ const levelPct = Math.min(100, (d.level / 10) * 100);
       transform var(--theme-transition),
       box-shadow var(--theme-transition),
       border-color var(--theme-transition);
+
+    /* Uniformisation des hauteurs */
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
   }
 
   .card:hover,
@@ -94,6 +99,7 @@ const levelPct = Math.min(100, (d.level / 10) * 100);
     padding-bottom: 0.9rem;
     margin-bottom: 0.9rem;
     border-bottom: 1px solid var(--gray-800);
+    min-width: 0;
   }
 
   .metaRow {
@@ -101,6 +107,7 @@ const levelPct = Math.min(100, (d.level / 10) * 100);
     align-items: center;
     gap: 0.6rem;
     flex-wrap: wrap;
+    min-width: 0;
   }
 
   .badge {
@@ -115,7 +122,6 @@ const levelPct = Math.min(100, (d.level / 10) * 100);
     line-height: 1;
   }
 
-  /* légère différenciation comme ton parcours */
   .card[data-type="technique"] .badge {
     border-color: color-mix(in srgb, var(--accent-regular) 30%, var(--gray-800));
   }
@@ -133,6 +139,8 @@ const levelPct = Math.min(100, (d.level / 10) * 100);
     color: var(--gray-0);
     font-size: clamp(1.05rem, 2.2vw, 1.25rem);
     line-height: 1.2;
+    overflow-wrap: anywhere;
+    word-break: break-word;
   }
 
   .summary {
@@ -144,6 +152,9 @@ const levelPct = Math.min(100, (d.level / 10) * 100);
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
+
+    overflow-wrap: anywhere;
+    word-break: break-word;
   }
 
   .meter {
@@ -170,6 +181,11 @@ const levelPct = Math.min(100, (d.level / 10) * 100);
   .body {
     display: grid;
     gap: 0.85rem;
+
+    /* Pousse le CTA en bas */
+    flex: 1;
+    min-height: 0;
+    min-width: 0;
   }
 
   .label {
@@ -193,6 +209,15 @@ const levelPct = Math.min(100, (d.level / 10) * 100);
     position: relative;
     padding-left: 1rem;
     line-height: 1.55;
+
+    /* Sécurité : évite d'allonger la card */
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+
+    overflow-wrap: anywhere;
+    word-break: break-word;
   }
 
   .proofItem::before {
@@ -217,10 +242,14 @@ const levelPct = Math.min(100, (d.level / 10) * 100);
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
+
+    overflow-wrap: anywhere;
+    word-break: break-word;
   }
 
   .actions {
-    margin-top: 0.2rem;
+    margin-top: auto;
+    padding-top: 0.15rem;
   }
 
   .detailLink {
@@ -259,31 +288,14 @@ const levelPct = Math.min(100, (d.level / 10) * 100);
     outline: none;
   }
 
-    /* Anti débordement mobile (safe) */
-    .card,
-  .head,
-  .body,
-  .metaRow {
-    min-width: 0;
-  }
-
-  .title,
-  .summary,
-  .growthText {
-    overflow-wrap: anywhere;
-    word-break: break-word;
-  }
-
+  /* Hauteur minimale optionnelle (premium, homogène) */
   .card {
-  min-width: 0;
-}
+    min-height: 440px;
+  }
 
-.title,
-.summary,
-.growthText {
-  overflow-wrap: anywhere;
-  word-break: break-word;
-}
-
-
+  @media (min-width: 60em) {
+    .card {
+      min-height: 470px;
+    }
+  }
 </style>
