@@ -51,8 +51,11 @@ const others = projects.slice(5);
 
       <section class="section" aria-label="Réalisations principales">
         <div class="sectionHead">
-          <h2>
-            Réalisations principales <span class="count">({featured.length})</span>
+          <h2 class="sectionTitle">
+            <span class="sectionTitleText">Réalisations principales</span>
+            <span class="count" aria-label={`${featured.length} réalisations principales`}>
+              ({featured.length})
+            </span>
           </h2>
         </div>
 
@@ -75,13 +78,12 @@ const others = projects.slice(5);
       {others.length ? (
         <section class="section section--secondary" aria-label="Autres projets">
           <div class="sectionHead">
-            <h2>
-              Autres projets <span class="count">({others.length})</span>
+            <h2 class="sectionTitle">
+              <span class="sectionTitleText">Autres projets</span>
+              <span class="count" aria-label={`${others.length} autres projets`}>
+                ({others.length})
+              </span>
             </h2>
-            {/* <p>
-              Projets complémentaires, utiles pour compléter la lecture sans diluer
-              les 5 réalisations phares.
-            </p> */}
           </div>
 
           <ul class="workGrid">
@@ -119,20 +121,45 @@ const others = projects.slice(5);
 
   .sectionHead {
     margin-bottom: 1.1rem;
+    min-width: 0;
   }
 
-  .sectionHead h2 {
+  /* Titre + compteur : wrap propre et stable */
+  .sectionTitle {
     margin: 0;
     color: var(--gray-0);
+
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.55rem;
+
+    line-height: 1.2;
+    min-width: 0;
   }
 
+  .sectionTitleText {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  /* Compteur : ne se retrouve jamais seul sur une ligne */
   .count {
     color: var(--gray-400);
     font-weight: 500;
     font-size: 0.95em;
     letter-spacing: 0.01em;
+    white-space: nowrap;
   }
 
+  /* Option premium : meilleure césure sur navigateurs récents */
+  @supports (text-wrap: balance) {
+    .sectionTitleText {
+      text-wrap: balance;
+    }
+  }
+
+  /* Si tu réactives un sous-texte plus tard */
   .sectionHead p {
     margin: 0.35rem 0 0;
     color: var(--gray-400);
@@ -170,6 +197,13 @@ const others = projects.slice(5);
   @media (min-width: 50em) {
     .section--secondary {
       margin-top: 7.5rem;
+    }
+  }
+
+  /* Sécurité très petits écrans : évite un titre trop massif */
+  @media (max-width: 24em) {
+    .sectionTitle {
+      font-size: var(--text-2xl);
     }
   }
 </style>

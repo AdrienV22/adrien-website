@@ -20,20 +20,37 @@ const { align = "center", tagline, title } = Astro.props;
 	.hero {
 		font-size: var(--text-lg);
 		text-align: center;
+		min-width: 0;
 	}
 
+	/* Largeur fluide (au lieu d’un 37ch rigide) + wrap plus élégant */
 	.title,
 	.tagline {
-		max-width: 37ch;
 		margin-inline: auto;
+		max-width: min(72ch, 100%);
+		overflow-wrap: anywhere; /* sécurité mots longs / URL */
+	}
+
+	/* Meilleure répartition des retours à la ligne quand supporté */
+	@supports (text-wrap: balance) {
+		.title,
+		.tagline {
+			text-wrap: balance;
+		}
 	}
 
 	.title {
 		font-size: var(--text-3xl);
 		color: var(--gray-0);
+		line-height: 1.08;
 	}
 
-	/* align="start" doit fonctionner sur toutes tailles (mobile inclus) */
+	.tagline {
+		color: var(--gray-300);
+		line-height: 1.6;
+	}
+
+	/* align="start" : actif sur toutes tailles (mobile inclus) */
 	.start {
 		text-align: left;
 	}
@@ -47,6 +64,14 @@ const { align = "center", tagline, title } = Astro.props;
 	.start .title,
 	.start .tagline {
 		margin-inline: 0;
+		max-width: min(72ch, 100%);
+	}
+
+	/* Très petits écrans : évite les titres trop gros */
+	@media (max-width: 24em) {
+		.title {
+			font-size: var(--text-2xl);
+		}
 	}
 
 	@media (min-width: 50em) {
@@ -56,6 +81,17 @@ const { align = "center", tagline, title } = Astro.props;
 
 		.title {
 			font-size: var(--text-5xl);
+		}
+
+		/* sur desktop, on limite un peu pour garder une “colonne” premium */
+		.title,
+		.tagline {
+			max-width: 70ch;
+		}
+
+		.start .title,
+		.start .tagline {
+			max-width: 70ch;
 		}
 	}
 </style>
