@@ -1,56 +1,74 @@
 ---
 interface Props {
-	href: string;
+  href: string;
 }
 
 const { href } = Astro.props;
 ---
 
-<a href={href}><slot /></a>
+<a class="cta" href={href}><slot /></a>
 
 <style>
-	a {
-		position: relative;
-		display: flex;
-		place-content: center;
-		text-align: center;
-		padding: 0.56em 2em;
-		gap: 0.8em;
-		color: var(--accent-text-over);
-		text-decoration: none;
-		line-height: 1.1;
-		border-radius: 999rem;
-		overflow: hidden;
-		background: var(--gradient-accent-orange);
-		box-shadow: var(--shadow-md);
-		white-space: nowrap;
-	}
+  a.cta {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6em;
 
-	@media (min-width: 20em) {
-		a {
-			font-size: var(--text-lg);
-		}
-	}
+    padding: 0.75rem 1.35rem;
+    border-radius: 999px;
 
-	/* Overlay for hover effects. */
-	a::after {
-		content: '';
-		position: absolute;
-		inset: 0;
-		pointer-events: none;
-		transition: background-color var(--theme-transition);
-		mix-blend-mode: overlay;
-	}
+    border: 1px solid var(--gray-800);
+    background: radial-gradient(
+      circle at 20% 20%,
+      color-mix(in srgb, var(--accent-regular) 18%, transparent),
+      transparent 60%
+    );
 
-	a:focus::after,
-	a:hover::after {
-		background-color: hsla(var(--gray-999-basis), 0.3);
-	}
+    color: var(--gray-0);
+    text-decoration: none;
+    line-height: 1.1;
+    font-weight: 500;
+    white-space: nowrap;
 
-	@media (min-width: 50em) {
-		a {
-			padding: 1.125rem 2.5rem;
-			font-size: var(--text-xl);
-		}
-	}
+    box-shadow: var(--shadow-sm);
+
+    transition:
+      background var(--theme-transition),
+      border-color var(--theme-transition),
+      transform var(--theme-transition),
+      box-shadow var(--theme-transition);
+  }
+
+  a.cta:hover,
+  a.cta:focus-visible {
+    border-color: var(--gray-600);
+    background: radial-gradient(
+      circle at 20% 20%,
+      color-mix(in srgb, var(--accent-regular) 26%, transparent),
+      transparent 62%
+    );
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+    outline: none;
+  }
+
+  a.cta:active {
+    transform: translateY(0);
+    box-shadow: var(--shadow-sm);
+  }
+
+  @media (min-width: 20em) {
+    a.cta {
+      font-size: var(--text-lg);
+    }
+  }
+
+  @media (min-width: 50em) {
+    a.cta {
+      padding: 1.05rem 1.9rem;
+      font-size: var(--text-xl);
+    }
+  }
 </style>

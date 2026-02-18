@@ -5,16 +5,13 @@ import { getCollection } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
 
 // Components
-import CallToAction from "../components/CallToAction.astro";
-import Grid from "../components/Grid.astro";
 import Hero from "../components/Hero.astro";
 import Icon from "../components/Icon.astro";
 import Pill from "../components/Pill.astro";
-import PortfolioPreview from "../components/PortfolioPreview.astro";
 import ContactCTA from "../components/ContactCTA.astro";
 import Skills from "../components/Skills.astro";
 
-// Content Fetching: 4 projets les plus récents
+// Content Fetching: 4 projets les plus récents (gardé si tu le réactives plus tard)
 const projects = (await getCollection("work"))
   .sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf())
   .slice(0, 4);
@@ -29,7 +26,7 @@ const projects = (await getCollection("work"))
           tagline="Développeur Fullstack / RPA, avec une forte appétence pour l’automatisation de processus et l’ETL, sensibilisé aux approches MOA, fort de près de deux ans d'expérience au sein d'ADENTAL GROUP."
           align="start"
         >
-          <div class="roles">
+          <div class="roles" aria-label="Qualités">
             <Pill><Icon icon="code" size="1.33em" /> Passionné</Pill>
             <Pill><Icon icon="target-logo" size="1.33em" /> Motivé</Pill>
             <Pill><Icon icon="pencil-line" size="1.33em" /> Créatif</Pill>
@@ -40,17 +37,17 @@ const projects = (await getCollection("work"))
         </Hero>
       </header>
 
-      <section class="stack gap-6">
+      <section class="stack gap-6" aria-label="Aperçu des compétences">
         <Skills />
+      </section>
 
-        
-    <!-- <main class="wrapper stack gap-20 lg:gap-48">
-      <section class="section with-background with-cta"> -->
-        <!-- <header class="section-header stack gap-2 lg:gap-4">
+      {/*
+      <section class="section with-background with-cta" aria-label="Projets récents">
+        <header class="section-header stack gap-2 lg:gap-4">
           <h3>Mes projets les plus récents</h3>
-        </header> -->
+        </header>
 
-        <!-- <div class="gallery">
+        <div class="gallery">
           <Grid variant="offset">
             {projects.map((project) => (
               <li>
@@ -58,16 +55,17 @@ const projects = (await getCollection("work"))
               </li>
             ))}
           </Grid>
-        </div> -->
+        </div>
 
-        <!-- <div class="cta">
+        <div class="cta">
           <CallToAction href="/work/">
             Tous mes projets
             <Icon icon="arrow-right" size="1.2em" />
           </CallToAction>
-        </div> -->
+        </div>
       </section>
-    </main>
+      */}
+    </div>
 
     <ContactCTA />
   </div>
@@ -93,11 +91,6 @@ const projects = (await getCollection("work"))
     box-shadow: var(--shadow-md);
   }
 
-  .skills-cta {
-    display: flex;
-    justify-content: flex-start;
-  }
-
   @media (min-width: 50em) {
     .hero {
       display: grid;
@@ -109,6 +102,7 @@ const projects = (await getCollection("work"))
     .roles {
       margin-top: 0.5rem;
       display: flex;
+      flex-wrap: wrap;
       gap: 0.5rem;
     }
 
@@ -119,7 +113,7 @@ const projects = (await getCollection("work"))
     }
   }
 
-  /* ====================================================== */
+  /* ------------------------------------------------------ */
 
   .section {
     display: grid;
@@ -197,28 +191,6 @@ const projects = (await getCollection("work"))
 
     .cta {
       grid-area: cta;
-    }
-  }
-
-  /* ====================================================== */
-
-  .mention-card {
-    display: flex;
-    height: 7rem;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    border: 1px solid var(--gray-800);
-    border-radius: 1.5rem;
-    color: var(--gray-300);
-    background: var(--gradient-subtle);
-    box-shadow: var(--shadow-sm);
-  }
-
-  @media (min-width: 50em) {
-    .mention-card {
-      border-radius: 1.5rem;
-      height: 9.5rem;
     }
   }
 </style>

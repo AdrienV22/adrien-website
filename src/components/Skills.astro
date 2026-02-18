@@ -1,64 +1,181 @@
 ---
-import Icon from './Icon.astro';
+import { getCollection } from "astro:content";
+import Icon from "./Icon.astro";
+import CallToAction from "./CallToAction.astro";
+
+// Compteurs dynamiques (collections)
+const skills = await getCollection("skills");
+const work = await getCollection("work");
+const parcours = await getCollection("parcours");
+
+const nbSkills = skills.length;
+const nbWork = work.length;
+const nbParcours = parcours.length;
+
+const nbTech = skills.filter((s) => s.data.type === "technique").length;
+const nbHuman = skills.filter((s) => s.data.type === "humaine").length;
 ---
 
-<section class="box skills">
-	<div class="stack gap-2 lg:gap-4">
-		<Icon icon="terminal-window" color="var(--accent-regular)" size="2.5rem" gradient />
-		<h2>Technologies</h2>
-		<p>Python • Selenium • Javascript • Typescript • React.js • Node.js • HTML5 • CSS3 • Git Technology • PHP & MySQL • MongoDB • PostgreSQL • Astro •</p>
-	</div>
-	<div class="stack gap-2 lg:gap-4">
-		<Icon icon="outil-logo" color="var(--accent-regular)" size="2.5rem" gradient />
-		<h2>Outils</h2>
-		<p>• UIPath • Microsoft SSIS • Power BI • Suite Office • Adobe InDesign • Adobe Photoshop • Adobe Premiere Pro • Figma • Gestion de projet Agile Scrum • Jira • Trello • Monday • Webflow • 
-</p>
-	</div>
-	
-	<div class="stack gap-2 lg:gap-4">
-		<Icon icon="language-logo" color="var(--accent-regular)" size="2.5rem" gradient />
-		<h2>Langues</h2>
-		<p> • Français (langue maternelle) <br> • Anglais (Courant - C1) <br> • Japonais (Courant - JLPT N2 - C1) <br>  • Espagnol (A2)</p>
-	</div>
+<section class="box skills" aria-label="Accès rapide">
+  <div class="skillCard">
+    <Icon icon="terminal-window" color="var(--accent-regular)" size="2.5rem" gradient />
+    <div class="head">
+      <h2>Compétences</h2>
+      <p class="meta">
+        <span class="count">{nbSkills}</span> au total
+        {nbTech || nbHuman ? (
+          <>
+            <span class="sep">·</span>
+            <span>{nbTech} techniques</span>
+            <span class="sep">·</span>
+            <span>{nbHuman} humaines</span>
+          </>
+        ) : null}
+      </p>
+    </div>
+
+    <div class="content">
+      <p>
+        Compétences structurées avec preuves, auto-évaluation, axes d’évolution et réalisations associées.
+      </p>
+    </div>
+
+    <div class="actions">
+      <CallToAction href="/competences/">Voir mes compétences</CallToAction>
+    </div>
+  </div>
+
+  <div class="skillCard">
+    <Icon icon="target-logo" color="var(--accent-regular)" size="2.5rem" gradient />
+    <div class="head">
+      <h2>Réalisations</h2>
+      <p class="meta">
+        <span class="count">{nbWork}</span> projets documentés
+      </p>
+    </div>
+
+    <div class="content">
+      <p>
+        Fiches projet détaillées.
+      </p>
+    </div>
+
+    <div class="actions">
+      <CallToAction href="/work/">Voir mes réalisations</CallToAction>
+    </div>
+  </div>
+
+  <div class="skillCard">
+    <Icon icon="pencil-line" color="var(--accent-regular)" size="2.5rem" gradient />
+    <div class="head">
+      <h2>Parcours</h2>
+      <p class="meta">
+        <span class="count">{nbParcours}</span> étapes structurées
+      </p>
+    </div>
+
+    <div class="content">
+      <p>
+        Expériences et formations reliées aux projets et aux compétences.
+      </p>
+    </div>
+
+    <div class="actions">
+      <CallToAction href="/parcours/">Voir mon parcours</CallToAction>
+    </div>
+  </div>
 </section>
 
 <style>
-	.box {
-		border: 1px solid var(--gray-800);
-		border-radius: 0.75rem;
-		padding: 1.5rem;
-		background-color: var(--gray-999_40);
-		box-shadow: var(--shadow-sm);
-	}
+  .box {
+    border: 1px solid var(--gray-800);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    background-color: var(--gray-999_40);
+    box-shadow: var(--shadow-sm);
+  }
 
-	.skills {
-		display: flex;
-		flex-direction: column;
-		gap: 3rem;
-	}
+  /* Mobile-first */
+  .skills {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
 
-	.skills h2 {
-		font-size: var(--text-lg);
-	}
+  /* ✅ Chaque colonne devient une "card" flex verticale */
+  .skillCard {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    min-width: 0;
+    height: 100%;
+  }
 
-	.skills p {
-		color: var(--gray-400);
-	}
+  .skills h2 {
+    font-size: var(--text-lg);
+    color: var(--gray-0);
+    margin: 0;
+  }
 
-	@media (min-width: 50em) {
-		.box {
-			border-radius: 1.5rem;
-			padding: 2.5rem;
-		}
+  .head {
+    display: grid;
+    gap: 0.25rem;
+  }
 
-		.skills {
-			display: grid;
-			grid-template-columns: repeat(3, 1fr);
-			gap: 5rem;
-		}
+  .meta {
+    margin: 0;
+    color: var(--gray-400);
+    font-size: var(--text-sm);
+    letter-spacing: 0.01em;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.35rem;
+  }
 
-		.skills h2 {
-			font-size: var(--text-2xl);
-		}
-	}
+  .count {
+    color: var(--gray-0);
+    font-weight: 600;
+  }
+
+  .sep {
+    opacity: 0.8;
+  }
+
+  .skills p {
+    color: var(--gray-400);
+    line-height: 1.7;
+    max-width: 55ch;
+    margin: 0;
+  }
+
+  /* ✅ Pousse le CTA en bas -> alignement parfait en desktop */
+  .content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .actions {
+    margin-top: 1.25rem;
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  @media (min-width: 50em) {
+    .box {
+      border-radius: 1.5rem;
+      padding: 2.5rem;
+    }
+
+    .skills {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 4rem;
+      align-items: stretch; /* important pour aligner les bas */
+    }
+
+    .skills h2 {
+      font-size: var(--text-2xl);
+    }
+  }
 </style>
