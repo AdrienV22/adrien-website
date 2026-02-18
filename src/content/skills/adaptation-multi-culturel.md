@@ -3,34 +3,81 @@ title: "Adaptation en environnement interculturel"
 type: "humaine"
 level: 7
 summary: "Évoluer dans des environnements multiculturels en adaptant communication, posture et méthodes de travail."
-
-evidence:
-  - title: "Préparation d’une carrière internationale"
-    context: "Projet professionnel orienté Japon"
-    result: "Développement d’une communication structurée, respectueuse des codes culturels et adaptée au contexte international."
-  - title: "Travail sur projets à dimension internationale"
-    context: "Études et veille professionnelle"
-    result: "Capacité à adapter le discours, la posture et la rigueur formelle selon le contexte."
-
-selfCritique: >
-  Niveau 7/10. Cette compétence est en progression constante.
-  Mon intérêt pour le Japon et les environnements internationaux m’a conduit
-  à développer une forte sensibilité culturelle et une communication plus structurée.
-  Toutefois, mon expérience reste majoritairement académique et préparatoire.
-  L’exposition concrète à un environnement international réel sera déterminante
-  pour atteindre un niveau supérieur.
-
-growth:
-  - "Acquérir une expérience professionnelle concrète en contexte international"
-  - "Renforcer la pratique professionnelle en langue étrangère"
-
-relatedWorks: ["portfolio"]
+relatedWorks: []
 ---
 
-## Définition
-Capacité à comprendre les différences culturelles et à ajuster son comportement professionnel en conséquence.
+## Définition et contexte professionnel
 
-## Mise en pratique
-- Communication claire et respectueuse
-- Adaptation du niveau de formalité
-- Sensibilité aux contextes interculturels
+L’adaptation interculturelle consiste à comprendre les différences culturelles et à ajuster son comportement professionnel en conséquence.
+
+Dans un contexte international, la réussite d’un projet ne repose pas uniquement sur des compétences techniques, mais également sur la capacité à communiquer de manière appropriée, à respecter les codes implicites et à adapter son niveau de formalité.
+
+La mondialisation des équipes techniques et la collaboration à distance rendent cette compétence stratégique.
+
+---
+
+## Éléments de preuve
+
+### Préparation d’un projet professionnel international
+
+**Contexte**  
+Orientation professionnelle vers un environnement international, notamment japonais.
+
+**Actions mises en œuvre**
+- Étude des codes culturels et professionnels  
+- Adaptation de la communication écrite et orale  
+- Développement d’une posture plus formelle et structurée  
+
+**Résultats**
+- Communication plus claire et plus respectueuse des contextes  
+- Capacité à ajuster le discours selon l’interlocuteur  
+
+**Valeur ajoutée**  
+Meilleure compréhension des attentes implicites et réduction des risques de malentendus culturels.
+
+---
+
+### Travail sur projets à dimension internationale
+
+**Contexte**  
+Projets académiques et veille professionnelle à dimension internationale.
+
+**Actions mises en œuvre**
+- Adaptation du niveau de formalité  
+- Structuration plus rigoureuse des présentations  
+- Sensibilité accrue aux différences de communication  
+
+**Résultats**
+- Meilleure capacité d’ajustement contextuel  
+- Communication plus professionnelle et plus maîtrisée  
+
+---
+
+## Auto-évaluation
+
+**Niveau de maîtrise :** 7/10  
+
+**Importance dans mon profil**  
+Cette compétence accompagne mon projet professionnel à dimension internationale et structure ma posture d’ingénieur responsable.
+
+**Vitesse d’acquisition**  
+Progression constante motivée par un projet professionnel clair.
+
+**Recul critique**  
+Mon expérience reste en grande partie préparatoire. Une immersion professionnelle internationale sera nécessaire pour consolider pleinement cette compétence.
+
+---
+
+## Évolution
+
+À moyen terme, je souhaite :
+
+- Acquérir une expérience professionnelle concrète en contexte international  
+- Renforcer la pratique professionnelle en langue étrangère  
+- Développer une expérience terrain dans un environnement multiculturel réel  
+
+---
+
+## Réalisations associées
+
+À compléter en fonction des projets internationaux intégrés au portfolio.

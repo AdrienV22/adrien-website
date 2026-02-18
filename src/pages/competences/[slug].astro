@@ -20,6 +20,9 @@ type Props = { entry: SkillEntry };
 const { entry } = Astro.props as Props;
 const d = entry.data;
 
+/* ✅ Rend le Markdown en HTML (au lieu d'injecter entry.body brut) */
+const { Content } = await entry.render();
+
 // Typage local des preuves
 type Evidence = {
   title: string;
@@ -87,9 +90,9 @@ function getExcerpt(markdown: string, length = 220) {
         </div>
       </header>
 
-      {/* Markdown libre */}
+      {/* ✅ Markdown libre rendu correctement */}
       <article class="content">
-        <div set:html={entry.body} />
+        <Content />
       </article>
 
       {/* Preuves structurées */}
@@ -134,46 +137,35 @@ function getExcerpt(markdown: string, length = 220) {
       ) : null}
 
       {/* ✅ Exigence RNCP : réalisations rattachées + liens */}
-      <section class="related" aria-label="Réalisations associées">
-        <div class="relatedHead">
-          <h2>Réalisations associées</h2>
-          <a class="seeAll" href="/work/">Voir tous les projets</a>
-        </div>
-
-        {relatedWorksAll.length ? (
-          <>
-            <ul class="workGrid">
-              {relatedWorks.map((w) => {
-                const description = String((w.data as any).description ?? w.body ?? "");
-                const excerpt = getExcerpt(description, 220);
-
-                return (
-                  <li class="workGridItem">
-                    <WorkCard
-                      href={`/work/${w.slug}/`}
-                      title={w.data.title as any}
-                      tags={(w.data as any).tags ?? []}
-                      excerpt={excerpt}
-                      image={(w.data as any).img}
-                      imageAlt={(w.data as any).img_alt}
-                    />
-                  </li>
-                );
-              })}
-            </ul>
-
-            {relatedWorksAll.length > relatedWorks.length ? (
-              <p class="muted smallNote">
-                +{relatedWorksAll.length - relatedWorks.length} autre(s) réalisation(s) liée(s) à cette compétence.
-              </p>
-            ) : null}
-          </>
-        ) : (
-          <p class="muted">
-            À compléter : ajoute des <code>relatedWorks</code> (slugs de projets) dans cette compétence.
-          </p>
-        )}
-      </section>
+      {relatedWorksAll.length ? (
+        <section class="related" aria-label="Réalisations associées">
+          <div class="relatedHead">
+            <h2>Réalisations associées</h2>
+            <a class="seeAll" href="/work/">Voir tous les projets</a>
+          </div>
+      
+          <ul class="workGrid">
+            {relatedWorks.map((w) => {
+              const description = String((w.data as any).description ?? w.body ?? "");
+              const excerpt = getExcerpt(description, 220);
+      
+              return (
+                <li class="workGridItem">
+                  <WorkCard
+                    href={`/work/${w.slug}/`}
+                    title={w.data.title as any}
+                    tags={(w.data as any).tags ?? []}
+                    excerpt={excerpt}
+                    image={(w.data as any).img}
+                    imageAlt={(w.data as any).img_alt}
+                  />
+                </li>
+              );
+            })}
+          </ul>
+        </section>
+      ) : null}
+      
     </section>
   </main>
 </BaseLayout>
@@ -292,6 +284,14 @@ function getExcerpt(markdown: string, length = 220) {
     position: absolute;
     left: 0;
     color: var(--gray-400);
+  }
+
+  /* ✅ Bonus premium : rendu des séparateurs Markdown (---) */
+  .content :global(hr) {
+    border: 0;
+    height: 1px;
+    margin: 1.75rem 0;
+    background: color-mix(in srgb, var(--gray-800) 85%, transparent);
   }
 
   .evidence {
