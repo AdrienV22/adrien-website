@@ -171,13 +171,26 @@ const iconLinks: { label: string; href: string; icon: keyof typeof iconPaths }[]
 </script>
 
 <style>
-	nav {
-		z-index: 9999;
-		position: relative;
-		font-family: var(--font-brand);
-		font-weight: 500;
-		margin-bottom: 3.5rem;
-	}
+nav {
+  z-index: 9999;
+  position: sticky;
+  top: 0;
+  padding-bottom: 1.5rem;
+  margin-bottom: 1.25rem;
+
+  font-family: var(--font-brand);
+  font-weight: 500;
+
+
+  margin-bottom: 0;
+
+  background: color-mix(in srgb, var(--gray-999) 70%, transparent);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  border-bottom: 1px solid color-mix(in srgb, var(--gray-800) 70%, transparent);
+}
+
 
 	.menu-header {
 		display: flex;
