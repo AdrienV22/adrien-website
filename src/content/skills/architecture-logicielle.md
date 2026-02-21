@@ -1,9 +1,9 @@
 ---
 title: "Architecture logicielle"
 type: "technique"
-level: 5
+level: 6
 summary: "Concevoir des structures logicielles cohérentes, maintenables et évolutives en choisissant des découpages adaptés."
-relatedWorks: ["portfolio"]
+relatedWorks: ["portfolio", "application-gestion-de-projet"]
 ---
 
 ## Définition et contexte professionnel
@@ -43,7 +43,7 @@ Capacité à poser des bases techniques stables facilitant les évolutions futur
 
 ## Auto-évaluation
 
-**Niveau de maîtrise :** 5/10  
+**Niveau de maîtrise :** 6/10  
 
 **Importance dans mon profil**  
 Compétence en construction. Elle structure progressivement ma manière de concevoir des projets.
@@ -65,7 +65,3 @@ L’architecture ne doit pas devenir une recherche de sophistication excessive. 
 - Étudier des cas concrets d’architectures distribuées  
 
 ---
-
-## Réalisations associées
-
-- Portfolio technique modulaire avec Astro

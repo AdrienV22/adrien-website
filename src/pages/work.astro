@@ -8,8 +8,8 @@ import Hero from "../components/Hero.astro";
 
 const entries = await getCollection("work");
 
-function getExcerpt(markdown: string, length = 220) {
-  const clean = markdown
+function getExcerpt(text: string, length = 220) {
+  const clean = String(text ?? "")
     .replace(/<!--[\s\S]*?-->/g, "")
     .replace(/<\/?[^>]+>/g, "")
     .replace(/!\[.*?\]\(.*?\)/g, "")
@@ -22,14 +22,31 @@ function getExcerpt(markdown: string, length = 220) {
 }
 
 const projects = entries
-  .map((entry) => ({
-    href: `/work/${entry.slug}/`,
-    excerpt: getExcerpt((entry.data as any).description ?? entry.body),
-    ...entry.data,
-    image: (entry.data as any).img,
-    imageAlt: (entry.data as any).img_alt,
-  }))
-  .sort((a, b) => b.publishDate.valueOf() - a.publishDate.valueOf());
+  .map((entry) => {
+    const d = entry.data as any;
+
+    return {
+      href: `/work/${entry.slug}/`,
+      slug: entry.slug,
+
+      title: d.title as string,
+      description: d.description as string,
+      publishDate: d.publishDate as Date | undefined,
+      type: d.type as string | undefined,
+
+      tags: (d.tags ?? []) as string[],
+
+      image: d.img as string | undefined,
+      imageAlt: (d.img_alt ?? "") as string,
+
+      excerpt: getExcerpt(String(d.description ?? ""), 220),
+    };
+  })
+  .sort((a, b) => {
+    const aDate = a.publishDate?.valueOf?.() ?? 0;
+    const bDate = b.publishDate?.valueOf?.() ?? 0;
+    return bDate - aDate;
+  });
 
 const featured = projects.slice(0, 5);
 const others = projects.slice(5);
@@ -37,57 +54,29 @@ const others = projects.slice(5);
 
 <BaseLayout
   title="Réalisations | Adrien Valo"
-  description="Sélection de réalisations (projets) illustrant mes compétences et ma progression."
+  description="Réalisations : contexte, décisions d’ingénierie et résultats."
 >
   <div class="stack gap-20">
-    <main class="wrapper stack gap-14">
-      <header class="hero">
-        <Hero
-          title="Réalisations"
-          tagline="Une sélection de projets concrets, avec résultats observables et liens vers le détail."
-          align="start"
-        />
-      </header>
+    <main class="wrapper stack gap-16">
+      <Hero
+        title="Réalisations"
+        tagline="Une sélection de projets structurés — méthode, qualité et résultats."
+        align="start"
+      />
 
-      <section class="section" aria-label="Réalisations principales">
-        <div class="sectionHead">
-          <h2 class="sectionTitle">
-            <span class="sectionTitleText">Réalisations principales</span>
-            <span class="count" aria-label={`${featured.length} réalisations principales`}>
-              ({featured.length})
-            </span>
-          </h2>
-        </div>
-
-        <ul class="workGrid">
-          {featured.map((project) => (
-            <li class="workGridItem">
-              <WorkCard
-                href={project.href}
-                title={project.title}
-                tags={project.tags}
-                excerpt={project.excerpt}
-                image={project.image}
-                imageAlt={project.imageAlt}
-              />
-            </li>
-          ))}
-        </ul>
-      </section>
-
-      {others.length ? (
-        <section class="section section--secondary" aria-label="Autres projets">
-          <div class="sectionHead">
-            <h2 class="sectionTitle">
-              <span class="sectionTitleText">Autres projets</span>
-              <span class="count" aria-label={`${others.length} autres projets`}>
-                ({others.length})
-              </span>
+      <section class="content" aria-label="Liste des réalisations">
+        <article class="block" aria-label="Sélection">
+          <header class="blockHead">
+            <h2 class="blockTitle">
+              Réalisations principales<span class="count">({featured.length})</span>
             </h2>
-          </div>
+            <p class="blockLead">
+              Les projets les plus représentatifs de ma démarche (architecture, industrialisation, tests).
+            </p>
+          </header>
 
           <ul class="workGrid">
-            {others.map((project) => (
+            {featured.map((project) => (
               <li class="workGridItem">
                 <WorkCard
                   href={project.href}
@@ -100,8 +89,36 @@ const others = projects.slice(5);
               </li>
             ))}
           </ul>
-        </section>
-      ) : null}
+        </article>
+
+        {others.length ? (
+          <article class="block" aria-label="Compléments">
+            <header class="blockHead">
+              <h2 class="blockTitle">
+                Compléments <span class="count">({others.length})</span>
+              </h2>
+              <p class="blockLead">
+                Réalisations additionnelles : approfondissements, variantes techniques, consolidation.
+              </p>
+            </header>
+
+            <ul class="workGrid">
+              {others.map((project) => (
+                <li class="workGridItem">
+                  <WorkCard
+                    href={project.href}
+                    title={project.title}
+                    tags={project.tags}
+                    excerpt={project.excerpt}
+                    image={project.image}
+                    imageAlt={project.imageAlt}
+                  />
+                </li>
+              ))}
+            </ul>
+          </article>
+        ) : null}
+      </section>
     </main>
 
     <ContactCTA />
@@ -109,69 +126,91 @@ const others = projects.slice(5);
 </BaseLayout>
 
 <style>
-  .hero {
+  .content {
+    margin-top: clamp(2.5rem, 6vw, 4.5rem);
+    padding-top: clamp(1.5rem, 3vw, 2.5rem);
+    border-top: 1px solid var(--gray-800);
     display: grid;
     gap: 1.25rem;
-    margin-top: 0.25rem;
   }
 
-  .section {
-    margin-top: 0.25rem;
+  .block {
+    position: relative;
+    border: 1px solid var(--gray-800);
+    border-radius: clamp(1rem, 2vw, 1.5rem);
+    padding: clamp(1.25rem, 3vw, 2rem);
+    background: var(--gray-999_40);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+
+    transition:
+      transform var(--theme-transition),
+      box-shadow var(--theme-transition),
+      border-color var(--theme-transition);
   }
 
-  .sectionHead {
+  .block::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 14%;
+    bottom: 14%;
+    width: 2px;
+    background: linear-gradient(
+      to bottom,
+      transparent 0%,
+      color-mix(in srgb, var(--accent-regular) 35%, var(--gray-700)) 18%,
+      var(--accent-regular) 50%,
+      color-mix(in srgb, var(--accent-regular) 35%, var(--gray-700)) 82%,
+      transparent 100%
+    );
+    opacity: 0.7;
+  }
+
+  .block:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--accent-overlay);
+  }
+
+  .blockHead {
+    padding-bottom: 1rem;
     margin-bottom: 1.1rem;
+    border-bottom: 1px solid var(--gray-800);
     min-width: 0;
   }
 
-  /* Titre + compteur : wrap propre et stable */
-  .sectionTitle {
+  .blockTitle {
     margin: 0;
+    font-size: clamp(1.15rem, 2vw, 1.4rem);
+    letter-spacing: -0.02em;
     color: var(--gray-0);
 
     display: flex;
-    flex-wrap: wrap;
     align-items: baseline;
-    gap: 0.55rem;
-
-    line-height: 1.2;
+    gap: 0.6rem;
+    flex-wrap: wrap;
     min-width: 0;
   }
 
-  .sectionTitleText {
-    min-width: 0;
-    overflow-wrap: anywhere;
-  }
-
-  /* Compteur : ne se retrouve jamais seul sur une ligne */
   .count {
     color: var(--gray-400);
     font-weight: 500;
     font-size: 0.95em;
-    letter-spacing: 0.01em;
     white-space: nowrap;
   }
 
-  /* Option premium : meilleure césure sur navigateurs récents */
-  @supports (text-wrap: balance) {
-    .sectionTitleText {
-      text-wrap: balance;
-    }
-  }
-
-  /* Si tu réactives un sous-texte plus tard */
-  .sectionHead p {
-    margin: 0.35rem 0 0;
+  .blockLead {
+    margin: 0.65rem 0 0;
+    line-height: 1.7;
     color: var(--gray-400);
-    line-height: 1.6;
-    max-width: 85ch;
+    max-width: 80ch;
   }
 
   .workGrid {
     list-style: none;
     padding: 0;
     margin: 0;
-
     display: grid;
     gap: 1.75rem;
     grid-template-columns: 1fr;
@@ -188,22 +227,9 @@ const others = projects.slice(5);
     min-width: 0;
   }
 
-  .section--secondary {
-    margin-top: 6.5rem;
-    padding-top: 3rem;
-    border-top: 1px solid var(--gray-800);
-  }
-
-  @media (min-width: 50em) {
-    .section--secondary {
-      margin-top: 7.5rem;
-    }
-  }
-
-  /* Sécurité très petits écrans : évite un titre trop massif */
-  @media (max-width: 24em) {
-    .sectionTitle {
-      font-size: var(--text-2xl);
+  @media (prefers-reduced-motion: reduce) {
+    .block {
+      transition: none;
     }
   }
 </style>

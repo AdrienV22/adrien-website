@@ -37,7 +37,7 @@ const typeLabel =
   d.type === "technique" ? "Compétence technique" : "Compétence humaine";
 
 /* =========================
-   ✅ Réalisations associées (relatedWorks)
+   Réalisations associées (relatedWorks)
 ========================= */
 const workEntries = (await getCollection("work")) as WorkEntry[];
 const relatedSlugs = (d.relatedWorks ?? []) as string[];

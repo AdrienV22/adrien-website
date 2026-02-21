@@ -1,10 +1,10 @@
 ---
-title: "Autonomie et responsabilité professionnelle"
+title: "Autonomie"
 type: "humaine"
-level: 8
+level: 7.5
 summary: "Assumer la responsabilité complète d’un livrable technique, de la conception à la mise en production, avec rigueur et initiative."
 
-relatedWorks: ["project-management-tool", "portfolio", "automatisation-multi-portails"]
+relatedWorks: []
 ---
 
 ## Définition et contexte professionnel
@@ -72,7 +72,7 @@ Voir la réalisation associée : *Automatisation multi-portails santé*
 
 ## Auto-évaluation
 
-**Niveau de maîtrise :** 8/10  
+**Niveau de maîtrise :** 7.5/10  
 
 **Importance dans mon profil**  
 L’autonomie constitue l’un de mes points forts. Elle me permet d’avancer efficacement sur des projets complexes tout en maintenant un haut niveau d’exigence.
@@ -95,8 +95,3 @@ L’autonomie ne doit pas conduire à l’isolement décisionnel. Elle gagne en 
 
 ---
 
-## Réalisations associées
-
-- Project Management Tool  
-- Portfolio technique modulaire avec Astro  
-- Automatisation multi-portails santé

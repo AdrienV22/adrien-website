@@ -6,11 +6,36 @@ import { defineCollection, z } from "astro:content";
 const work = defineCollection({
   schema: z.object({
     title: z.string(),
-    description: z.string(),
+
+    // safe si certains anciens work n'ont pas ce champ
+    description: z.string().optional(),
+
     publishDate: z.coerce.date(),
-    tags: z.array(z.string()),
-    img: z.string(),
+
+    tags: z.array(z.string()).default([]),
+
+    // cover optionnelle (si galerie suffisante)
+    img: z.string().optional(),
     img_alt: z.string().optional(),
+
+    // Galerie pour la fiche projet (carousel)
+    gallery: z
+      .array(
+        z.object({
+          src: z.string(),
+          alt: z.string().optional(),
+        })
+      )
+      .default([]),
+
+    // Navigation circulaire RNCP : slugs des skills (/skills/*.md)
+    relatedSkills: z.array(z.string()).default([]),
+
+    // Optionnels
+    card: z.string().optional(),
+
+    // enum "large" (inclut slide) => compatible avec tes contenus existants
+    type: z.enum(["projet", "etude", "rpa", "dev", "autre", "slide"]).optional(),
   }),
 });
 

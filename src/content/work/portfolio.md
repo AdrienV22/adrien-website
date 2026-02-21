@@ -105,12 +105,3 @@ Avec davantage de temps, une couche de tests automatisés et une analyse de perf
 
 ---
 
-## Compétences mobilisées
-
-- Architecture logicielle  
-- Modélisation de données  
-- TypeScript  
-- Structuration modulaire  
-- UX orientée lisibilité  
-- CI/CD et déploiement  
-
