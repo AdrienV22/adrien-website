@@ -37,8 +37,8 @@ const typeLabel =
 
 const tagline = typeLabel ?? "";
 
-/** Galerie : si vide / images absentes -> rien n'est affiché */
 const gallery = (entry.data as any)?.gallery as { src: string; alt?: string }[] | undefined;
+const imgAlt = entry.data.img_alt || entry.data.title;
 
 const altOf = (item: { alt?: string }, i: number) =>
   (item.alt && String(item.alt).trim()) || `${entry.data.title} — visuel ${i + 1}`;
@@ -51,7 +51,7 @@ const relatedSkills = relatedSkillsSlugs
   .map((s) => skillBySlug.get(String(s)))
   .filter((x): x is SkillEntry => Boolean(x));
 
-/** Navigation Précédent / Suivant (tri par date desc) */
+/** ✅ Navigation Précédent / Suivant (tri par date desc) */
 const all = (await getCollection("work")) as WorkEntry[];
 const sorted = [...all].sort((a, b) => {
   const aDate = (a.data.publishDate as Date | undefined)?.valueOf?.() ?? 0;
@@ -62,7 +62,7 @@ const idx = sorted.findIndex((e) => String(e.slug) === String(entry.slug));
 const prev = idx > 0 ? sorted[idx - 1] : null;
 const next = idx >= 0 && idx < sorted.length - 1 ? sorted[idx + 1] : null;
 
-/** Liens (safe) */
+/** ✅ Liens (safe) */
 const links = ((entry.data as any)?.links ?? {}) as { repo?: string; demo?: string; doc?: string };
 const hasLinks = Boolean(links.repo || links.demo || links.doc);
 ---
@@ -80,39 +80,23 @@ const hasLinks = Boolean(links.repo || links.demo || links.doc);
     <section class="layout" aria-label="Fiche projet">
       {/* Colonne principale */}
       <div class="mainCol stack gap-10">
-        {/* Galerie premium légère : si aucune image valide -> rien */}
+        {/* ✅ Si pas d'images, on n'affiche rien (comme demandé) */}
         {gallery?.length ? (
-          <section class="gallery" aria-label="Galerie" data-gallery>
-            <div class="galleryTop">
-              <div class="galleryViewport" tabindex="0" aria-label="Galerie (défilement horizontal)">
-                {gallery.map((item, i) => (
-                  <figure class="gallerySlide" data-slide={String(i)}>
-                    <img
-                      src={item.src}
-                      alt={altOf(item, i)}
-                      loading={i === 0 ? "eager" : "lazy"}
-                      fetchpriority={i === 0 ? "high" : "auto"}
-                      decoding="async"
-                      sizes="(min-width: 60em) 900px, 100vw"
-                      onerror="this.closest('figure')?.remove();"
-                    />
-                  </figure>
-                ))}
-              </div>
-
-              <div class="galleryControls" aria-label="Contrôles de la galerie">
-                <button class="galleryBtn" type="button" data-prev aria-label="Image précédente">‹</button>
-                <button class="galleryBtn" type="button" data-next aria-label="Image suivante">›</button>
-              </div>
-            </div>
-
-            <nav class="galleryNav" aria-label="Navigation de la galerie">
+          <section class="gallery" aria-label="Galerie">
+            <div class="galleryViewport" tabindex="0" aria-label="Galerie (défilement horizontal)">
               {gallery.map((item, i) => (
-                <button class="galleryPill" type="button" data-go={String(i)}>
-                  {(item.alt && String(item.alt).trim()) || `Visuel ${i + 1}`}
-                </button>
+                <figure class="gallerySlide">
+                  <img
+                    src={item.src}
+                    alt={altOf(item, i)}
+                    loading={i === 0 ? "eager" : "lazy"}
+                    fetchpriority={i === 0 ? "high" : "auto"}
+                    decoding="async"
+                    sizes="(min-width: 60em) 900px, 100vw"
+                  />
+                </figure>
               ))}
-            </nav>
+            </div>
           </section>
         ) : null}
 
@@ -236,23 +220,12 @@ const hasLinks = Boolean(links.repo || links.demo || links.doc);
 </BaseLayout>
 
 <script>
-  type IconKey = "target" | "tools" | "shield" | "chart" | "check" | "arrow" | "eye";
+  // ✅ IIFE = pas de "return" au top-level => build Netlify OK
+  (() => {
+    type IconKey = "target" | "tools" | "shield" | "chart" | "check" | "arrow" | "eye";
 
-  const root = document.querySelector<HTMLElement>("[data-md-blocks]");
-  if (root) {
-    const iconMap = new Map<string, IconKey>([
-      ["definition", "target"],
-      ["mise en pratique", "tools"],
-      ["contraintes & enjeux", "shield"],
-      ["contraintes et enjeux", "shield"],
-      ["resultats", "chart"],
-      ["résultats", "chart"],
-      ["auto-evaluation", "check"],
-      ["auto-évaluation", "check"],
-      ["evolution", "arrow"],
-      ["évolution", "arrow"],
-      ["regard critique", "eye"],
-    ]);
+    const root = document.querySelector<HTMLElement>("[data-md-blocks]");
+    if (!root) return;
 
     const icons: Record<IconKey, string> = {
       target: `
@@ -307,6 +280,20 @@ const hasLinks = Boolean(links.repo || links.demo || links.doc);
       `,
     };
 
+    const iconMap = new Map<string, IconKey>([
+      ["definition", "target"],
+      ["mise en pratique", "tools"],
+      ["contraintes & enjeux", "shield"],
+      ["contraintes et enjeux", "shield"],
+      ["resultats", "chart"],
+      ["résultats", "chart"],
+      ["auto-evaluation", "check"],
+      ["auto-évaluation", "check"],
+      ["evolution", "arrow"],
+      ["évolution", "arrow"],
+      ["regard critique", "eye"],
+    ]);
+
     const normalize = (s: string): string =>
       s
         .trim()
@@ -343,79 +330,7 @@ const hasLinks = Boolean(links.repo || links.demo || links.doc);
 
       if (current) current.appendChild(el);
     }
-  }
-</script>
-
-<script>
-  const galleryRoot = document.querySelector<HTMLElement>("[data-gallery]");
-  if (galleryRoot) {
-    const viewport = galleryRoot.querySelector<HTMLElement>(".galleryViewport");
-    const slides = Array.from(galleryRoot.querySelectorAll<HTMLElement>(".gallerySlide"));
-    const pills = Array.from(galleryRoot.querySelectorAll<HTMLButtonElement>(".galleryPill"));
-    const prevBtn = galleryRoot.querySelector<HTMLButtonElement>("[data-prev]");
-    const nextBtn = galleryRoot.querySelector<HTMLButtonElement>("[data-next]");
-
-    const cleanupIfEmpty = () => {
-      const remaining = galleryRoot.querySelectorAll(".gallerySlide img").length;
-      if (!remaining) galleryRoot.remove();
-    };
-
-    cleanupIfEmpty();
-    if (!viewport) return;
-
-    const scrollToIndex = (idx: number) => {
-      const slide = galleryRoot.querySelector<HTMLElement>(`.gallerySlide[data-slide="${idx}"]`);
-      if (!slide) return;
-      viewport.scrollTo({ left: slide.offsetLeft, behavior: "smooth" });
-    };
-
-    const getActiveIndex = () => {
-      const left = viewport.scrollLeft;
-      let bestIdx = 0;
-      let bestDist = Infinity;
-
-      slides.forEach((s, i) => {
-        const dist = Math.abs(s.offsetLeft - left);
-        if (dist < bestDist) {
-          bestDist = dist;
-          bestIdx = i;
-        }
-      });
-
-      return bestIdx;
-    };
-
-    const setActivePill = (idx: number) => {
-      pills.forEach((p, i) => p.classList.toggle("is-active", i === idx));
-    };
-
-    prevBtn?.addEventListener("click", () => {
-      const idx = getActiveIndex();
-      scrollToIndex(Math.max(0, idx - 1));
-    });
-
-    nextBtn?.addEventListener("click", () => {
-      const idx = getActiveIndex();
-      scrollToIndex(Math.min(slides.length - 1, idx + 1));
-    });
-
-    pills.forEach((p) => {
-      p.addEventListener("click", () => {
-        const raw = p.getAttribute("data-go");
-        const idx = raw ? Number(raw) : 0;
-        scrollToIndex(idx);
-      });
-    });
-
-    let raf = 0;
-    viewport.addEventListener("scroll", () => {
-      cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(() => setActivePill(getActiveIndex()));
-    });
-
-    setActivePill(0);
-    setTimeout(cleanupIfEmpty, 400);
-  }
+  })();
 </script>
 
 <style>
@@ -478,137 +393,7 @@ const hasLinks = Boolean(links.repo || links.demo || links.doc);
     min-width: 0;
   }
 
-  /* =========================
-     Galerie premium (léger)
-  ========================= */
-  .gallery {
-    border: 1px solid var(--gray-800);
-    border-radius: 1.5rem;
-    padding: clamp(1rem, 2.5vw, 1.35rem);
-    background: var(--gray-999_40);
-    box-shadow: var(--shadow-sm);
-  }
-
-  .galleryTop {
-    position: relative;
-  }
-
-  .galleryViewport {
-    display: grid;
-    grid-auto-flow: column;
-    grid-auto-columns: minmax(280px, 1fr);
-    gap: 1rem;
-
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    scroll-behavior: smooth;
-
-    padding-bottom: 0.25rem;
-    border-radius: 1.15rem;
-  }
-
-  .gallerySlide {
-    margin: 0;
-    scroll-snap-align: start;
-    min-width: 0;
-  }
-
-  .gallerySlide img {
-    width: 100%;
-    height: auto;
-    display: block;
-    border-radius: 1rem;
-    border: 1px solid var(--gray-800);
-    background: radial-gradient(var(--gray-900), var(--gray-800) 150%);
-  }
-
-  .galleryControls {
-    position: absolute;
-    top: 0.75rem;
-    right: 0.75rem;
-    display: flex;
-    gap: 0.5rem;
-    pointer-events: none;
-  }
-
-  .galleryBtn {
-    pointer-events: auto;
-    width: 2.15rem;
-    height: 2.15rem;
-    border-radius: 999px;
-
-    border: 1px solid color-mix(in srgb, var(--gray-800) 82%, transparent);
-    background:
-      linear-gradient(180deg, var(--gray-999_40), transparent),
-      radial-gradient(var(--gray-900), var(--gray-800) 150%);
-
-    color: var(--gray-100);
-    font-size: 1.2rem;
-    line-height: 1;
-    cursor: pointer;
-
-    box-shadow:
-      0 10px 30px rgba(0, 0, 0, 0.10),
-      inset 0 0 0 1px rgba(255, 255, 255, 0.03);
-
-    transition: transform var(--theme-transition), border-color var(--theme-transition), box-shadow var(--theme-transition);
-  }
-
-  .galleryBtn:hover,
-  .galleryBtn:focus-visible {
-    outline: none;
-    transform: translateY(-1px);
-    border-color: color-mix(in srgb, var(--accent-regular) 35%, var(--gray-700));
-    box-shadow: var(--shadow-sm);
-  }
-
-  .galleryNav {
-    margin-top: 0.85rem;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.55rem;
-  }
-
-  .galleryPill {
-    display: inline-flex;
-    align-items: center;
-
-    padding: 0.4rem 0.85rem;
-    border-radius: 999px;
-
-    border: 1px solid color-mix(in srgb, var(--gray-800) 82%, transparent);
-    background:
-      linear-gradient(180deg, var(--gray-999_40), transparent),
-      radial-gradient(var(--gray-900), var(--gray-800) 150%);
-
-    color: var(--gray-200);
-    font-size: var(--text-sm);
-    line-height: 1;
-    cursor: pointer;
-
-    transition: transform var(--theme-transition), border-color var(--theme-transition), box-shadow var(--theme-transition), color var(--theme-transition);
-  }
-
-  .galleryPill:hover,
-  .galleryPill:focus-visible {
-    outline: none;
-    transform: translateY(-1px);
-    border-color: color-mix(in srgb, var(--accent-regular) 35%, var(--gray-700));
-    box-shadow: var(--shadow-sm);
-    color: var(--gray-0);
-  }
-
-  .galleryPill.is-active {
-    color: var(--accent-text-over);
-    border-color: var(--accent-overlay);
-    background:
-      linear-gradient(180deg, var(--accent-subtle-overlay), transparent),
-      radial-gradient(var(--gray-900), var(--gray-800) 150%);
-  }
-
-  /* =========================
-     CONTENT — blocks premium (Présentation-like)
-  ========================= */
+  /* CONTENT — blocks premium */
   .content {
     display: grid;
     gap: 1.25rem;
@@ -661,7 +446,6 @@ const hasLinks = Boolean(links.repo || links.demo || links.doc);
     font-size: clamp(1.15rem, 2vw, 1.4rem);
     letter-spacing: -0.02em;
     color: var(--gray-0);
-
     display: flex;
     align-items: center;
     gap: 0.6rem;
@@ -720,24 +504,13 @@ const hasLinks = Boolean(links.repo || links.demo || links.doc);
     color: var(--gray-400);
   }
 
-  .content :global(hr) {
-    border: 0;
-    height: 1px;
-    margin: 1.75rem 0;
-    background: color-mix(in srgb, var(--gray-800) 85%, transparent);
-  }
-
   @media (prefers-reduced-motion: reduce) {
     .content :global(.mdBlock) {
       transition: none;
     }
-    .galleryBtn,
-    .galleryPill {
-      transition: none;
-    }
   }
 
-  /* Sidebar titles */
+  /* Sidebar */
   .sideCard h2 {
     margin: 0 0 0.75rem;
     font-size: var(--text-lg);
@@ -780,63 +553,7 @@ const hasLinks = Boolean(links.repo || links.demo || links.doc);
     gap: 0.5rem;
   }
 
-  .skillLinks {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.55rem;
-  }
-
-  .skillPill {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.45rem;
-    padding: 0.42rem 0.8rem;
-    border-radius: 999px;
-    background:
-      linear-gradient(180deg, var(--gray-999_40), transparent),
-      radial-gradient(var(--gray-900), var(--gray-800) 150%);
-    border: 1px solid color-mix(in srgb, var(--gray-800) 82%, transparent);
-    color: var(--gray-100);
-    text-decoration: none;
-    font-size: var(--text-sm);
-    line-height: 1;
-    box-shadow:
-      0 10px 30px rgba(0, 0, 0, 0.08),
-      inset 0 0 0 1px rgba(255, 255, 255, 0.03);
-    transition:
-      transform var(--theme-transition),
-      border-color var(--theme-transition),
-      box-shadow var(--theme-transition),
-      background var(--theme-transition);
-  }
-
-  .skillPill::after {
-    content: "›";
-    opacity: 0.75;
-    transform: translateY(-0.5px);
-    transition: transform var(--theme-transition), opacity var(--theme-transition);
-  }
-
-  .skillPill:hover,
-  .skillPill:focus-visible {
-    transform: translateY(-1px);
-    outline: none;
-    border-color: color-mix(in srgb, var(--accent-regular) 35%, var(--gray-700));
-    box-shadow:
-      0 18px 45px rgba(0, 0, 0, 0.16),
-      inset 0 0 0 1px rgba(255, 255, 255, 0.05);
-    background:
-      linear-gradient(180deg, color-mix(in srgb, var(--accent-overlay) 55%, transparent), transparent),
-      radial-gradient(var(--gray-900), var(--gray-800) 150%);
-  }
-
-  .skillPill:hover::after,
-  .skillPill:focus-visible::after {
-    opacity: 0.9;
-    transform: translate(1px, -0.5px);
-  }
-
-  /* TOC non-sticky */
+  /* TOC */
   .tocCard {
     position: static;
     z-index: 1;
@@ -890,6 +607,29 @@ const hasLinks = Boolean(links.repo || links.demo || links.doc);
     background:
       linear-gradient(180deg, color-mix(in srgb, var(--accent-overlay) 55%, transparent), transparent),
       radial-gradient(var(--gray-900), var(--gray-800) 150%);
+  }
+
+  /* Gallery */
+  .galleryViewport {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(280px, 1fr);
+    gap: 1rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 0.25rem;
+  }
+
+  .gallerySlide {
+    margin: 0;
+    scroll-snap-align: start;
+  }
+
+  .gallerySlide img {
+    width: 100%;
+    border-radius: 1rem;
+    border: 1px solid var(--gray-800);
+    display: block;
   }
 
   /* Pager */
