@@ -36,6 +36,26 @@ const work = defineCollection({
 
     // enum "large" (inclut slide) => compatible avec tes contenus existants
     type: z.enum(["projet", "etude", "rpa", "dev", "autre", "slide"]).optional(),
+
+    /* =========================
+       ✅ Champs premium (optionnels / safe)
+    ========================= */
+    featured: z.boolean().default(false),
+
+    // Contexte “jury friendly”
+    role: z.string().optional(),
+    context: z.string().optional(),
+    duration: z.string().optional(),
+    team: z.string().optional(),
+
+    // Liens projet (preuve tangible)
+    links: z
+      .object({
+        repo: z.string().url().optional(),
+        demo: z.string().url().optional(),
+        doc: z.string().url().optional(),
+      })
+      .default({}),
   }),
 });
 

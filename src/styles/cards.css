@@ -1,0 +1,31 @@
+/* src/styles/cards.css */
+.ds-card {
+    border: 1px solid var(--gray-800);
+    border-radius: 1.5rem;
+    padding: clamp(1.25rem, 3vw, 1.9rem);
+    background: var(--gray-999_40);
+    box-shadow: var(--shadow-sm);
+    min-width: 0;
+  
+    transition:
+      transform var(--theme-transition),
+      box-shadow var(--theme-transition),
+      border-color var(--theme-transition);
+  }
+  
+  .ds-card:hover,
+  .ds-card:focus-within {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--accent-overlay);
+  }
+  
+  @media (prefers-reduced-motion: reduce) {
+    .ds-card {
+      transition: none;
+    }
+    .ds-card:hover,
+    .ds-card:focus-within {
+      transform: none;
+    }
+  }

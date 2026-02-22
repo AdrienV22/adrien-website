@@ -79,22 +79,30 @@ const getTagCategory = (raw: string) => {
 const MAX_TAGS = 5;
 const visibleTags = tags.slice(0, MAX_TAGS);
 const remainingCount = Math.max(0, tags.length - MAX_TAGS);
+
+const safeAlt = imageAlt || `Aperçu du projet ${title}`;
 ---
 
 <article class="card">
   <!-- overlay : toute la card cliquable -->
   <a class="cardLink" href={href} aria-label={`Ouvrir le projet : ${title}`}></a>
 
-  {image && (
-    <div class="media">
+  <div class:list={["media", !image && "isPlaceholder"]} aria-hidden={image ? "false" : "true"}>
+    {image ? (
       <img
         src={image}
-        alt={imageAlt || `Aperçu du projet ${title}`}
+        alt={safeAlt}
         loading="lazy"
         decoding="async"
+        sizes="(min-width: 40em) 420px, 100vw"
       />
-    </div>
-  )}
+    ) : (
+      <div class="placeholder">
+        <span class="placeholderTitle">{title}</span>
+        <span class="placeholderHint">Aperçu à venir</span>
+      </div>
+    )}
+  </div>
 
   <header class="head">
     <h3 class="title">{title}</h3>
@@ -121,9 +129,6 @@ const remainingCount = Math.max(0, tags.length - MAX_TAGS);
       </li>
     ) : null}
   </ul>
-
-  <div class="cta" aria-hidden="true">
-  </div>
 </article>
 
 <style>
@@ -157,7 +162,7 @@ const remainingCount = Math.max(0, tags.length - MAX_TAGS);
     border-color: var(--accent-overlay);
   }
 
-  /* ✅ overlay au-dessus de tout le contenu */
+  /* overlay au-dessus de tout le contenu */
   .cardLink {
     position: absolute;
     inset: 0;
@@ -170,22 +175,24 @@ const remainingCount = Math.max(0, tags.length - MAX_TAGS);
     outline-offset: 4px;
   }
 
-  /* ✅ le contenu n'a plus besoin de z-index spécial */
+  /* le contenu n'a plus besoin de z-index spécial */
   .media,
   .head,
-  .excerpt,
-  .cta {
+  .excerpt {
     position: relative;
     z-index: 1;
   }
 
-  /* Image */
+  /* ===== Media ===== */
   .media {
     position: relative;
     border-radius: 1rem;
     overflow: hidden;
     border: 1px solid var(--gray-800);
     background: radial-gradient(var(--gray-900), var(--gray-800) 150%);
+
+    /* ratio stable pour éviter les sauts de layout */
+    aspect-ratio: 16 / 9;
   }
 
   .media::after {
@@ -204,8 +211,9 @@ const remainingCount = Math.max(0, tags.length - MAX_TAGS);
   .media img {
     display: block;
     width: 100%;
-    height: 180px;
+    height: 100%;
     object-fit: cover;
+
     transform: scale(1);
     transition: transform var(--theme-transition);
   }
@@ -214,6 +222,43 @@ const remainingCount = Math.max(0, tags.length - MAX_TAGS);
     transform: scale(1.02);
   }
 
+  /* Placeholder sans image */
+  .media.isPlaceholder::after {
+    background: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.35),
+      rgba(0, 0, 0, 0.15) 40%,
+      rgba(0, 0, 0, 0) 75%
+    );
+  }
+
+  .placeholder {
+    height: 100%;
+    display: grid;
+    align-content: end;
+    gap: 0.25rem;
+    padding: 0.9rem 0.95rem;
+  }
+
+  .placeholderTitle {
+    color: var(--gray-0);
+    font-weight: 650;
+    letter-spacing: -0.01em;
+    overflow-wrap: anywhere;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .placeholderHint {
+    color: var(--gray-300);
+    font-size: var(--text-sm);
+    opacity: 0.9;
+  }
+
+  /* ===== Head ===== */
   .head {
     display: flex;
     align-items: baseline;
@@ -228,6 +273,7 @@ const remainingCount = Math.max(0, tags.length - MAX_TAGS);
     overflow-wrap: anywhere;
   }
 
+  /* ===== Excerpt ===== */
   .excerpt {
     margin: 0;
     color: var(--gray-300);
@@ -255,7 +301,7 @@ const remainingCount = Math.max(0, tags.length - MAX_TAGS);
     gap: 0.5rem;
 
     position: relative;
-    z-index: 20; /* ✅ au-dessus du cardLink (z-index 10) */
+    z-index: 20; /* au-dessus du cardLink (z-index 10) */
   }
 
   .tag,
@@ -377,18 +423,5 @@ const remainingCount = Math.max(0, tags.length - MAX_TAGS);
     transform: none;
     border-color: var(--gray-800);
     box-shadow: none;
-  }
-
-  /* CTA discret en bas */
-  .cta {
-    margin-top: 0.15rem;
-    font-size: var(--text-sm);
-    color: var(--gray-300);
-    opacity: 0.75;
-    transition: opacity var(--theme-transition);
-  }
-
-  .card:hover .cta {
-    opacity: 1;
   }
 </style>

@@ -34,6 +34,8 @@ const projects = entries
       publishDate: d.publishDate as Date | undefined,
       type: d.type as string | undefined,
 
+      featured: Boolean(d.featured),
+
       tags: (d.tags ?? []) as string[],
 
       image: d.img as string | undefined,
@@ -48,8 +50,12 @@ const projects = entries
     return bDate - aDate;
   });
 
-const featured = projects.slice(0, 5);
-const others = projects.slice(5);
+// ✅ Sélection éditoriale : featured=true (sinon fallback “5 plus récents”)
+const featured = projects.filter((p) => p.featured);
+const featuredFinal = featured.length ? featured : projects.slice(0, 5);
+
+const featuredSlugs = new Set(featuredFinal.map((p) => p.slug));
+const others = projects.filter((p) => !featuredSlugs.has(p.slug));
 ---
 
 <BaseLayout
@@ -57,7 +63,7 @@ const others = projects.slice(5);
   description="Réalisations : contexte, décisions d’ingénierie et résultats."
 >
   <div class="stack gap-20">
-    <main class="wrapper stack gap-16">
+    <main class="wrapper stack gap-16" id="top">
       <Hero
         title="Réalisations"
         tagline="Une sélection de projets structurés — méthode, qualité et résultats."
@@ -68,7 +74,7 @@ const others = projects.slice(5);
         <article class="block" aria-label="Sélection">
           <header class="blockHead">
             <h2 class="blockTitle">
-              Réalisations principales<span class="count">({featured.length})</span>
+              Réalisations principales<span class="count">({featuredFinal.length})</span>
             </h2>
             <p class="blockLead">
               Les projets les plus représentatifs de ma démarche (architecture, industrialisation, tests).
@@ -76,7 +82,7 @@ const others = projects.slice(5);
           </header>
 
           <ul class="workGrid">
-            {featured.map((project) => (
+            {featuredFinal.map((project) => (
               <li class="workGridItem">
                 <WorkCard
                   href={project.href}
