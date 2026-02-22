@@ -111,7 +111,7 @@ const hasLinks = Boolean(links.repo || links.demo || links.doc);
 
         {/* Card principale */}
         <section class="card" aria-label="Contenu">
-          <article class="content autoBlocks">
+          <article class="content" data-md-blocks>
             <Content />
           </article>
         </section>
@@ -197,16 +197,15 @@ const hasLinks = Boolean(links.repo || links.demo || links.doc);
         {toc.length ? (
           <section class="card sideCard tocCard">
             <h2 class="sideTitle">Table des matières</h2>
+
             <nav class="toc" aria-label="Table des matières">
-              <ol class="tocList">
+              <div class="tocPills">
                 {toc.map((h: any) => (
-                  <li class:list={["tocItem", h.depth === 3 && "isSub"]}>
-                    <a class="tocLink" href={`#${h.slug}`}>
-                      <span class="tocText">{h.text}</span>
-                    </a>
-                  </li>
+                  <a class:list={["tocPill", h.depth === 3 && "isSub"]} href={`#${h.slug}`}>
+                    <span class="tocPillText">{h.text}</span>
+                  </a>
                 ))}
-              </ol>
+              </div>
             </nav>
           </section>
         ) : null}
@@ -228,6 +227,124 @@ const hasLinks = Boolean(links.repo || links.demo || links.doc);
     <ContactCTA />
   </main>
 </BaseLayout>
+
+<script>
+  type IconKey = "target" | "tools" | "shield" | "spark" | "check" | "arrow" | "eye";
+
+  const root = document.querySelector<HTMLElement>("[data-md-blocks]");
+  if (root) {
+    const iconMap = new Map<string, IconKey>([
+      ["definition", "target"],
+      ["mise en pratique", "tools"],
+      ["contraintes & enjeux", "shield"],
+      ["contraintes et enjeux", "shield"],
+      ["resultats", "spark"],
+      ["résultats", "spark"],
+      ["auto-evaluation", "check"],
+      ["auto-évaluation", "check"],
+      ["evolution", "arrow"],
+      ["évolution", "arrow"],
+      ["regard critique", "eye"],
+    ]);
+
+    const icons: Record<IconKey, string> = {
+
+target: `
+  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/>
+    <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.8"/>
+    <circle cx="12" cy="12" r="1.5" fill="currentColor"/>
+  </svg>
+`,
+
+tools: `
+  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <path d="M14 7l3 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+    <path d="M13 8l-8 8a2 2 0 0 0 0 3 2 2 0 0 0 3 0l8-8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+    <path d="M16.5 3.5a4.5 4.5 0 0 0 4 6l-1.8 1.8-4-4L16.5 3.5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+  </svg>
+`,
+
+shield: `
+  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <path d="M12 3l8 4v6c0 5-3.5 8.5-8 9-4.5-.5-8-4-8-9V7l8-4Z"
+      stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+  </svg>
+`,
+
+spark: `
+  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <path d="M4 19V5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+    <path d="M10 19V9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+    <path d="M16 19V12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+    <path d="M22 19H2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+  </svg>
+`,
+
+check: `
+  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/>
+    <path d="M8 12l3 3 5-6"
+      stroke="currentColor" stroke-width="1.8"
+      stroke-linecap="round"
+      stroke-linejoin="round"/>
+  </svg>
+`,
+
+arrow: `
+  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <path d="M7 17l10-10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+    <path d="M10 7h7v7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+`,
+
+eye: `
+  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <path d="M2.5 12s3.5-7 9.5-7 9.5 7 9.5 7-3.5 7-9.5 7-9.5-7-9.5-7Z"
+      stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+    <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.8"/>
+  </svg>
+`,
+};
+
+    const normalize = (s: string): string =>
+      s
+        .trim()
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "");
+
+    const children = Array.from(root.children);
+    let current: HTMLElement | null = null;
+
+    for (const el of children) {
+      const isH2 = el.tagName === "H2";
+
+      if (isH2) {
+        current = document.createElement("article");
+        current.className = "block mdBlock";
+        root.insertBefore(current, el);
+
+        const title = el.textContent ?? "";
+        const key = normalize(title);
+        const iconKey = iconMap.get(key);
+
+        if (iconKey) {
+          const iconWrap = document.createElement("span");
+          iconWrap.className = "blockIcon";
+          iconWrap.setAttribute("aria-hidden", "true");
+          iconWrap.innerHTML = icons[iconKey];
+          el.prepend(iconWrap);
+        }
+
+        current.appendChild(el);
+        continue;
+      }
+
+      if (current) current.appendChild(el);
+    }
+  }
+</script>
 
 <style>
   .back {
@@ -276,8 +393,6 @@ const hasLinks = Boolean(links.repo || links.demo || links.doc);
     display: grid;
     gap: 1.25rem;
     align-content: start;
-
-    /* ✅ Fix stacking context : base stable */
     position: relative;
     z-index: 0;
   }
@@ -291,6 +406,115 @@ const hasLinks = Boolean(links.repo || links.demo || links.doc);
     min-width: 0;
   }
 
+  /* =========================
+     CONTENT — blocks premium (comme Présentation)
+  ========================= */
+  .content {
+    display: grid;
+    gap: 1.25rem;
+    max-width: 78ch;
+    min-width: 0;
+  }
+
+  .content :global(.mdBlock) {
+    position: relative;
+    border: 1px solid var(--gray-800);
+    border-radius: clamp(1rem, 2vw, 1.5rem);
+    padding: clamp(1.25rem, 3vw, 2rem);
+    background: var(--gray-999_40);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+    transition:
+      transform var(--theme-transition),
+      box-shadow var(--theme-transition),
+      border-color var(--theme-transition);
+  }
+
+  /* Accent “frise” à gauche (copié de Présentation) */
+  .content :global(.mdBlock::before) {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 14%;
+    bottom: 14%;
+    width: 2px;
+    background: linear-gradient(
+      to bottom,
+      transparent 0%,
+      color-mix(in srgb, var(--accent-regular) 35%, var(--gray-700)) 18%,
+      var(--accent-regular) 50%,
+      color-mix(in srgb, var(--accent-regular) 35%, var(--gray-700)) 82%,
+      transparent 100%
+    );
+    opacity: 0.7;
+  }
+
+  /* Hover très discret */
+  .content :global(.mdBlock:hover),
+  .content :global(.mdBlock:focus-within) {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--accent-overlay);
+    outline: none;
+  }
+
+  /* Titres / texte exactement comme Présentation */
+  .content :global(.mdBlock > h2) {
+    margin: 0 0 0.75rem;
+    font-size: clamp(1.15rem, 2vw, 1.4rem);
+    letter-spacing: -0.02em;
+    color: var(--gray-0);
+  }
+
+  .content :global(.mdBlock p) {
+    margin: 0.65rem 0;
+    line-height: 1.75;
+    color: var(--gray-200);
+    max-width: 78ch;
+  }
+
+  .content :global(.mdBlock ul),
+  .content :global(.mdBlock ol) {
+    list-style: none;
+    padding: 0;
+    margin: 0.75rem 0 0;
+    display: grid;
+    gap: 0.55rem;
+    color: var(--gray-200);
+    max-width: 78ch;
+  }
+
+  .content :global(.mdBlock li) {
+    position: relative;
+    padding-left: 1rem;
+    line-height: 1.7;
+  }
+
+  .content :global(.mdBlock li::before) {
+    content: "–";
+    position: absolute;
+    left: 0;
+    color: var(--gray-400);
+  }
+
+  /* HR / éléments éventuels */
+  .content :global(hr) {
+    border: 0;
+    height: 1px;
+    margin: 1.75rem 0;
+    background: color-mix(in srgb, var(--gray-800) 85%, transparent);
+  }
+
+  /* Respect des préférences */
+  @media (prefers-reduced-motion: reduce) {
+    .content :global(.mdBlock) {
+      transition: none;
+    }
+  }
+
+  /* =========================
+     Sidebar titles
+  ========================= */
   .sideCard h2 {
     margin: 0 0 0.75rem;
     font-size: var(--text-lg);
@@ -389,119 +613,64 @@ const hasLinks = Boolean(links.repo || links.demo || links.doc);
     transform: translate(1px, -0.5px);
   }
 
-  /* ✅ Sticky TOC, mais sans bloquer les clics des actions */
+  /* TOC non-sticky */
   .tocCard {
     position: static;
-    top: calc(var(--nav-gap) + 0.75rem);
-
-    /* clé du fix : ordre d’empilement maîtrisé */
     z-index: 1;
   }
 
-  .tocList {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: grid;
-    gap: 0.35rem;
-  }
-
-  .tocItem.isSub .tocLink {
-    padding-left: 1.25rem;
-    opacity: 0.92;
-  }
-
-  .tocLink {
+  /* TOC — pills premium */
+  .tocPills {
     display: flex;
-    text-decoration: none;
-    color: var(--gray-200);
-    padding: 0.45rem 0.55rem;
-    border-radius: 0.75rem;
-    border: 1px solid transparent;
-    transition: transform var(--theme-transition), border-color var(--theme-transition),
-      background var(--theme-transition);
+    flex-wrap: wrap;
+    gap: 0.55rem;
   }
 
-  .tocLink:hover,
-  .tocLink:focus-visible {
-    outline: none;
-    transform: translateY(-1px);
-    border-color: color-mix(in srgb, var(--gray-800) 85%, transparent);
-    background: color-mix(in srgb, var(--gray-999_40) 70%, transparent);
-  }
-
-  .tocText {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
-  @media (max-width: 60em) {
-    .tocCard {
-      position: static;
-      top: auto;
-      z-index: auto;
-    }
-    .tocText {
-      white-space: normal;
-    }
-  }
-
-  .content {
-    max-width: 78ch;
-    min-width: 0;
-  }
-
-  .content :global(h2) {
-    margin: 1.75rem 0 0.75rem;
-    font-size: var(--text-xl);
-    color: var(--gray-0);
-    overflow-wrap: anywhere;
-  }
-
-  .content :global(h3) {
-    margin: 1.25rem 0 0.6rem;
-    font-size: var(--text-lg);
-    color: var(--gray-0);
-  }
-
-  .content :global(p) {
-    margin: 0.65rem 0;
-    line-height: 1.75;
-    color: var(--gray-200);
-    overflow-wrap: anywhere;
-  }
-
-  .content :global(ul),
-  .content :global(ol) {
-    margin: 0.6rem 0 1rem;
-    padding-left: 0;
-    list-style: none;
-    display: grid;
+  .tocPill {
+    display: inline-flex;
+    align-items: center;
     gap: 0.45rem;
+    padding: 0.4rem 0.85rem;
+    border-radius: 999px;
+    background:
+      linear-gradient(180deg, var(--gray-999_40), transparent),
+      radial-gradient(var(--gray-900), var(--gray-800) 150%);
+    border: 1px solid color-mix(in srgb, var(--gray-800) 82%, transparent);
     color: var(--gray-200);
+    text-decoration: none;
+    font-size: var(--text-sm);
+    line-height: 1;
+    box-shadow:
+      0 8px 25px rgba(0, 0, 0, 0.06),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.03);
+    transition:
+      transform var(--theme-transition),
+      border-color var(--theme-transition),
+      box-shadow var(--theme-transition),
+      background var(--theme-transition),
+      color var(--theme-transition);
   }
 
-  .content :global(li) {
-    position: relative;
-    padding-left: 1rem;
-    line-height: 1.7;
+  .tocPill.isSub {
+    opacity: 0.85;
+    font-size: calc(var(--text-sm) - 0.05rem);
   }
 
-  .content :global(li)::before {
-    content: "–";
-    position: absolute;
-    left: 0;
-    color: var(--gray-400);
+  .tocPill:hover,
+  .tocPill:focus-visible {
+    transform: translateY(-1px);
+    outline: none;
+    border-color: color-mix(in srgb, var(--accent-regular) 35%, var(--gray-700));
+    color: var(--gray-0);
+    box-shadow:
+      0 16px 40px rgba(0, 0, 0, 0.15),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+    background:
+      linear-gradient(180deg, color-mix(in srgb, var(--accent-overlay) 55%, transparent), transparent),
+      radial-gradient(var(--gray-900), var(--gray-800) 150%);
   }
 
-  .content :global(hr) {
-    border: 0;
-    height: 1px;
-    margin: 1.75rem 0;
-    background: color-mix(in srgb, var(--gray-800) 85%, transparent);
-  }
-
+  /* Gallery */
   .galleryViewport {
     display: grid;
     grid-auto-flow: column;
@@ -524,6 +693,7 @@ const hasLinks = Boolean(links.repo || links.demo || links.doc);
     display: block;
   }
 
+  /* Pager */
   .pager {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -568,19 +738,11 @@ const hasLinks = Boolean(links.repo || links.demo || links.doc);
     }
   }
 
-  .sideCard .sideTitle {
-    letter-spacing: -0.01em;
-  }
-
-  /* =========================
-     Actions — pills premium
-  ========================= */
+  /* Actions — pills */
   .sideActions {
     display: flex;
     flex-wrap: wrap;
     gap: 0.6rem;
-
-    /* ✅ passe au-dessus si une sticky card chevauche */
     position: relative;
     z-index: 2;
   }
@@ -589,33 +751,25 @@ const hasLinks = Boolean(links.repo || links.demo || links.doc);
     display: inline-flex;
     align-items: center;
     gap: 0.55rem;
-
     padding: 0.42rem 0.8rem;
     border-radius: 999px;
-
     background:
       linear-gradient(180deg, var(--gray-999_40), transparent),
       radial-gradient(var(--gray-900), var(--gray-800) 150%);
-
     border: 1px solid color-mix(in srgb, var(--gray-800) 82%, transparent);
-
     color: var(--gray-200);
     text-decoration: none;
     font-size: var(--text-sm);
     line-height: 1;
-
     box-shadow:
       0 10px 30px rgba(0, 0, 0, 0.08),
       inset 0 0 0 1px rgba(255, 255, 255, 0.03);
-
     transition:
       transform var(--theme-transition),
       border-color var(--theme-transition),
       box-shadow var(--theme-transition),
       background var(--theme-transition),
       color var(--theme-transition);
-
-    /* sécurité clic */
     position: relative;
     pointer-events: auto;
   }
@@ -635,14 +789,11 @@ const hasLinks = Boolean(links.repo || links.demo || links.doc);
   .actionPill:focus-visible {
     transform: translateY(-1px);
     outline: none;
-
     border-color: color-mix(in srgb, var(--accent-regular) 35%, var(--gray-700));
     color: var(--gray-0);
-
     box-shadow:
       0 18px 45px rgba(0, 0, 0, 0.16),
       inset 0 0 0 1px rgba(255, 255, 255, 0.05);
-
     background:
       linear-gradient(180deg, color-mix(in srgb, var(--accent-overlay) 55%, transparent), transparent),
       radial-gradient(var(--gray-900), var(--gray-800) 150%);
@@ -658,9 +809,35 @@ const hasLinks = Boolean(links.repo || links.demo || links.doc);
     transform: translateY(0);
   }
 
-  @media (max-width: 60em) {
-    .sideActions {
-      justify-content: flex-start;
-    }
-  }
+  /* Icône de section (dans le H2) */
+.content :global(.mdBlock > h2) {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.content :global(.blockIcon) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 1.15rem;
+  height: 1.15rem;
+
+  color: color-mix(in srgb, var(--accent-regular) 55%, var(--gray-200));
+  opacity: 0.95;
+  transform: translateY(0.5px);
+}
+
+.content :global(.blockIcon svg) {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Petit “boost” au hover du bloc */
+.content :global(.mdBlock:hover .blockIcon),
+.content :global(.mdBlock:focus-within .blockIcon) {
+  color: var(--accent-regular);
+}
 </style>
