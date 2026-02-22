@@ -37,8 +37,8 @@ const typeLabel =
 
 const tagline = typeLabel ?? "";
 
+/** Galerie : si vide / images absentes -> rien n'est affiché */
 const gallery = (entry.data as any)?.gallery as { src: string; alt?: string }[] | undefined;
-const imgAlt = entry.data.img_alt || entry.data.title;
 
 const altOf = (item: { alt?: string }, i: number) =>
   (item.alt && String(item.alt).trim()) || `${entry.data.title} — visuel ${i + 1}`;
@@ -51,7 +51,7 @@ const relatedSkills = relatedSkillsSlugs
   .map((s) => skillBySlug.get(String(s)))
   .filter((x): x is SkillEntry => Boolean(x));
 
-/** ✅ Navigation Précédent / Suivant (tri par date desc) */
+/** Navigation Précédent / Suivant (tri par date desc) */
 const all = (await getCollection("work")) as WorkEntry[];
 const sorted = [...all].sort((a, b) => {
   const aDate = (a.data.publishDate as Date | undefined)?.valueOf?.() ?? 0;
@@ -62,7 +62,7 @@ const idx = sorted.findIndex((e) => String(e.slug) === String(entry.slug));
 const prev = idx > 0 ? sorted[idx - 1] : null;
 const next = idx >= 0 && idx < sorted.length - 1 ? sorted[idx + 1] : null;
 
-/** ✅ Liens (safe) */
+/** Liens (safe) */
 const links = ((entry.data as any)?.links ?? {}) as { repo?: string; demo?: string; doc?: string };
 const hasLinks = Boolean(links.repo || links.demo || links.doc);
 ---
@@ -80,33 +80,40 @@ const hasLinks = Boolean(links.repo || links.demo || links.doc);
     <section class="layout" aria-label="Fiche projet">
       {/* Colonne principale */}
       <div class="mainCol stack gap-10">
+        {/* Galerie premium légère : si aucune image valide -> rien */}
         {gallery?.length ? (
-          <section class="gallery" aria-label="Galerie">
-            <div class="galleryViewport" tabindex="0" aria-label="Galerie (défilement horizontal)">
-              {gallery.map((item, i) => (
-                <figure class="gallerySlide">
-                  <img
-                    src={item.src}
-                    alt={altOf(item, i)}
-                    loading={i === 0 ? "eager" : "lazy"}
-                    fetchpriority={i === 0 ? "high" : "auto"}
-                    decoding="async"
-                    sizes="(min-width: 60em) 900px, 100vw"
-                  />
-                </figure>
-              ))}
+          <section class="gallery" aria-label="Galerie" data-gallery>
+            <div class="galleryTop">
+              <div class="galleryViewport" tabindex="0" aria-label="Galerie (défilement horizontal)">
+                {gallery.map((item, i) => (
+                  <figure class="gallerySlide" data-slide={String(i)}>
+                    <img
+                      src={item.src}
+                      alt={altOf(item, i)}
+                      loading={i === 0 ? "eager" : "lazy"}
+                      fetchpriority={i === 0 ? "high" : "auto"}
+                      decoding="async"
+                      sizes="(min-width: 60em) 900px, 100vw"
+                      onerror="this.closest('figure')?.remove();"
+                    />
+                  </figure>
+                ))}
+              </div>
+
+              <div class="galleryControls" aria-label="Contrôles de la galerie">
+                <button class="galleryBtn" type="button" data-prev aria-label="Image précédente">‹</button>
+                <button class="galleryBtn" type="button" data-next aria-label="Image suivante">›</button>
+              </div>
             </div>
+
+            <nav class="galleryNav" aria-label="Navigation de la galerie">
+              {gallery.map((item, i) => (
+                <button class="galleryPill" type="button" data-go={String(i)}>
+                  {(item.alt && String(item.alt).trim()) || `Visuel ${i + 1}`}
+                </button>
+              ))}
+            </nav>
           </section>
-        ) : entry.data.img ? (
-          <figure class="cover">
-            <img
-              src={entry.data.img}
-              alt={imgAlt}
-              loading="lazy"
-              decoding="async"
-              sizes="(min-width: 60em) 900px, 100vw"
-            />
-          </figure>
         ) : null}
 
         {/* Card principale */}
@@ -229,7 +236,7 @@ const hasLinks = Boolean(links.repo || links.demo || links.doc);
 </BaseLayout>
 
 <script>
-  type IconKey = "target" | "tools" | "shield" | "spark" | "check" | "arrow" | "eye";
+  type IconKey = "target" | "tools" | "shield" | "chart" | "check" | "arrow" | "eye";
 
   const root = document.querySelector<HTMLElement>("[data-md-blocks]");
   if (root) {
@@ -238,8 +245,8 @@ const hasLinks = Boolean(links.repo || links.demo || links.doc);
       ["mise en pratique", "tools"],
       ["contraintes & enjeux", "shield"],
       ["contraintes et enjeux", "shield"],
-      ["resultats", "spark"],
-      ["résultats", "spark"],
+      ["resultats", "chart"],
+      ["résultats", "chart"],
       ["auto-evaluation", "check"],
       ["auto-évaluation", "check"],
       ["evolution", "arrow"],
@@ -248,64 +255,57 @@ const hasLinks = Boolean(links.repo || links.demo || links.doc);
     ]);
 
     const icons: Record<IconKey, string> = {
-
-target: `
-  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-    <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/>
-    <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.8"/>
-    <circle cx="12" cy="12" r="1.5" fill="currentColor"/>
-  </svg>
-`,
-
-tools: `
-  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-    <path d="M14 7l3 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-    <path d="M13 8l-8 8a2 2 0 0 0 0 3 2 2 0 0 0 3 0l8-8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-    <path d="M16.5 3.5a4.5 4.5 0 0 0 4 6l-1.8 1.8-4-4L16.5 3.5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
-  </svg>
-`,
-
-shield: `
-  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-    <path d="M12 3l8 4v6c0 5-3.5 8.5-8 9-4.5-.5-8-4-8-9V7l8-4Z"
-      stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
-  </svg>
-`,
-
-spark: `
-  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-    <path d="M4 19V5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-    <path d="M10 19V9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-    <path d="M16 19V12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-    <path d="M22 19H2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-  </svg>
-`,
-
-check: `
-  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-    <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/>
-    <path d="M8 12l3 3 5-6"
-      stroke="currentColor" stroke-width="1.8"
-      stroke-linecap="round"
-      stroke-linejoin="round"/>
-  </svg>
-`,
-
-arrow: `
-  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-    <path d="M7 17l10-10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-    <path d="M10 7h7v7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-  </svg>
-`,
-
-eye: `
-  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-    <path d="M2.5 12s3.5-7 9.5-7 9.5 7 9.5 7-3.5 7-9.5 7-9.5-7-9.5-7Z"
-      stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
-    <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.8"/>
-  </svg>
-`,
-};
+      target: `
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/>
+          <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.8"/>
+          <circle cx="12" cy="12" r="1.5" fill="currentColor"/>
+        </svg>
+      `,
+      tools: `
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M14 7l3 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          <path d="M13 8l-8 8a2 2 0 0 0 0 3 2 2 0 0 0 3 0l8-8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          <path d="M16.5 3.5a4.5 4.5 0 0 0 4 6l-1.8 1.8-4-4L16.5 3.5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+        </svg>
+      `,
+      shield: `
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M12 3l8 4v6c0 5-3.5 8.5-8 9-4.5-.5-8-4-8-9V7l8-4Z"
+            stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+        </svg>
+      `,
+      chart: `
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M4 19V5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          <path d="M10 19V9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          <path d="M16 19V12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          <path d="M22 19H2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+      `,
+      check: `
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/>
+          <path d="M8 12l3 3 5-6"
+            stroke="currentColor" stroke-width="1.8"
+            stroke-linecap="round"
+            stroke-linejoin="round"/>
+        </svg>
+      `,
+      arrow: `
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M7 17l10-10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          <path d="M10 7h7v7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      `,
+      eye: `
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M2.5 12s3.5-7 9.5-7 9.5 7 9.5 7-3.5 7-9.5 7-9.5-7-9.5-7Z"
+            stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+          <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.8"/>
+        </svg>
+      `,
+    };
 
     const normalize = (s: string): string =>
       s
@@ -343,6 +343,78 @@ eye: `
 
       if (current) current.appendChild(el);
     }
+  }
+</script>
+
+<script>
+  const galleryRoot = document.querySelector<HTMLElement>("[data-gallery]");
+  if (galleryRoot) {
+    const viewport = galleryRoot.querySelector<HTMLElement>(".galleryViewport");
+    const slides = Array.from(galleryRoot.querySelectorAll<HTMLElement>(".gallerySlide"));
+    const pills = Array.from(galleryRoot.querySelectorAll<HTMLButtonElement>(".galleryPill"));
+    const prevBtn = galleryRoot.querySelector<HTMLButtonElement>("[data-prev]");
+    const nextBtn = galleryRoot.querySelector<HTMLButtonElement>("[data-next]");
+
+    const cleanupIfEmpty = () => {
+      const remaining = galleryRoot.querySelectorAll(".gallerySlide img").length;
+      if (!remaining) galleryRoot.remove();
+    };
+
+    cleanupIfEmpty();
+    if (!viewport) return;
+
+    const scrollToIndex = (idx: number) => {
+      const slide = galleryRoot.querySelector<HTMLElement>(`.gallerySlide[data-slide="${idx}"]`);
+      if (!slide) return;
+      viewport.scrollTo({ left: slide.offsetLeft, behavior: "smooth" });
+    };
+
+    const getActiveIndex = () => {
+      const left = viewport.scrollLeft;
+      let bestIdx = 0;
+      let bestDist = Infinity;
+
+      slides.forEach((s, i) => {
+        const dist = Math.abs(s.offsetLeft - left);
+        if (dist < bestDist) {
+          bestDist = dist;
+          bestIdx = i;
+        }
+      });
+
+      return bestIdx;
+    };
+
+    const setActivePill = (idx: number) => {
+      pills.forEach((p, i) => p.classList.toggle("is-active", i === idx));
+    };
+
+    prevBtn?.addEventListener("click", () => {
+      const idx = getActiveIndex();
+      scrollToIndex(Math.max(0, idx - 1));
+    });
+
+    nextBtn?.addEventListener("click", () => {
+      const idx = getActiveIndex();
+      scrollToIndex(Math.min(slides.length - 1, idx + 1));
+    });
+
+    pills.forEach((p) => {
+      p.addEventListener("click", () => {
+        const raw = p.getAttribute("data-go");
+        const idx = raw ? Number(raw) : 0;
+        scrollToIndex(idx);
+      });
+    });
+
+    let raf = 0;
+    viewport.addEventListener("scroll", () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => setActivePill(getActiveIndex()));
+    });
+
+    setActivePill(0);
+    setTimeout(cleanupIfEmpty, 400);
   }
 </script>
 
@@ -407,7 +479,135 @@ eye: `
   }
 
   /* =========================
-     CONTENT — blocks premium (comme Présentation)
+     Galerie premium (léger)
+  ========================= */
+  .gallery {
+    border: 1px solid var(--gray-800);
+    border-radius: 1.5rem;
+    padding: clamp(1rem, 2.5vw, 1.35rem);
+    background: var(--gray-999_40);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .galleryTop {
+    position: relative;
+  }
+
+  .galleryViewport {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(280px, 1fr);
+    gap: 1rem;
+
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+
+    padding-bottom: 0.25rem;
+    border-radius: 1.15rem;
+  }
+
+  .gallerySlide {
+    margin: 0;
+    scroll-snap-align: start;
+    min-width: 0;
+  }
+
+  .gallerySlide img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 1rem;
+    border: 1px solid var(--gray-800);
+    background: radial-gradient(var(--gray-900), var(--gray-800) 150%);
+  }
+
+  .galleryControls {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    display: flex;
+    gap: 0.5rem;
+    pointer-events: none;
+  }
+
+  .galleryBtn {
+    pointer-events: auto;
+    width: 2.15rem;
+    height: 2.15rem;
+    border-radius: 999px;
+
+    border: 1px solid color-mix(in srgb, var(--gray-800) 82%, transparent);
+    background:
+      linear-gradient(180deg, var(--gray-999_40), transparent),
+      radial-gradient(var(--gray-900), var(--gray-800) 150%);
+
+    color: var(--gray-100);
+    font-size: 1.2rem;
+    line-height: 1;
+    cursor: pointer;
+
+    box-shadow:
+      0 10px 30px rgba(0, 0, 0, 0.10),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.03);
+
+    transition: transform var(--theme-transition), border-color var(--theme-transition), box-shadow var(--theme-transition);
+  }
+
+  .galleryBtn:hover,
+  .galleryBtn:focus-visible {
+    outline: none;
+    transform: translateY(-1px);
+    border-color: color-mix(in srgb, var(--accent-regular) 35%, var(--gray-700));
+    box-shadow: var(--shadow-sm);
+  }
+
+  .galleryNav {
+    margin-top: 0.85rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+  }
+
+  .galleryPill {
+    display: inline-flex;
+    align-items: center;
+
+    padding: 0.4rem 0.85rem;
+    border-radius: 999px;
+
+    border: 1px solid color-mix(in srgb, var(--gray-800) 82%, transparent);
+    background:
+      linear-gradient(180deg, var(--gray-999_40), transparent),
+      radial-gradient(var(--gray-900), var(--gray-800) 150%);
+
+    color: var(--gray-200);
+    font-size: var(--text-sm);
+    line-height: 1;
+    cursor: pointer;
+
+    transition: transform var(--theme-transition), border-color var(--theme-transition), box-shadow var(--theme-transition), color var(--theme-transition);
+  }
+
+  .galleryPill:hover,
+  .galleryPill:focus-visible {
+    outline: none;
+    transform: translateY(-1px);
+    border-color: color-mix(in srgb, var(--accent-regular) 35%, var(--gray-700));
+    box-shadow: var(--shadow-sm);
+    color: var(--gray-0);
+  }
+
+  .galleryPill.is-active {
+    color: var(--accent-text-over);
+    border-color: var(--accent-overlay);
+    background:
+      linear-gradient(180deg, var(--accent-subtle-overlay), transparent),
+      radial-gradient(var(--gray-900), var(--gray-800) 150%);
+  }
+
+  /* =========================
+     CONTENT — blocks premium (Présentation-like)
   ========================= */
   .content {
     display: grid;
@@ -430,7 +630,6 @@ eye: `
       border-color var(--theme-transition);
   }
 
-  /* Accent “frise” à gauche (copié de Présentation) */
   .content :global(.mdBlock::before) {
     content: "";
     position: absolute;
@@ -449,7 +648,6 @@ eye: `
     opacity: 0.7;
   }
 
-  /* Hover très discret */
   .content :global(.mdBlock:hover),
   .content :global(.mdBlock:focus-within) {
     transform: translateY(-1px);
@@ -458,12 +656,37 @@ eye: `
     outline: none;
   }
 
-  /* Titres / texte exactement comme Présentation */
   .content :global(.mdBlock > h2) {
     margin: 0 0 0.75rem;
     font-size: clamp(1.15rem, 2vw, 1.4rem);
     letter-spacing: -0.02em;
     color: var(--gray-0);
+
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .content :global(.blockIcon) {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.15rem;
+    height: 1.15rem;
+    color: color-mix(in srgb, var(--accent-regular) 55%, var(--gray-200));
+    opacity: 0.95;
+    transform: translateY(0.5px);
+  }
+
+  .content :global(.blockIcon svg) {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  .content :global(.mdBlock:hover .blockIcon),
+  .content :global(.mdBlock:focus-within .blockIcon) {
+    color: var(--accent-regular);
   }
 
   .content :global(.mdBlock p) {
@@ -497,7 +720,6 @@ eye: `
     color: var(--gray-400);
   }
 
-  /* HR / éléments éventuels */
   .content :global(hr) {
     border: 0;
     height: 1px;
@@ -505,16 +727,17 @@ eye: `
     background: color-mix(in srgb, var(--gray-800) 85%, transparent);
   }
 
-  /* Respect des préférences */
   @media (prefers-reduced-motion: reduce) {
     .content :global(.mdBlock) {
       transition: none;
     }
+    .galleryBtn,
+    .galleryPill {
+      transition: none;
+    }
   }
 
-  /* =========================
-     Sidebar titles
-  ========================= */
+  /* Sidebar titles */
   .sideCard h2 {
     margin: 0 0 0.75rem;
     font-size: var(--text-lg);
@@ -619,7 +842,6 @@ eye: `
     z-index: 1;
   }
 
-  /* TOC — pills premium */
   .tocPills {
     display: flex;
     flex-wrap: wrap;
@@ -670,29 +892,6 @@ eye: `
       radial-gradient(var(--gray-900), var(--gray-800) 150%);
   }
 
-  /* Gallery */
-  .galleryViewport {
-    display: grid;
-    grid-auto-flow: column;
-    grid-auto-columns: minmax(280px, 1fr);
-    gap: 1rem;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    padding-bottom: 0.25rem;
-  }
-
-  .gallerySlide {
-    margin: 0;
-    scroll-snap-align: start;
-  }
-
-  .gallerySlide img {
-    width: 100%;
-    border-radius: 1rem;
-    border: 1px solid var(--gray-800);
-    display: block;
-  }
-
   /* Pager */
   .pager {
     display: grid;
@@ -738,7 +937,7 @@ eye: `
     }
   }
 
-  /* Actions — pills */
+  /* Actions */
   .sideActions {
     display: flex;
     flex-wrap: wrap;
@@ -808,36 +1007,4 @@ eye: `
   .actionPill:active {
     transform: translateY(0);
   }
-
-  /* Icône de section (dans le H2) */
-.content :global(.mdBlock > h2) {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-}
-
-.content :global(.blockIcon) {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-
-  width: 1.15rem;
-  height: 1.15rem;
-
-  color: color-mix(in srgb, var(--accent-regular) 55%, var(--gray-200));
-  opacity: 0.95;
-  transform: translateY(0.5px);
-}
-
-.content :global(.blockIcon svg) {
-  width: 100%;
-  height: 100%;
-  display: block;
-}
-
-/* Petit “boost” au hover du bloc */
-.content :global(.mdBlock:hover .blockIcon),
-.content :global(.mdBlock:focus-within .blockIcon) {
-  color: var(--accent-regular);
-}
 </style>
