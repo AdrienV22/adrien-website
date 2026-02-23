@@ -214,11 +214,13 @@ const excerptOf = (w: any) => {
     box-shadow: var(--shadow-sm);
   }
   .logoWrap img {
-    width: 72%;
-    height: 72%;
+    width: 100%;
+    height: 100%;
     object-fit: contain;
+    object-position: center;
     display: block;
     opacity: 0.95;
+    filter: none; /* couleurs d’origine du logo */
   }
 
   .meta {
