@@ -152,6 +152,7 @@ const excerptOf = (w: any) => {
                   title={w.data.title}
                   tags={w.data.tags ?? []}
                   skillPills={skillPills}
+                  cardBadge={w.data.cardBadge}
                   excerpt={excerptOf(w)}
                   image={w.data.img}
                   imageAlt={w.data.img_alt ?? ""}
@@ -373,9 +374,17 @@ const excerptOf = (w: any) => {
     color: var(--gray-0);
   }
 
+  /* Projets associés : cartes compactes (même taille que Réalisations associées en page compétence) */
   .relatedGrid {
     display: grid;
     gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
+  }
+
+  @media (min-width: 30em) {
+    .relatedGrid {
+      grid-template-columns: repeat(auto-fill, minmax(200px, 280px));
+    }
   }
 
   @media (min-width: 50em) {
@@ -383,8 +392,7 @@ const excerptOf = (w: any) => {
       grid-template-columns: 1fr 1fr;
     }
     .relatedGrid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 1.25rem;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 300px));
     }
   }
 

@@ -34,6 +34,9 @@ const work = defineCollection({
     // Optionnels
     card: z.string().optional(),
 
+    /** Pill affichée sur la card (ex. "Projet d'entreprise") */
+    cardBadge: z.string().optional(),
+
     // enum "large" (inclut slide) => compatible avec tes contenus existants
     type: z.enum(["projet", "etude", "rpa", "dev", "autre", "slide"]).optional(),
 

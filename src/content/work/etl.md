@@ -3,10 +3,13 @@ title: "Projets ELT & Traitement de données (SSIS & Python)"
 publishDate: 2023-09-22
 description: "Conception et maintenance de flux ELT en environnement professionnel : extraction, transformation, nettoyage et fiabilisation de données à l’aide de Microsoft SSIS et Python."
 
+cardBadge: "Projet d'entreprise"
 img: "/assets/data/elt-cover.png"
 img_alt: "Illustration symbolique de pipeline de traitement de données"
 
 relatedSkills:
+  - ETL
+  - communication-technique
   - architecture-logicielle
   - developpement-back-end
   - autonomie

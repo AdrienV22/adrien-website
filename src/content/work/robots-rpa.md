@@ -3,9 +3,12 @@ title: "Robots d'automatisation RPA"
 publishDate: 2023-09-22
 description: "Conception et maintenance de robots RPA en environnement professionnel, dans un contexte sensible soumis à des contraintes de confidentialité et de protection des données de santé."
 type: projet
+cardBadge: "Projet d'entreprise"
 img: "/assets/music_shop/main.png"
 img_alt: "Illustration symbolique d'automatisation"
 relatedSkills:
+  - rpa
+  - communication-technique
   - architecture-logicielle
   - pilotagedeprojet
   - developpement-back-end

@@ -12,9 +12,11 @@ type Props = {
   imageAlt?: string;
   /** Compétences mobilisées : pills vers /competences/slug (prioritaires sur tags si non vide) */
   skillPills?: SkillPill[];
+  /** Pill premium sur la card (ex. "Projet d'entreprise") */
+  cardBadge?: string;
 };
 
-const { href, title, tags, excerpt, image, imageAlt = "", skillPills = [] } =
+const { href, title, tags, excerpt, image, imageAlt = "", skillPills = [], cardBadge } =
   Astro.props as Props;
 
 // Catégorisation simple (tu peux enrichir quand tu veux)
@@ -94,6 +96,10 @@ const safeAlt = imageAlt || `Aperçu du projet ${title}`;
 <article class="card">
   <!-- overlay : toute la card cliquable -->
   <a class="cardLink" href={href} aria-label={`Ouvrir le projet : ${title}`}></a>
+
+  {cardBadge ? (
+    <span class="cardBadge" aria-hidden="true">{cardBadge}</span>
+  ) : null}
 
   <div class:list={["media", !image && "isPlaceholder"]} aria-hidden={image ? "false" : "true"}>
     {image ? (
@@ -190,6 +196,26 @@ const safeAlt = imageAlt || `Aperçu du projet ${title}`;
     transform: translateY(-2px);
     box-shadow: var(--shadow-md);
     border-color: var(--accent-overlay);
+  }
+
+  /* Pill premium (ex. "Projet d'entreprise") */
+  .cardBadge {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    z-index: 11;
+    pointer-events: none;
+    padding: 0.28rem 0.65rem;
+    border-radius: 999px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    background: linear-gradient(180deg, var(--gray-999_40), transparent),
+      radial-gradient(var(--gray-900), var(--gray-800) 150%);
+    border: 1px solid color-mix(in srgb, var(--accent-regular) 40%, var(--gray-800));
+    color: var(--gray-100);
+    box-shadow: var(--shadow-sm), inset 0 0 0 1px rgba(255, 255, 255, 0.06);
   }
 
   /* overlay au-dessus de tout le contenu */

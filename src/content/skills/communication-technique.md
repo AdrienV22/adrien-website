@@ -25,7 +25,7 @@ growth:
   - "Renforcer la capacité de vulgarisation pour des décideurs non techniques"
   - "Pratiquer davantage la présentation orale en contexte professionnel"
 
-relatedWorks: ["portfolio"]
+relatedWorks: ["robots-rpa", "etl", "portfolio"]
 ---
 
 ## Définition

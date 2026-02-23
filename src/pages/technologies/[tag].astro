@@ -35,6 +35,7 @@ const projects = entries
     excerpt: (entry.data as any).description ?? entry.body,
     image: (entry.data as any).img,
     imageAlt: (entry.data as any).img_alt,
+    cardBadge: (entry.data as any).cardBadge,
   }))
   .sort((a, b) => b.publishDate.valueOf() - a.publishDate.valueOf());
 ---

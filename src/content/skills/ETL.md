@@ -17,7 +17,7 @@ growth:
   - "Renforcer les compétences en modélisation de données avancée"
   - "Approfondir l'orchestration et l'observabilité des pipelines"
 
-relatedWorks: []
+relatedWorks: ["etl"]
 ---
 
 ## Définition et contexte professionnel

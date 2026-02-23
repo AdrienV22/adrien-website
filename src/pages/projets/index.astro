@@ -49,6 +49,7 @@ const projects = entries
 
       tags: (d.tags ?? []) as string[],
       skillPills,
+      cardBadge: (d.cardBadge ?? undefined) as string | undefined,
 
       image: d.img as string | undefined,
       imageAlt: (d.img_alt ?? "") as string,
@@ -101,6 +102,7 @@ const others = projects.filter((p) => !featuredSlugs.has(p.slug));
                   title={project.title}
                   tags={project.tags}
                   skillPills={project.skillPills}
+                  cardBadge={project.cardBadge}
                   excerpt={project.excerpt}
                   image={project.image}
                   imageAlt={project.imageAlt}
@@ -129,6 +131,7 @@ const others = projects.filter((p) => !featuredSlugs.has(p.slug));
                     title={project.title}
                     tags={project.tags}
                     skillPills={project.skillPills}
+                    cardBadge={project.cardBadge}
                     excerpt={project.excerpt}
                     image={project.image}
                     imageAlt={project.imageAlt}

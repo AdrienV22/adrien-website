@@ -166,6 +166,7 @@ function getExcerpt(markdown: string, length = 220) {
                     title={w.data.title as any}
                     tags={(w.data as any).tags ?? []}
                     skillPills={skillPills}
+                    cardBadge={(w.data as any).cardBadge}
                     excerpt={excerpt}
                     image={(w.data as any).img}
                     imageAlt={(w.data as any).img_alt}

@@ -73,6 +73,9 @@ const hasLinks = Boolean(
   links.repo || links.repoFrontend || links.repoBackend || links.demo || links.doc
 );
 const hasCodeLinks = Boolean(links.repoFrontend || links.repoBackend);
+
+/** Projets soumis à confidentialité / données de santé (encart d’information) */
+const isConfidentialProject = String(entry.slug) === "robots-rpa" || String(entry.slug) === "etl";
 ---
 
 <BaseLayout title={entry.data.title} description={entry.data.description}>
@@ -84,6 +87,20 @@ const hasCodeLinks = Boolean(links.repoFrontend || links.repoBackend);
     <Hero title={entry.data.title} tagline={tagline || undefined} align="start">
       {entry.data.description ? <p class="lead">{entry.data.description}</p> : null}
     </Hero>
+
+    {isConfidentialProject ? (
+      <aside class="confidentialEncart" role="note" aria-label="Information confidentialité">
+        <span class="confidentialEncartIcon" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 256 256" fill="none" stroke="currentColor" stroke-width="16" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M128 48a88 88 0 0 0-88 88c0 30 18 58 44 76v36a8 8 0 0 0 8 8h72a8 8 0 0 0 8-8v-36c26-18 44-46 44-76a88 88 0 0 0-88-88Z"/>
+            <path d="M128 152a24 24 0 0 1-24-24v-16a24 24 0 0 1 48 0v16a24 24 0 0 1-24 24Z"/>
+          </svg>
+        </span>
+        <p class="confidentialEncartText">
+          Ce projet ne peut pas être montré dans son intégralité afin de protéger la <strong>confidentialité</strong> et les <strong>données de santé</strong>. La fiche présente la démarche, les compétences mobilisées et les résultats sans exposer d’éléments sensibles.
+        </p>
+      </aside>
+    ) : null}
 
     <section class="layout" aria-label="Fiche projet">
       {/* Colonne principale */}
@@ -426,6 +443,54 @@ const hasCodeLinks = Boolean(links.repoFrontend || links.repoBackend);
     max-width: 78ch;
     color: var(--gray-200);
     line-height: 1.7;
+  }
+
+  /* Encart confidentialité / données de santé (projets RPA & ETL) */
+  .confidentialEncart {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+    border-radius: 1rem;
+    border: 1px solid color-mix(in srgb, var(--accent-regular) 25%, var(--gray-800));
+    border-left-width: 3px;
+    border-left-color: var(--accent-regular);
+    background: linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--accent-regular) 8%, var(--gray-999_40)),
+      var(--gray-999_40)
+    );
+    box-shadow: var(--shadow-sm);
+    min-width: 0;
+  }
+
+  .confidentialEncartIcon {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 0.5rem;
+    background: color-mix(in srgb, var(--accent-regular) 15%, transparent);
+    color: var(--accent-regular);
+  }
+
+  .confidentialEncartIcon svg {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  .confidentialEncartText {
+    margin: 0;
+    font-size: var(--text-sm);
+    line-height: 1.6;
+    color: var(--gray-200);
+  }
+
+  .confidentialEncartText strong {
+    color: var(--gray-100);
+    font-weight: 600;
   }
 
   .layout {

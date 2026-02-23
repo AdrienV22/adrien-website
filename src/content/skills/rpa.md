@@ -18,7 +18,7 @@ growth:
   - "Structurer les pratiques d'industrialisation (versioning, CI/CD, observabilité)"
   - "Développer une approche hybride combinant RPA et développement logiciel traditionnel"
 
-relatedWorks: ["automatisation-multi-portails", "maintenance-robots-production"]
+relatedWorks: ["robots-rpa", "automatisation-multi-portails", "maintenance-robots-production"]
 ---
 
 ## Définition et contexte professionnel
