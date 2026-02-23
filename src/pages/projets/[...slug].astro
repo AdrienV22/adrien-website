@@ -18,7 +18,7 @@ export async function getStaticPaths() {
 const slugParam = Astro.params.slug;
 const slug = Array.isArray(slugParam) ? slugParam.join("/") : slugParam;
 
-if (!slug) throw new Error("Missing slug param for /work/[...slug].astro");
+if (!slug) throw new Error("Missing slug param for /projets/[...slug].astro");
 
 const entry = (await getEntryBySlug("work", slug)) as WorkEntry | null;
 if (!entry) throw new Error(`Work entry not found for slug: ${slug}`);
@@ -38,7 +38,6 @@ const typeLabel =
 const tagline = typeLabel ?? "";
 
 const gallery = (entry.data as any)?.gallery as { src: string; alt?: string }[] | undefined;
-const imgAlt = entry.data.img_alt || entry.data.title;
 
 const altOf = (item: { alt?: string }, i: number) =>
   (item.alt && String(item.alt).trim()) || `${entry.data.title} — visuel ${i + 1}`;
@@ -80,22 +79,41 @@ const hasLinks = Boolean(links.repo || links.demo || links.doc);
     <section class="layout" aria-label="Fiche projet">
       {/* Colonne principale */}
       <div class="mainCol stack gap-10">
-        {/* Si pas d'images, on n'affiche rien */}
+        {/* ✅ Carousel sobre : flèche avant / arrière uniquement */}
         {gallery?.length ? (
           <section class="gallery" aria-label="Galerie">
-            <div class="galleryViewport" tabindex="0" aria-label="Galerie (défilement horizontal)">
-              {gallery.map((item, i) => (
-                <figure class="gallerySlide">
-                  <img
-                    src={item.src}
-                    alt={altOf(item, i)}
-                    loading={i === 0 ? "eager" : "lazy"}
-                    fetchpriority={i === 0 ? "high" : "auto"}
-                    decoding="async"
-                    sizes="(min-width: 60em) 900px, 100vw"
-                  />
-                </figure>
-              ))}
+            <div class="galleryShell" data-gallery>
+              <button class="gArrow gPrev" type="button" aria-label="Image précédente" data-prev>
+                ‹
+              </button>
+
+              <div
+                class="galleryViewport"
+                tabindex="0"
+                aria-label="Galerie (défilement horizontal)"
+                data-viewport
+              >
+                {gallery.map((item, i) => (
+                  <figure class="gallerySlide">
+                    <img
+                      src={item.src}
+                      alt={altOf(item, i)}
+                      loading={i === 0 ? "eager" : "lazy"}
+                      fetchpriority={i === 0 ? "high" : "auto"}
+                      decoding="async"
+                      sizes="(min-width: 60em) 900px, 100vw"
+                    />
+                  </figure>
+                ))}
+              </div>
+
+              <button class="gArrow gNext" type="button" aria-label="Image suivante" data-next>
+                ›
+              </button>
+
+              {/* fade edges */}
+              <span class="edge edgeLeft" aria-hidden="true"></span>
+              <span class="edge edgeRight" aria-hidden="true"></span>
             </div>
           </section>
         ) : null}
@@ -110,14 +128,14 @@ const hasLinks = Boolean(links.repo || links.demo || links.doc);
         {/* Navigation précédente / suivante */}
         <nav class="pager" aria-label="Navigation entre réalisations">
           {prev ? (
-            <a class="pagerLink" href={`/work/${prev.slug}/`}>
+            <a class="pagerLink" href={`/projets/${prev.slug}/`}>
               <span class="pagerLabel">Précédent</span>
               <span class="pagerTitle">{prev.data.title}</span>
             </a>
           ) : <span />}
 
           {next ? (
-            <a class="pagerLink" href={`/work/${next.slug}/`}>
+            <a class="pagerLink" href={`/projets/${next.slug}/`}>
               <span class="pagerLabel">Suivant</span>
               <span class="pagerTitle">{next.data.title}</span>
             </a>
@@ -202,7 +220,7 @@ const hasLinks = Boolean(links.repo || links.demo || links.doc);
         ) : null}
 
         <section class="sideActions" aria-label="Actions">
-          <a class="actionPill" href="/work/">
+          <a class="actionPill" href="/projets/">
             <span class="actionText">Toutes les réalisations</span>
             <span class="actionIcon" aria-hidden="true">›</span>
           </a>
@@ -219,15 +237,45 @@ const hasLinks = Boolean(links.repo || links.demo || links.doc);
   </main>
 </BaseLayout>
 
+<script is:inline>
+  // ✅ JS pur (pas de types) => plus d'erreur ts(8010)
+  (() => {
+    const shell = document.querySelector("[data-gallery]");
+    if (!shell) return;
+
+    const viewport = shell.querySelector("[data-viewport]");
+    const prevBtn = shell.querySelector("[data-prev]");
+    const nextBtn = shell.querySelector("[data-next]");
+    if (!viewport || !prevBtn || !nextBtn) return;
+
+    const scrollByOne = (dir) => {
+      const amount = viewport.clientWidth;
+      viewport.scrollBy({ left: dir * amount, behavior: "smooth" });
+    };
+
+    prevBtn.addEventListener("click", () => scrollByOne(-1));
+    nextBtn.addEventListener("click", () => scrollByOne(1));
+
+    viewport.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowLeft") {
+        e.preventDefault();
+        scrollByOne(-1);
+      }
+      if (e.key === "ArrowRight") {
+        e.preventDefault();
+        scrollByOne(1);
+      }
+    });
+  })();
+</script>
+
 <script>
   // ✅ IIFE = pas de "return" au top-level => build Netlify OK
   (() => {
-    type IconKey = "target" | "tools" | "shield" | "chart" | "check" | "arrow" | "eye";
-
-    const root = document.querySelector<HTMLElement>("[data-md-blocks]");
+    const root = document.querySelector("[data-md-blocks]");
     if (!root) return;
 
-    const icons: Record<IconKey, string> = {
+    const icons = {
       target: `
         <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
           <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/>
@@ -280,7 +328,7 @@ const hasLinks = Boolean(links.repo || links.demo || links.doc);
       `,
     };
 
-    const iconMap = new Map<string, IconKey>([
+    const iconMap = new Map([
       ["definition", "target"],
       ["mise en pratique", "tools"],
       ["contraintes & enjeux", "shield"],
@@ -294,7 +342,7 @@ const hasLinks = Boolean(links.repo || links.demo || links.doc);
       ["regard critique", "eye"],
     ]);
 
-    const normalize = (s: string): string =>
+    const normalize = (s: string) =>
       s
         .trim()
         .toLowerCase()
@@ -302,7 +350,7 @@ const hasLinks = Boolean(links.repo || links.demo || links.doc);
         .replace(/[\u0300-\u036f]/g, "");
 
     const children = Array.from(root.children);
-    let current: HTMLElement | null = null;
+    let current = null;
 
     for (const el of children) {
       const isH2 = el.tagName === "H2";
@@ -320,7 +368,7 @@ const hasLinks = Boolean(links.repo || links.demo || links.doc);
           const iconWrap = document.createElement("span");
           iconWrap.className = "blockIcon";
           iconWrap.setAttribute("aria-hidden", "true");
-          iconWrap.innerHTML = icons[iconKey];
+          iconWrap.innerHTML = icons[iconKey as keyof typeof icons];
           el.prepend(iconWrap);
         }
 
@@ -391,6 +439,135 @@ const hasLinks = Boolean(links.repo || links.demo || links.doc);
     background: var(--gray-999_40);
     box-shadow: var(--shadow-sm);
     min-width: 0;
+  }
+
+  /* =========================
+     Carousel sobre + premium
+  ========================= */
+  .gallery {
+    display: grid;
+    gap: 0.85rem;
+  }
+
+  .galleryShell {
+    position: relative;
+    border-radius: 1.5rem;
+    border: 1px solid var(--gray-800);
+    background: radial-gradient(var(--gray-900), var(--gray-800) 150%);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .galleryViewport {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 100%;
+    gap: 0.9rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding: 1rem;
+    padding: 1rem;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .galleryViewport:focus-visible {
+    outline: 2px solid var(--accent-regular);
+    outline-offset: 4px;
+    border-radius: 1.25rem;
+  }
+
+  .gallerySlide {
+    margin: 0;
+    scroll-snap-align: start;
+    position: relative;
+    border-radius: 1.25rem;
+    overflow: hidden;
+    border: 1px solid var(--gray-800);
+    background: var(--gray-999_40);
+    aspect-ratio: 16 / 9;
+  }
+
+  .gallerySlide img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    transform: scale(1);
+    transition: transform var(--theme-transition);
+  }
+
+  .gallerySlide:hover img {
+    transform: scale(1.01);
+  }
+
+  .gArrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 5;
+
+    width: 42px;
+    height: 42px;
+    border-radius: 999px;
+    border: 1px solid color-mix(in srgb, var(--gray-800) 82%, transparent);
+    background:
+      linear-gradient(180deg, var(--gray-999_40), transparent),
+      radial-gradient(var(--gray-900), var(--gray-800) 150%);
+    color: var(--gray-0);
+    box-shadow:
+      0 10px 30px rgba(0, 0, 0, 0.18),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+
+    display: grid;
+    place-items: center;
+    font-size: 1.5rem;
+    line-height: 1;
+    cursor: pointer;
+
+    transition:
+      transform var(--theme-transition),
+      border-color var(--theme-transition),
+      box-shadow var(--theme-transition),
+      color var(--theme-transition);
+  }
+
+  .gArrow:hover,
+  .gArrow:focus-visible {
+    outline: none;
+    border-color: color-mix(in srgb, var(--accent-regular) 35%, var(--gray-700));
+    box-shadow:
+      0 18px 45px rgba(0, 0, 0, 0.22),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+    transform: translateY(-50%) translateY(-1px);
+  }
+
+  .gPrev { left: 0.75rem; }
+  .gNext { right: 0.75rem; }
+
+  .edge {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 56px;
+    pointer-events: none;
+    opacity: 0.85;
+  }
+
+  .edgeLeft {
+    left: 0;
+    background: linear-gradient(to right, var(--gray-999), transparent);
+  }
+
+  .edgeRight {
+    right: 0;
+    background: linear-gradient(to left, var(--gray-999), transparent);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .gallerySlide img,
+    .gArrow {
+      transition: none;
+    }
   }
 
   /* CONTENT — blocks premium */
@@ -609,29 +786,6 @@ const hasLinks = Boolean(links.repo || links.demo || links.doc);
       radial-gradient(var(--gray-900), var(--gray-800) 150%);
   }
 
-  /* Gallery */
-  .galleryViewport {
-    display: grid;
-    grid-auto-flow: column;
-    grid-auto-columns: minmax(280px, 1fr);
-    gap: 1rem;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    padding-bottom: 0.25rem;
-  }
-
-  .gallerySlide {
-    margin: 0;
-    scroll-snap-align: start;
-  }
-
-  .gallerySlide img {
-    width: 100%;
-    border-radius: 1rem;
-    border: 1px solid var(--gray-800);
-    display: block;
-  }
-
   /* Pager */
   .pager {
     display: grid;
@@ -749,71 +903,71 @@ const hasLinks = Boolean(links.repo || links.demo || links.doc);
   }
 
   /* =========================
-   Compétences mobilisées — pills
-========================= */
-.skillLinks {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.55rem;
-}
+     Compétences mobilisées — pills
+  ========================= */
+  .skillLinks {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+  }
 
-.skillPill {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  padding: 0.42rem 0.8rem;
-  border-radius: 999px;
+  .skillPill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.42rem 0.8rem;
+    border-radius: 999px;
 
-  background:
-    linear-gradient(180deg, var(--gray-999_40), transparent),
-    radial-gradient(var(--gray-900), var(--gray-800) 150%);
+    background:
+      linear-gradient(180deg, var(--gray-999_40), transparent),
+      radial-gradient(var(--gray-900), var(--gray-800) 150%);
 
-  border: 1px solid color-mix(in srgb, var(--gray-800) 82%, transparent);
+    border: 1px solid color-mix(in srgb, var(--gray-800) 82%, transparent);
 
-  color: var(--gray-100);
-  text-decoration: none;
-  font-size: var(--text-sm);
-  line-height: 1;
+    color: var(--gray-100);
+    text-decoration: none;
+    font-size: var(--text-sm);
+    line-height: 1;
 
-  box-shadow:
-    0 10px 30px rgba(0, 0, 0, 0.08),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.03);
+    box-shadow:
+      0 10px 30px rgba(0, 0, 0, 0.08),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.03);
 
-  transition:
-    transform var(--theme-transition),
-    border-color var(--theme-transition),
-    box-shadow var(--theme-transition),
-    background var(--theme-transition),
-    color var(--theme-transition);
-}
+    transition:
+      transform var(--theme-transition),
+      border-color var(--theme-transition),
+      box-shadow var(--theme-transition),
+      background var(--theme-transition),
+      color var(--theme-transition);
+  }
 
-.skillPill::after {
-  content: "›";
-  opacity: 0.75;
-  transform: translateY(-0.5px);
-  transition: transform var(--theme-transition), opacity var(--theme-transition);
-}
+  .skillPill::after {
+    content: "›";
+    opacity: 0.75;
+    transform: translateY(-0.5px);
+    transition: transform var(--theme-transition), opacity var(--theme-transition);
+  }
 
-.skillPill:hover,
-.skillPill:focus-visible {
-  transform: translateY(-1px);
-  outline: none;
+  .skillPill:hover,
+  .skillPill:focus-visible {
+    transform: translateY(-1px);
+    outline: none;
 
-  border-color: color-mix(in srgb, var(--accent-regular) 35%, var(--gray-700));
-  color: var(--gray-0);
+    border-color: color-mix(in srgb, var(--accent-regular) 35%, var(--gray-700));
+    color: var(--gray-0);
 
-  box-shadow:
-    0 18px 45px rgba(0, 0, 0, 0.16),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+    box-shadow:
+      0 18px 45px rgba(0, 0, 0, 0.16),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.05);
 
-  background:
-    linear-gradient(180deg, color-mix(in srgb, var(--accent-overlay) 55%, transparent), transparent),
-    radial-gradient(var(--gray-900), var(--gray-800) 150%);
-}
+    background:
+      linear-gradient(180deg, color-mix(in srgb, var(--accent-overlay) 55%, transparent), transparent),
+      radial-gradient(var(--gray-900), var(--gray-800) 150%);
+  }
 
-.skillPill:hover::after,
-.skillPill:focus-visible::after {
-  opacity: 0.9;
-  transform: translate(1px, -0.5px);
-}
+  .skillPill:hover::after,
+  .skillPill:focus-visible::after {
+    opacity: 0.9;
+    transform: translate(1px, -0.5px);
+  }
 </style>

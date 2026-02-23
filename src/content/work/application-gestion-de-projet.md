@@ -3,16 +3,20 @@ title: "Application de gestion de projet"
 publishDate: 2023-09-22
 description: "Une application web full-stack de gestion de projet (projets, tâches, statuts, priorités, attribution), conçue pour être maintenable, testable et industrialisable (Docker + couverture)."
 
-img: "/assets/pmt/main.png"
+img: "/assets/pmt/board.png"
 img_alt: "Page d'accueil de l'application de gestion de projet"
 
 gallery:
-  - src: "/assets/pmt/main.png"
-    alt: "Page d'accueil"
+  - src: "/assets/pmt/connexion.png"
+    alt: "Page de connexion"
   - src: "/assets/pmt/board.png"
     alt: "Tableau de bord"
+  - src: "/assets/pmt/detail-projet.png"
+    alt: "Page de détail du projet"
   - src: "/assets/pmt/tasks.png"
     alt: "Liste des tâches"
+  - src: "/assets/pmt/inscription.png"
+    alt: "Page d'inscription"
 
 relatedSkills:
   - architecture-logicielle
