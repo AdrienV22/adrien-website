@@ -62,8 +62,17 @@ const prev = idx > 0 ? sorted[idx - 1] : null;
 const next = idx >= 0 && idx < sorted.length - 1 ? sorted[idx + 1] : null;
 
 /** ✅ Liens (safe) */
-const links = ((entry.data as any)?.links ?? {}) as { repo?: string; demo?: string; doc?: string };
-const hasLinks = Boolean(links.repo || links.demo || links.doc);
+const links = ((entry.data as any)?.links ?? {}) as {
+  repo?: string;
+  repoFrontend?: string;
+  repoBackend?: string;
+  demo?: string;
+  doc?: string;
+};
+const hasLinks = Boolean(
+  links.repo || links.repoFrontend || links.repoBackend || links.demo || links.doc
+);
+const hasCodeLinks = Boolean(links.repoFrontend || links.repoBackend);
 ---
 
 <BaseLayout title={entry.data.title} description={entry.data.description}>
@@ -170,18 +179,31 @@ const hasLinks = Boolean(links.repo || links.demo || links.doc);
             <>
               <h3 class="sideSubtitle">Liens</h3>
               <div class="sideLinks">
-                {links.repo ? (
-                  <a class="pillLink" href={links.repo} target="_blank" rel="noreferrer">
-                    Code
+                {links.repoFrontend ? (
+                  <a class="repoLink" href={links.repoFrontend} target="_blank" rel="noopener noreferrer" aria-label="Voir le code frontend sur GitHub">
+                    <Icon icon="github-logo" size="1.1em" />
+                    <span>Voir le code frontend</span>
+                  </a>
+                ) : null}
+                {links.repoBackend ? (
+                  <a class="repoLink" href={links.repoBackend} target="_blank" rel="noopener noreferrer" aria-label="Voir le code backend sur GitHub">
+                    <Icon icon="github-logo" size="1.1em" />
+                    <span>Voir le code backend</span>
+                  </a>
+                ) : null}
+                {!hasCodeLinks && links.repo ? (
+                  <a class="repoLink" href={links.repo} target="_blank" rel="noopener noreferrer" aria-label="Voir le code sur GitHub">
+                    <Icon icon="github-logo" size="1.1em" />
+                    <span>Code</span>
                   </a>
                 ) : null}
                 {links.demo ? (
-                  <a class="pillLink" href={links.demo} target="_blank" rel="noreferrer">
+                  <a class="pillLink" href={links.demo} target="_blank" rel="noopener noreferrer">
                     Démo
                   </a>
                 ) : null}
                 {links.doc ? (
-                  <a class="pillLink" href={links.doc} target="_blank" rel="noreferrer">
+                  <a class="pillLink" href={links.doc} target="_blank" rel="noopener noreferrer">
                     Documentation
                   </a>
                 ) : null}
@@ -728,6 +750,83 @@ const hasLinks = Boolean(links.repo || links.demo || links.doc);
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
+  }
+
+  .repoLink {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.42rem 0.8rem;
+    border-radius: 999px;
+    background:
+      linear-gradient(180deg, var(--gray-999_40), transparent),
+      radial-gradient(var(--gray-900), var(--gray-800) 150%);
+    border: 1px solid color-mix(in srgb, var(--gray-800) 82%, transparent);
+    color: var(--gray-100);
+    text-decoration: none;
+    font-size: var(--text-sm);
+    line-height: 1;
+    box-shadow:
+      0 10px 30px rgba(0, 0, 0, 0.08),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.03);
+    transition:
+      transform var(--theme-transition),
+      border-color var(--theme-transition),
+      box-shadow var(--theme-transition),
+      background var(--theme-transition),
+      color var(--theme-transition);
+  }
+
+  .repoLink :global(svg) {
+    flex-shrink: 0;
+    opacity: 0.9;
+  }
+
+  .repoLink:hover,
+  .repoLink:focus-visible {
+    transform: translateY(-1px);
+    outline: none;
+    border-color: color-mix(in srgb, var(--accent-regular) 35%, var(--gray-700));
+    color: var(--gray-0);
+    box-shadow:
+      0 18px 45px rgba(0, 0, 0, 0.16),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+    background:
+      linear-gradient(180deg, color-mix(in srgb, var(--accent-overlay) 55%, transparent), transparent),
+      radial-gradient(var(--gray-900), var(--gray-800) 150%);
+  }
+
+  .repoLink:hover :global(svg),
+  .repoLink:focus-visible :global(svg) {
+    opacity: 1;
+  }
+
+  .pillLink {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.42rem 0.8rem;
+    border-radius: 999px;
+    background:
+      linear-gradient(180deg, var(--gray-999_40), transparent),
+      radial-gradient(var(--gray-900), var(--gray-800) 150%);
+    border: 1px solid color-mix(in srgb, var(--gray-800) 82%, transparent);
+    color: var(--gray-100);
+    text-decoration: none;
+    font-size: var(--text-sm);
+    transition:
+      transform var(--theme-transition),
+      border-color var(--theme-transition),
+      box-shadow var(--theme-transition),
+      background var(--theme-transition),
+      color var(--theme-transition);
+  }
+
+  .pillLink:hover,
+  .pillLink:focus-visible {
+    transform: translateY(-1px);
+    outline: none;
+    border-color: color-mix(in srgb, var(--accent-regular) 35%, var(--gray-700));
+    color: var(--gray-0);
   }
 
   /* TOC */

@@ -28,7 +28,7 @@ const projects = entries
     return tags.some((t) => slugifyTag(t) === tag);
   })
   .map((entry) => ({
-    href: `/work/${entry.slug}/`,
+    href: `/projets/${entry.slug}/`,
     title: entry.data.title,
     publishDate: entry.data.publishDate,
     tags: entry.data.tags,

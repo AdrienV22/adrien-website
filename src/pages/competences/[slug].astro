@@ -40,8 +40,17 @@ const typeLabel =
    Réalisations associées (relatedWorks)
 ========================= */
 const workEntries = (await getCollection("work")) as WorkEntry[];
-const relatedSlugs = (d.relatedWorks ?? []) as string[];
+const skillEntries = await getCollection("skills");
+const skillBySlug = new Map(skillEntries.map((s) => [String(s.slug), s]));
 
+function getSkillPills(relatedSlugs: string[]): { title: string; slug: string }[] {
+  return relatedSlugs
+    .map((slug) => skillBySlug.get(String(slug)))
+    .filter((s): s is import("astro:content").CollectionEntry<"skills"> => Boolean(s))
+    .map((s) => ({ title: s.data.title, slug: s.slug }));
+}
+
+const relatedSlugs = (d.relatedWorks ?? []) as string[];
 const workBySlug = new Map<string, WorkEntry>(
   workEntries.map((w) => [String(w.slug), w])
 );
@@ -148,6 +157,7 @@ function getExcerpt(markdown: string, length = 220) {
             {relatedWorks.map((w) => {
               const description = String((w.data as any).description ?? w.body ?? "");
               const excerpt = getExcerpt(description, 220);
+              const skillPills = getSkillPills((w.data as any).relatedSkills ?? []);
       
               return (
                 <li class="workGridItem">
@@ -155,6 +165,7 @@ function getExcerpt(markdown: string, length = 220) {
                     href={`/projets/${w.slug}/`}
                     title={w.data.title as any}
                     tags={(w.data as any).tags ?? []}
+                    skillPills={skillPills}
                     excerpt={excerpt}
                     image={(w.data as any).img}
                     imageAlt={(w.data as any).img_alt}

@@ -24,6 +24,10 @@ relatedSkills:
   - developpement-back-end
   - autonomie
   - testqualites
+
+links:
+  repoFrontend: "https://github.com/AdrienV22/project-management-tool-frontend"
+  repoBackend: "https://github.com/AdrienV22/project-management-tool-backend"
 ---
 
 ## Définition

@@ -1,6 +1,8 @@
 ---
 import { slugifyTag } from "../lib/tags";
 
+type SkillPill = { title: string; slug: string };
+
 type Props = {
   href: string;
   title: string;
@@ -8,9 +10,11 @@ type Props = {
   excerpt: string;
   image?: string;
   imageAlt?: string;
+  /** Compétences mobilisées : pills vers /competences/slug (prioritaires sur tags si non vide) */
+  skillPills?: SkillPill[];
 };
 
-const { href, title, tags, excerpt, image, imageAlt = "" } =
+const { href, title, tags, excerpt, image, imageAlt = "", skillPills = [] } =
   Astro.props as Props;
 
 // Catégorisation simple (tu peux enrichir quand tu veux)
@@ -77,8 +81,12 @@ const getTagCategory = (raw: string) => {
 };
 
 const MAX_TAGS = 5;
+const MAX_SKILL_PILLS = 3; /* compétences mobilisées : 3 par card, le reste dans la fiche projet */
+const useSkillPills = skillPills.length > 0;
+const visibleSkillPills = skillPills.slice(0, MAX_SKILL_PILLS);
 const visibleTags = tags.slice(0, MAX_TAGS);
-const remainingCount = Math.max(0, tags.length - MAX_TAGS);
+const remainingSkillCount = useSkillPills ? Math.max(0, skillPills.length - MAX_SKILL_PILLS) : 0;
+const remainingCount = useSkillPills ? 0 : Math.max(0, tags.length - MAX_TAGS);
 
 const safeAlt = imageAlt || `Aperçu du projet ${title}`;
 ---
@@ -110,24 +118,46 @@ const safeAlt = imageAlt || `Aperçu du projet ${title}`;
 
   <p class="excerpt clamp">{excerpt}</p>
 
-  <ul class="tags" aria-label="Tags">
-    {visibleTags.map((t) => (
-      <li class="tag" data-cat={getTagCategory(t)}>
-        <a
-          class="tagLink"
-          href={`/technologies/${slugifyTag(t)}/`}
-          aria-label={`Voir les projets liés à ${t}`}
-        >
-          {t}
-        </a>
-      </li>
-    ))}
-
-    {remainingCount > 0 ? (
-      <li class="tag more" aria-hidden="true">
-        <span class="tagLink">+{remainingCount}</span>
-      </li>
-    ) : null}
+  <ul class="tags" aria-label={useSkillPills ? "Compétences mobilisées" : "Tags"}>
+    {useSkillPills ? (
+      <>
+        {visibleSkillPills.map((s) => (
+          <li class="tag" data-cat="skill">
+            <a
+              class="tagLink"
+              href={`/competences/${s.slug}/`}
+              aria-label={`Voir la compétence : ${s.title}`}
+            >
+              {s.title}
+            </a>
+          </li>
+        ))}
+        {remainingSkillCount > 0 ? (
+          <li class="tag more" aria-hidden="true">
+            <span class="tagLink">+{remainingSkillCount}</span>
+          </li>
+        ) : null}
+      </>
+    ) : (
+      <>
+        {visibleTags.map((t) => (
+          <li class="tag" data-cat={getTagCategory(t)}>
+            <a
+              class="tagLink"
+              href={`/technologies/${slugifyTag(t)}/`}
+              aria-label={`Voir les projets liés à ${t}`}
+            >
+              {t}
+            </a>
+          </li>
+        ))}
+        {remainingCount > 0 ? (
+          <li class="tag more" aria-hidden="true">
+            <span class="tagLink">+{remainingCount}</span>
+          </li>
+        ) : null}
+      </>
+    )}
   </ul>
 </article>
 
@@ -332,7 +362,8 @@ const safeAlt = imageAlt || `Aperçu du projet ${title}`;
   .tag[data-cat="cloud"] {
     --tag-tint: rgba(180, 220, 255, 0.16);
   }
-  .tag[data-cat="other"] {
+  .tag[data-cat="other"],
+  .tag[data-cat="skill"] {
     --tag-tint: rgba(255, 255, 255, 0.12);
   }
 

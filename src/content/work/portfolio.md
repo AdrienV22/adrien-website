@@ -5,6 +5,12 @@ publishDate: 2026-02-01
 tags: ["Astro", "TypeScript", "Architecture Front-End", "Content Collections", "CI/CD", "UX/UI", "SEO"]
 img: "/assets/projects/portfolio-cover.png"
 img_alt: "Aperçu du portfolio développé avec Astro"
+
+relatedSkills:
+  - architecture-logicielle
+  - testqualites
+  - pilotagedeprojet
+  - communication-technique
 ---
 
 ## Définition

@@ -27,8 +27,17 @@ const typeLabel = TYPE_LABEL[d.type] ?? "Parcours";
    Projets associés (relatedWorks)
 ========================= */
 const workEntries = await getCollection("work");
-const relatedSlugs = (d.relatedWorks ?? []) as string[];
+const skillEntries = await getCollection("skills");
+const skillBySlug = new Map(skillEntries.map((s) => [String(s.slug), s]));
 
+function getSkillPills(relatedSlugs: string[]): { title: string; slug: string }[] {
+  return relatedSlugs
+    .map((slug) => skillBySlug.get(String(slug)))
+    .filter((s): s is (typeof skillEntries)[number] => Boolean(s))
+    .map((s) => ({ title: s.data.title, slug: s.slug }));
+}
+
+const relatedSlugs = (d.relatedWorks ?? []) as string[];
 const workBySlug = new Map<string, (typeof workEntries)[number]>(
   workEntries.map((w) => [String(w.slug), w])
 );
@@ -36,7 +45,6 @@ const workBySlug = new Map<string, (typeof workEntries)[number]>(
 const relatedWorks = relatedSlugs
   .map((s) => workBySlug.get(String(s)))
   .filter((x): x is (typeof workEntries)[number] => Boolean(x));
-
 
 const excerptOf = (w: any) => {
   const text = String(w.data?.description ?? "").trim();
@@ -136,16 +144,20 @@ const excerptOf = (w: any) => {
           <h2>Projets associés</h2>
 
           <div class="relatedGrid">
-            {relatedWorks.map((w: any) => (
-              <WorkCard
-                href={`/work/${w.slug}/`}
-                title={w.data.title}
-                tags={w.data.tags ?? []}
-                excerpt={excerptOf(w)}
-                image={w.data.img}
-                imageAlt={w.data.img_alt ?? ""}
-              />
-            ))}
+            {relatedWorks.map((w: any) => {
+              const skillPills = getSkillPills(w.data?.relatedSkills ?? []);
+              return (
+                <WorkCard
+                  href={`/projets/${w.slug}/`}
+                  title={w.data.title}
+                  tags={w.data.tags ?? []}
+                  skillPills={skillPills}
+                  excerpt={excerptOf(w)}
+                  image={w.data.img}
+                  imageAlt={w.data.img_alt ?? ""}
+                />
+              );
+            })}
           </div>
         </section>
       ) : null}

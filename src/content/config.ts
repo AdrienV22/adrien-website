@@ -52,6 +52,8 @@ const work = defineCollection({
     links: z
       .object({
         repo: z.string().url().optional(),
+        repoFrontend: z.string().url().optional(),
+        repoBackend: z.string().url().optional(),
         demo: z.string().url().optional(),
         doc: z.string().url().optional(),
       })

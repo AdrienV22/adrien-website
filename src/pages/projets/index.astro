@@ -1,5 +1,5 @@
 ---
-import { getCollection } from "astro:content";
+import { getCollection, type CollectionEntry } from "astro:content";
 import WorkCard from "../../components/WorkCard.astro";
 
 import BaseLayout from "../../layouts/BaseLayout.astro";
@@ -7,6 +7,15 @@ import ContactCTA from "../../components/ContactCTA.astro";
 import Hero from "../../components/Hero.astro";
 
 const entries = await getCollection("work");
+const skills = await getCollection("skills");
+const skillBySlug = new Map(skills.map((s) => [String(s.slug), s]));
+
+function getSkillPills(relatedSlugs: string[]): { title: string; slug: string }[] {
+  return relatedSlugs
+    .map((slug) => skillBySlug.get(String(slug)))
+    .filter((s): s is CollectionEntry<"skills"> => Boolean(s))
+    .map((s) => ({ title: s.data.title, slug: s.slug }));
+}
 
 function getExcerpt(text: string, length = 220) { 
   const clean = String(text ?? "")
@@ -24,6 +33,8 @@ function getExcerpt(text: string, length = 220) {
 const projects = entries
   .map((entry) => {
     const d = entry.data as any;
+    const relatedSlugs = (d.relatedSkills ?? []) as string[];
+    const skillPills = getSkillPills(relatedSlugs);
 
     return {
       href: `/projets/${entry.slug}/`,
@@ -37,6 +48,7 @@ const projects = entries
       featured: Boolean(d.featured),
 
       tags: (d.tags ?? []) as string[],
+      skillPills,
 
       image: d.img as string | undefined,
       imageAlt: (d.img_alt ?? "") as string,
@@ -50,7 +62,7 @@ const projects = entries
     return bDate - aDate;
   });
 
-// ✅ Sélection éditoriale : featured=true (sinon fallback “5 plus récents”)
+// Sélection éditoriale : featured=true (sinon fallback “5 plus récents”)
 const featured = projects.filter((p) => p.featured);
 const featuredFinal = featured.length ? featured : projects.slice(0, 5);
 
@@ -88,6 +100,7 @@ const others = projects.filter((p) => !featuredSlugs.has(p.slug));
                   href={project.href}
                   title={project.title}
                   tags={project.tags}
+                  skillPills={project.skillPills}
                   excerpt={project.excerpt}
                   image={project.image}
                   imageAlt={project.imageAlt}
@@ -115,6 +128,7 @@ const others = projects.filter((p) => !featuredSlugs.has(p.slug));
                     href={project.href}
                     title={project.title}
                     tags={project.tags}
+                    skillPills={project.skillPills}
                     excerpt={project.excerpt}
                     image={project.image}
                     imageAlt={project.imageAlt}
