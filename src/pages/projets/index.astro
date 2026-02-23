@@ -222,6 +222,11 @@ const others = projects.filter((p) => !featuredSlugs.has(p.slug));
     grid-template-columns: 1fr;
   }
 
+  .workGridItem {
+  height: 100%;
+  min-width: 0;
+}
+
   @media (min-width: 40em) {
     .workGrid {
       grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));

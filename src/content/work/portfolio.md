@@ -3,7 +3,7 @@ title: "Portfolio technique modulaire avec Astro"
 description: "Conception et développement d’un portfolio structuré comme une application statique moderne, orientée architecture et ingénierie logicielle."
 publishDate: 2026-02-01
 tags: ["Astro", "TypeScript", "Architecture Front-End", "Content Collections", "CI/CD", "UX/UI", "SEO"]
-img: "/assets/projects/portfolio-cover.jpg"
+img: "/assets/projects/portfolio-cover.png"
 img_alt: "Aperçu du portfolio développé avec Astro"
 ---
 

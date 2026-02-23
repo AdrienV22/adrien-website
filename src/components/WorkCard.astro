@@ -137,7 +137,7 @@ const safeAlt = imageAlt || `Aperçu du projet ${title}`;
     border: 1px solid var(--gray-800);
     border-radius: 1.25rem;
     overflow: hidden;
-
+    height: 100%;
     padding: 1.25rem;
     display: flex;
     flex-direction: column;
@@ -175,7 +175,12 @@ const safeAlt = imageAlt || `Aperçu du projet ${title}`;
     outline-offset: 4px;
   }
 
-  /* le contenu n'a plus besoin de z-index spécial */
+  .excerpt {
+  /* ✅ garde l’extrait flexible mais stable */
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
   .media,
   .head,
   .excerpt {
@@ -299,7 +304,7 @@ const safeAlt = imageAlt || `Aperçu du projet ${title}`;
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
-
+    margin-top: auto;
     position: relative;
     z-index: 20; /* au-dessus du cardLink (z-index 10) */
   }
@@ -424,4 +429,11 @@ const safeAlt = imageAlt || `Aperçu du projet ${title}`;
     border-color: var(--gray-800);
     box-shadow: none;
   }
+
+  .title {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
 </style>

@@ -69,7 +69,7 @@ const hasLinks = Boolean(links.repo || links.demo || links.doc);
 
 <BaseLayout title={entry.data.title} description={entry.data.description}>
   <main class="wrapper stack gap-10" id="top">
-    <a class="back" href="/work/">
+    <a class="back" href="/projets/">
       <Icon icon="arrow-left" /> Retour aux réalisations
     </a>
 
@@ -80,7 +80,7 @@ const hasLinks = Boolean(links.repo || links.demo || links.doc);
     <section class="layout" aria-label="Fiche projet">
       {/* Colonne principale */}
       <div class="mainCol stack gap-10">
-        {/* ✅ Si pas d'images, on n'affiche rien (comme demandé) */}
+        {/* Si pas d'images, on n'affiche rien */}
         {gallery?.length ? (
           <section class="gallery" aria-label="Galerie">
             <div class="galleryViewport" tabindex="0" aria-label="Galerie (défilement horizontal)">
