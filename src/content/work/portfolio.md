@@ -7,101 +7,46 @@ img: "/assets/projects/portfolio-cover.jpg"
 img_alt: "Aperçu du portfolio développé avec Astro"
 ---
 
-## 1. Présentation du projet
+## Définition
+Ce portfolio a été conçu comme une application statique moderne structurée selon des principes d’ingénierie logicielle, et non comme un simple site vitrine.
 
-Ce portfolio a été conçu comme une application statique moderne et structurée, et non comme un simple site vitrine.
+L’objectif était de construire une base technique évolutive, maintenable et cohérente, capable de structurer mon parcours, mes projets et mes compétences selon une logique modulaire.
 
-L’objectif était de construire une base technique évolutive, maintenable et cohérente, capable de structurer mon parcours, mes projets et mes compétences selon une logique d’ingénierie.
+## Mise en pratique
+- Analyse des exigences RNCP et formalisation des livrables attendus.
+- Modélisation des entités principales (compétences, réalisations, parcours).
+- Mise en place des Content Collections Astro avec typage TypeScript.
+- Création de routes dynamiques basées sur les slugs.
+- Conception d’un design system sobre, cohérent et maintenable.
+- Structuration des liens croisés entre compétences et réalisations.
+- Optimisation SEO, accessibilité et performance (génération statique).
 
----
+## Contraintes & enjeux
+- **Crédibilité professionnelle** : produire un rendu structuré et conforme aux exigences RNCP.
+- **Maintenabilité** : séparation claire entre contenu (Markdown) et présentation (composants Astro).
+- **Cohérence globale** : navigation circulaire entre compétences et projets.
+- **Évolutivité** : capacité à intégrer de nouveaux projets sans refonte complète.
 
-## 2. Objectifs, contexte, enjeux et risques
+## Résultats
+- Architecture modulaire et maintenable.
+- Génération statique performante.
+- Structuration claire du contenu.
+- Navigation cohérente entre compétences, parcours et réalisations.
 
-**Objectifs**
+Sur le plan personnel, le projet a renforcé ma rigueur architecturale et ma capacité à structurer un système d’information centré sur la lisibilité.
 
-- Structurer un portfolio conforme aux exigences RNCP  
-- Mettre en avant des compétences techniques et humaines de manière cohérente  
-- Concevoir une architecture propre, modulaire et évolutive  
+## Auto-évaluation
+Niveau **8/10**.  
+La base technique est solide, cohérente et évolutive. Le projet respecte une logique d’ingénierie claire, sans sur-ingénierie excessive.
 
-**Enjeux**
+Le point fort principal est la cohérence d’ensemble entre architecture, contenu et exigences académiques.
 
-- Lisibilité et crédibilité professionnelle  
-- Maintenabilité dans le temps  
-- Séparation claire entre contenu et présentation  
+## Évolution
+- Intégration d’une internationalisation (FR / EN / JP).
+- Ajout d’un blog technique structuré.
+- Mise en place éventuelle d’une couche de tests automatisés.
 
-**Risques identifiés**
+## Regard critique
+Le principal risque initial était de sur-complexifier l’architecture. Le choix a été fait de privilégier la lisibilité et la modularité.
 
-- Sur-complexification technique inutile  
-- Manque de cohérence entre les pages  
-- Difficulté à maintenir une navigation circulaire claire  
-
----
-
-## 3. Étapes et actions réalisées
-
-- Analyse des exigences RNCP  
-- Modélisation des entités principales (compétences, réalisations, parcours)  
-- Mise en place des Content Collections Astro  
-- Création de routes dynamiques basées sur les slugs  
-- Conception d’un design system sobre et cohérent  
-- Structuration des liens croisés entre compétences et réalisations  
-- Optimisation SEO et accessibilité  
-
----
-
-## 4. Acteurs et interactions
-
-Bien que réalisé à titre personnel, ce projet s’inscrit dans une logique d’interaction avec :
-
-- Le jury RNCP (évaluation académique)  
-- Les recruteurs et professionnels du secteur  
-- Les utilisateurs finaux consultant le portfolio  
-
-Les choix techniques ont été réalisés en tenant compte de ces différentes parties prenantes.
-
----
-
-## 5. Résultats
-
-**Résultats techniques**
-
-- Architecture modulaire maintenable  
-- Génération statique performante  
-- Structuration claire du contenu  
-- Navigation circulaire entre compétences et réalisations  
-
-**Résultats personnels**
-
-- Approfondissement de ma réflexion architecturale  
-- Amélioration de ma rigueur dans la structuration de contenu technique  
-- Meilleure compréhension des enjeux d’UX et de cohérence globale  
-
----
-
-## 6. Lendemains du projet
-
-**À court terme**
-
-- Finalisation des compétences et conformité complète aux critères RNCP  
-
-**À moyen terme**
-
-- Ajout d’une internationalisation (FR / EN / JP)  
-- Intégration d’un blog technique  
-
-**Aujourd’hui**
-
-Le portfolio constitue une base évolutive pouvant accueillir de nouveaux projets et démontrer une progression continue.
-
----
-
-## 7. Regard critique
-
-Le projet a été volontairement structuré de manière modulaire afin d’éviter une logique purement esthétique.
-
-Un risque initial était de sur-ingénier le site. Le choix a été fait de privilégier la lisibilité et la cohérence plutôt que la sophistication excessive.
-
-Avec davantage de temps, une couche de tests automatisés et une analyse de performance plus approfondie pourraient renforcer la robustesse du projet.
-
----
-
+Avec davantage de temps, une analyse de performance plus approfondie et une stratégie de tests front pourraient renforcer encore la robustesse du projet.
