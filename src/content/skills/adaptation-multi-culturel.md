@@ -3,6 +3,20 @@ title: "Adaptation en environnement interculturel"
 type: "humaine"
 level: 7
 summary: "Évoluer dans des environnements multiculturels en adaptant communication, posture et méthodes de travail."
+
+evidence:
+  - title: "Préparation d'un projet professionnel international"
+    context: "Orientation professionnelle vers un environnement international, notamment japonais."
+    result: "Communication plus claire et respectueuse des contextes, capacité à ajuster le discours selon l'interlocuteur."
+  - title: "Travail sur projets à dimension internationale"
+    context: "Projets académiques et veille professionnelle à dimension internationale."
+    result: "Meilleure capacité d'ajustement contextuel, communication plus professionnelle et maîtrisée."
+
+growth:
+  - "Acquérir une expérience professionnelle concrète en contexte international"
+  - "Renforcer la pratique professionnelle en langue étrangère"
+  - "Développer une expérience terrain dans un environnement multiculturel réel"
+
 relatedWorks: []
 ---
 
@@ -80,4 +94,4 @@ Mon expérience reste en grande partie préparatoire. Une immersion professionne
 
 ## Réalisations associées
 
-À compléter en fonction des projets internationaux intégrés au portfolio.
+Projets à dimension internationale (préparation et veille) ; réalisations formalisées à venir au fil de l’expérience.

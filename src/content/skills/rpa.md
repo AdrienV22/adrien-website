@@ -4,6 +4,20 @@ type: "technique"
 level: 8
 summary: "Concevoir, fiabiliser et industrialiser des automatisations robustes afin d’optimiser des processus métiers critiques."
 
+evidence:
+  - title: "Robots UiPath en production – ADENTAL GROUP"
+    context: "Automatisation de traitements multi-portails dans le domaine de la santé, volumes importants et contraintes de fiabilité élevées."
+    result: "Réduction des anomalies opérationnelles, gain de temps quotidien, stabilisation durable des traitements en production."
+  - title: "Gestion des erreurs et monitoring en production"
+    context: "Maintenance évolutive de robots déjà déployés, modifications d'interfaces et variations de données."
+    result: "Diminution des incidents, réduction du temps de diagnostic, solutions maintenables et documentées."
+
+growth:
+  - "Approfondir les architectures d'orchestration complexes"
+  - "Renforcer l'intégration RPA avec des API REST et services back-end"
+  - "Structurer les pratiques d'industrialisation (versioning, CI/CD, observabilité)"
+  - "Développer une approche hybride combinant RPA et développement logiciel traditionnel"
+
 relatedWorks: ["automatisation-multi-portails", "maintenance-robots-production"]
 ---
 

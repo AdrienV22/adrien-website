@@ -454,6 +454,24 @@ function getExcerpt(markdown: string, length = 220) {
     }
   }
 
+  /* Réalisations associées : cartes plus compactes, plusieurs par ligne */
+  .related .workGrid {
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
+  }
+
+  @media (min-width: 30em) {
+    .related .workGrid {
+      grid-template-columns: repeat(auto-fill, minmax(200px, 280px));
+    }
+  }
+
+  @media (min-width: 50em) {
+    .related .workGrid {
+      grid-template-columns: repeat(auto-fill, minmax(220px, 300px));
+    }
+  }
+
   .workGridItem {
     margin: 0;
     min-width: 0;

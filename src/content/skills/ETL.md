@@ -4,6 +4,19 @@ type: "technique"
 level: 7.5
 summary: "Concevoir, fiabiliser et superviser des flux de données garantissant cohérence, qualité et traçabilité."
 
+evidence:
+  - title: "Packages SSIS en environnement SQL Server – ADENTAL GROUP"
+    context: "Déploiement et maintenance de flux d'intégration alimentant processus comptables et métiers."
+    result: "Fiabilisation des traitements comptables, réduction des incohérences, visibilité sur les flux exécutés."
+  - title: "Gestion des erreurs et optimisation des performances"
+    context: "Amélioration de flux existants avec échecs ponctuels ou temps d'exécution élevés."
+    result: "Diminution des échecs de traitement, réduction des temps d'exécution, stabilité globale des pipelines."
+
+growth:
+  - "Approfondir les architectures data modernes (ELT, Azure Data Factory, pipelines cloud)"
+  - "Renforcer les compétences en modélisation de données avancée"
+  - "Approfondir l'orchestration et l'observabilité des pipelines"
+
 relatedWorks: []
 ---
 

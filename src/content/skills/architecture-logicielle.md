@@ -3,6 +3,17 @@ title: "Architecture logicielle"
 type: "technique"
 level: 6
 summary: "Concevoir des structures logicielles cohérentes, maintenables et évolutives en choisissant des découpages adaptés."
+
+evidence:
+  - title: "Conception d'API et structuration de modules"
+    context: "Projets back-end et projets d'automatisation nécessitant une organisation claire du code."
+    result: "Code plus lisible et testable, réduction des dépendances implicites, meilleure évolutivité des projets."
+
+growth:
+  - "Approfondir Domain-Driven Design"
+  - "Renforcer les compétences en tests d'architecture"
+  - "Étudier des cas concrets d'architectures distribuées"
+
 relatedWorks: ["portfolio", "application-gestion-de-projet"]
 ---
 

@@ -304,6 +304,14 @@ const pctOf = (level: number) => Math.max(0, Math.min(100, (Number(level) / 10) 
       radial-gradient(var(--gray-900), var(--gray-800) 150%);
   }
 
+  /* Mode clair : fond du bouton actif très clair → texte sombre pour la lisibilité */
+  :global(html:not(.theme-dark)) .chip.is-active {
+    color: var(--gray-0);
+  }
+  :global(html:not(.theme-dark)) .chip.is-active .chipCount {
+    color: var(--gray-200);
+  }
+
   .overviewList {
     list-style: none;
     margin: 0;

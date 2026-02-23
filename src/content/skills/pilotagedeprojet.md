@@ -4,6 +4,19 @@ type: "humaine"
 level: 7.5
 summary: "Structurer, prioriser et piloter un projet logiciel de manière progressive et cohérente."
 
+evidence:
+  - title: "Structuration complète d'un projet full stack"
+    context: "Réalisation d'un projet incluant front-end, back-end et déploiement."
+    result: "Progression maîtrisée, réduction des retours en arrière, architecture cohérente et stable."
+  - title: "Structuration relationnelle du portfolio RNCP"
+    context: "Conception d'un portfolio répondant à des critères d'évaluation stricts."
+    result: "Navigation circulaire claire, cohérence triangulaire entre pages, alignement strict avec les modalités d'évaluation."
+
+growth:
+  - "Formaliser davantage la gestion des risques et des dépendances"
+  - "Approfondir les méthodes d'estimation et d'indicateurs simples"
+  - "Renforcer la dimension collaborative et l'animation d'équipe"
+
 relatedWorks: ["portfolio", "project-management-tool"]
 ---
 

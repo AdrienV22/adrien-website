@@ -4,6 +4,19 @@ type: "technique"
 level: 6.5
 summary: "Sécuriser et fiabiliser un système logiciel par des tests ciblés, une couverture mesurée et une démarche qualité structurée."
 
+evidence:
+  - title: "Mise en place de tests unitaires sur API Spring Boot"
+    context: "Développement d'une API REST dans le cadre d'un projet full stack."
+    result: "Réduction des régressions fonctionnelles, confiance lors des refactorings, code plus modulaire et lisible."
+  - title: "Intégration d'un suivi de couverture (JaCoCo)"
+    context: "Mesure objective de la qualité du code produit."
+    result: "Vision claire des zones à risque, amélioration progressive de la couverture, démarche qualité mesurable."
+
+growth:
+  - "Développer une stratégie de tests plus complète (intégration et E2E)"
+  - "Automatiser davantage les contrôles qualité en CI/CD"
+  - "Approfondir les approches de tests contractuels et de validation d'API"
+
 relatedWorks: ["project-management-tool", "gamesup", "portfolio"]
 ---
 

@@ -4,6 +4,19 @@ type: "humaine"
 level: 7.5
 summary: "Assumer la responsabilité complète d’un livrable technique, de la conception à la mise en production, avec rigueur et initiative."
 
+evidence:
+  - title: "Conduite autonome d'un projet full stack"
+    context: "Développement d'un projet intégrant back-end, front-end et déploiement."
+    result: "Livraison d'une application fonctionnelle et cohérente, maîtrise des dépendances entre couches, capacité à corriger et améliorer sans assistance permanente."
+  - title: "Gestion autonome de robots en environnement de production"
+    context: "Maintenance et évolution de robots RPA en production."
+    result: "Réduction du temps d'interruption, stabilisation des processus automatisés, amélioration continue des pratiques de monitoring."
+
+growth:
+  - "Renforcer la prise de décision stratégique sur des architectures plus complexes"
+  - "Développer davantage la coordination avec des équipes pluridisciplinaires"
+  - "Approfondir la gestion des risques et la documentation formelle"
+
 relatedWorks: []
 ---
 
