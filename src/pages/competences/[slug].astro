@@ -141,7 +141,7 @@ function getExcerpt(markdown: string, length = 220) {
         <section class="related" aria-label="Réalisations associées">
           <div class="relatedHead">
             <h2>Réalisations associées</h2>
-            <a class="seeAll" href="/work/">Voir tous les projets</a>
+            <a class="seeAll" href="/projets/">Voir tous les projets</a>
           </div>
       
           <ul class="workGrid">
@@ -152,7 +152,7 @@ function getExcerpt(markdown: string, length = 220) {
               return (
                 <li class="workGridItem">
                   <WorkCard
-                    href={`/work/${w.slug}/`}
+                    href={`/projets/${w.slug}/`}
                     title={w.data.title as any}
                     tags={(w.data as any).tags ?? []}
                     excerpt={excerpt}

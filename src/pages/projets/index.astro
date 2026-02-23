@@ -1,14 +1,14 @@
 ---
 import { getCollection } from "astro:content";
-import WorkCard from "../components/WorkCard.astro";
+import WorkCard from "../../components/WorkCard.astro";
 
-import BaseLayout from "../layouts/BaseLayout.astro";
-import ContactCTA from "../components/ContactCTA.astro";
-import Hero from "../components/Hero.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import ContactCTA from "../../components/ContactCTA.astro";
+import Hero from "../../components/Hero.astro";
 
 const entries = await getCollection("work");
 
-function getExcerpt(text: string, length = 220) {
+function getExcerpt(text: string, length = 220) { 
   const clean = String(text ?? "")
     .replace(/<!--[\s\S]*?-->/g, "")
     .replace(/<\/?[^>]+>/g, "")
@@ -26,7 +26,7 @@ const projects = entries
     const d = entry.data as any;
 
     return {
-      href: `/work/${entry.slug}/`,
+      href: `/projets/${entry.slug}/`,
       slug: entry.slug,
 
       title: d.title as string,
