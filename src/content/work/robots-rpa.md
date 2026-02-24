@@ -20,7 +20,6 @@ relatedSkills:
   - autonomie
   - testqualites
   - travail-en-equipe
-  - adaptation-multi-culturel
 ---
 
 ## Définition

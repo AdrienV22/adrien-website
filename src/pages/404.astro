@@ -1,8 +1,75 @@
 ---
 import Hero from '../components/Hero.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from '../components/Icon.astro';
 ---
 
-<BaseLayout title="Not Found" description="404 Error — this page was not found">
-	<Hero title="Page Not Found" tagline="Not found" />
+<BaseLayout title="Page introuvable | Adrien Valo" description="Cette page n'existe pas.">
+	<div class="wrapper stack gap-12">
+		<Hero
+			title="Page introuvable"
+			tagline="La page que vous recherchez n'existe pas ou a été déplacée."
+			align="center"
+		/>
+		<nav class="back-links" aria-label="Navigation de secours">
+			<a class="back primary" href="/">
+				<Icon icon="arrow-left" /> Retour à l'accueil
+			</a>
+			<ul class="links">
+				<li><a href="/presentation/">Présentation</a></li>
+				<li><a href="/competences/">Compétences</a></li>
+				<li><a href="/projets/">Réalisations</a></li>
+				<li><a href="/parcours/">Parcours</a></li>
+				<li><a href="/contact/">Contact</a></li>
+			</ul>
+		</nav>
+	</div>
 </BaseLayout>
+
+<style>
+	.back-links {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 1.25rem;
+		text-align: center;
+	}
+	.back.primary {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		padding: 0.5rem 1rem;
+		border-radius: 999px;
+		border: 1px solid var(--gray-800);
+		background: var(--gray-999_40);
+		color: var(--gray-0);
+		text-decoration: none;
+		font-size: var(--text-md);
+		transition: border-color var(--theme-transition), transform var(--theme-transition);
+	}
+	.back.primary:hover,
+	.back.primary:focus-visible {
+		border-color: var(--accent-overlay);
+		transform: translateY(-1px);
+		outline: none;
+	}
+	.links {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 0.75rem 1.25rem;
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		font-size: var(--text-sm);
+	}
+	.links a {
+		color: var(--gray-300);
+		text-decoration: none;
+	}
+	.links a:hover,
+	.links a:focus-visible {
+		color: var(--accent-regular);
+		outline: none;
+	}
+</style>

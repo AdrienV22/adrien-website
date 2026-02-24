@@ -30,7 +30,7 @@ keyAchievements:
 
 relatedWorks:
   - "application-gestion-de-projet"
-  - "nested/projet-todolist"
+  - "refonte-architecture"
   - "portfolio"
 relatedSkills: ["architecture-logicielle", "pilotagedeprojet", "developpement-back-end", "testqualites", "autonomie", "git"]
 ---

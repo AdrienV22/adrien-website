@@ -1,0 +1,66 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Hero from "../../components/Hero.astro";
+import Icon from "../../components/Icon.astro";
+---
+
+<BaseLayout
+  title="Message envoyé | Adrien Valo"
+  description="Votre message a bien été envoyé."
+>
+  <div class="wrapper stack gap-12">
+    <Hero
+      title="Message envoyé"
+      tagline="Merci pour votre message. Je vous recontacterai dans les plus brefs délais."
+      align="center"
+    />
+    <nav class="actions" aria-label="Suites possibles">
+      <a class="btn primary" href="/">
+        <Icon icon="arrow-left" /> Retour à l'accueil
+      </a>
+      <a class="btn secondary" href="/contact/">Envoyer un autre message</a>
+    </nav>
+  </div>
+</BaseLayout>
+
+<style>
+	.actions {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 1rem;
+	}
+	.btn {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		padding: 0.5rem 1rem;
+		border-radius: 999px;
+		text-decoration: none;
+		font-size: var(--text-md);
+		transition: border-color var(--theme-transition), transform var(--theme-transition), background-color var(--theme-transition);
+	}
+	.btn.primary {
+		border: 1px solid var(--accent-regular);
+		background: var(--accent-regular);
+		color: var(--accent-text-over);
+	}
+	.btn.primary:hover,
+	.btn.primary:focus-visible {
+		background: var(--accent-overlay);
+		border-color: var(--accent-overlay);
+		transform: translateY(-1px);
+		outline: none;
+	}
+	.btn.secondary {
+		border: 1px solid var(--gray-800);
+		background: var(--gray-999_40);
+		color: var(--gray-0);
+	}
+	.btn.secondary:hover,
+	.btn.secondary:focus-visible {
+		border-color: var(--accent-overlay);
+		transform: translateY(-1px);
+		outline: none;
+	}
+</style>
