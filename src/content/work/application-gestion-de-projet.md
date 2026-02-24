@@ -42,6 +42,9 @@ Une application web de gestion de projet pensée comme un socle « produit » : 
 - Mise en place d’endpoints REST stables, gestion d’erreurs explicites, et cohérence des opérations CRUD.
 - Déploiement reproductible via Docker Compose et démarche orientée qualité (tests + couverture).
 
+## Acteurs & interactions
+Projet réalisé en autonomie (conception, développement, tests). Validation et retours dans le cadre académique (livrables, démonstrations). Pas d’équipe métier dédiée : les « acteurs » sont les utilisateurs cibles (gestion de projets / tâches) et le cadre pédagogique pour les revues.
+
 ## Contraintes & enjeux
 
 - **Cohérence fonctionnelle** : règles métier compréhensibles et applicables de bout en bout.

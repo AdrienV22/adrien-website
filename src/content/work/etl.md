@@ -46,6 +46,9 @@ Ces projets s’inscrivaient dans une logique d’industrialisation des flux de 
 - Optimisation des performances sur des volumes importants.
 - Documentation technique et structuration des flux pour assurer leur maintenabilité.
 
+## Acteurs & interactions
+Équipes métier (comptabilité, contrôle de gestion) pour la définition des règles et la validation des flux ; équipe IT pour l’infrastructure et le déploiement. Coordination pour formaliser les règles de transformation, les contrôles qualité et les seuils d’alerte. Documentation et échanges réguliers pour anticiper les évolutions des sources et les impacts.
+
 ## Contraintes & enjeux
 - **Qualité des données** : garantir la cohérence et la fiabilité des informations.
 - **Performance** : traitement de volumes significatifs sans dégradation des temps d’exécution.

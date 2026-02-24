@@ -28,14 +28,9 @@ keyAchievements:
   - "Mise en œuvre de principes de qualité et de sécurité applicative."
   - "Travail collaboratif en méthodologie Agile."
 
-skills:
-  - "Architecture logicielle"
-  - "Développement Full-Stack"
-  - "Sécurisation des applications"
-  - "Gestion de projet"
-
 relatedWorks:
   - "application-gestion-de-projet"
   - "nested/projet-todolist"
   - "portfolio"
+relatedSkills: ["architecture-logicielle", "pilotagedeprojet", "developpement-back-end", "testqualites", "autonomie", "git"]
 ---

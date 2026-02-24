@@ -17,7 +17,7 @@ growth:
   - "Développer davantage la coordination avec des équipes pluridisciplinaires"
   - "Approfondir la gestion des risques et la documentation formelle"
 
-relatedWorks: ["portfolio", "application-gestion-de-projet", "robots-rpa", "etl"]
+relatedWorks: ["application-gestion-de-projet", "robots-rpa", "etl"]
 ---
 
 ## Définition et contexte professionnel
@@ -110,7 +110,6 @@ L’autonomie ne doit pas conduire à l’isolement décisionnel. Elle gagne en 
 
 ## Réalisations associées
 
-- [Portfolio technique modulaire avec Astro](/projets/portfolio/)
 - [Application de gestion de projet](/projets/application-gestion-de-projet/)
 - [Robots d'automatisation RPA](/projets/robots-rpa/)
 - [Projets ELT & Traitement de données](/projets/etl/)

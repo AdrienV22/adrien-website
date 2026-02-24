@@ -29,11 +29,6 @@ keyAchievements:
   - "Participation à des activités étudiantes locales."
   - "Renforcement significatif des compétences linguistiques."
 
-skills:
-  - "Japonais avancé"
-  - "Adaptabilité interculturelle"
-  - "Communication internationale"
-  - "Autonomie"
-
 relatedWorks: []
+relatedSkills: ["adaptation-multi-culturel", "travail-en-equipe", "autonomie"]
 ---

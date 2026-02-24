@@ -36,6 +36,9 @@ Ces automatisations visaient à fiabiliser, accélérer et sécuriser des proces
 - Maintenance corrective et évolutive des robots existants.
 - Documentation technique interne pour assurer la continuité.
 
+## Acteurs & interactions
+Équipe IT interne (développement, déploiement) ; équipes métier et opérationnelles (validation des processus, retours terrain, priorisation). Échanges en mode Agile : points réguliers, clarification des cas limites et des scénarios d’erreur, validation avant mise en production. Documentation partagée pour la continuité et la reprise par d’autres.
+
 ## Contraintes & enjeux
 - **Confidentialité** : traitement de données sensibles (données de santé).
 - **Robustesse** : gestion des cas limites, erreurs réseau et changements d’interface.

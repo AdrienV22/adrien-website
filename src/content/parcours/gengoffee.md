@@ -28,12 +28,6 @@ keyAchievements:
   - "Participation aux décisions stratégiques de l’association."
   - "Contribution au développement d’une communauté interculturelle active."
 
-skills:
-  - "Collaboration"
-  - "Communication interculturelle"
-  - "Organisation"
-  - "Gestion de projet associatif"
-  - "Responsabilité"
-
 relatedWorks: []
+relatedSkills: ["adaptation-multi-culturel", "travail-en-equipe", "communication-technique", "pilotagedeprojet"]
 ---

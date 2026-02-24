@@ -17,7 +17,7 @@ growth:
   - "Approfondir les méthodes d'estimation et d'indicateurs simples"
   - "Renforcer la dimension collaborative et l'animation d'équipe"
 
-relatedWorks: ["portfolio", "application-gestion-de-projet", "robots-rpa", "etl"]
+relatedWorks: ["application-gestion-de-projet", "robots-rpa", "etl"]
 ---
 
 ## Définition et contexte professionnel
@@ -74,8 +74,6 @@ Assurer cohérence, conformité aux exigences et lisibilité globale.
 
 **Valeur ajoutée**  
 Approche orientée produit et conformité, sans surcharge visuelle inutile.
-
-Voir la réalisation associée : [Portfolio technique modulaire avec Astro](/projets/portfolio/)
 
 
 ## Mon autocritique

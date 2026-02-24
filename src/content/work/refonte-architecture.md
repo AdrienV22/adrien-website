@@ -4,7 +4,7 @@ publishDate: 2024-03-01
 description: "Refonte complète d’une API Spring obsolète, sécurisation via Spring Security, mise en place d’une architecture REST conforme aux principes SOLID et intégration d’un système de recommandation Machine Learning via FastAPI."
 type: projet
 
-img: "/assets/gamesup/architecture-cover.png"
+img: "/assets/refonte-architecture/fastapi.png"
 img_alt: "Schéma d'architecture API Spring et service Python ML"
 
 links:
@@ -38,6 +38,9 @@ L’objectif était de reprendre un code existant défaillant, de redéfinir ent
 - Mise en place d’une communication inter-services (API Spring ↔ API Python).
 - Identification des données nécessaires au futur entraînement du modèle ML.
 - Production des diagrammes UML : architecture, classes, composants, séquences dans le README.md.
+
+## Acteurs & interactions
+Étude de cas en contexte académique : travail individuel sur un code fourni, avec livrables (code, diagrammes, README) et évaluations. Pas d’équipe projet ni de product owner ; les interactions concernent la compréhension du sujet, les contraintes imposées (réutilisation, stack) et la démonstration des résultats.
 
 ## Contraintes & enjeux
 

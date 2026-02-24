@@ -20,6 +20,6 @@ keyAchievements:
   - "Création et diffusion de supports de communication (réseaux sociaux, contenus éditoriaux)."
   - "Interaction avec des partenaires culturels et adaptation du discours selon les publics."
   - "Contribution à la visibilité et au rayonnement du festival sur plusieurs éditions."
-skills: ["Gestion de projet", "Communication", "Coordination", "Adaptation interculturelle", "Organisation"]
 relatedWorks: []
+relatedSkills: ["adaptation-multi-culturel", "travail-en-equipe", "communication-technique", "pilotagedeprojet"]
 ---

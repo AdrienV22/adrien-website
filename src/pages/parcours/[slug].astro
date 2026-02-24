@@ -46,6 +46,14 @@ const relatedWorks = relatedSlugs
   .map((s) => workBySlug.get(String(s)))
   .filter((x): x is (typeof workEntries)[number] => Boolean(x));
 
+const relatedSkillsSlugs = (d.relatedSkills ?? []) as string[];
+const skillBySlugForParcours = new Map(
+  skillEntries.map((s) => [String(s.slug), s])
+);
+const relatedSkillsResolved = relatedSkillsSlugs
+  .map((slug) => skillBySlugForParcours.get(String(slug)))
+  .filter((x): x is (typeof skillEntries)[number] => Boolean(x));
+
 const excerptOf = (w: any) => {
   const text = String(w.data?.description ?? "").trim();
   return text.length > 220 ? text.slice(0, 217) + "…" : text;
@@ -163,16 +171,18 @@ const excerptOf = (w: any) => {
         </section>
       ) : null}
 
-      {/* Skills */}
-      {d.skills?.length ? (
-        <footer class="skills">
-          <h2>Compétences mises en œuvre</h2>
-          <ul class="skillList" aria-label="Compétences">
-            {d.skills.map((s) => (
-              <li class="skill">{s}</li>
+      {/* ✅ Compétences rattachées (liens vers les fiches compétences) */}
+      {relatedSkillsResolved.length ? (
+        <section class="related skillsRelated" aria-label="Compétences rattachées">
+          <h2>Compétences rattachées</h2>
+          <div class="skillLinks">
+            {relatedSkillsResolved.map((s) => (
+              <a class="skillPill" href={`/competences/${s.slug}/`}>
+                {s.data.title}
+              </a>
             ))}
-          </ul>
-        </footer>
+          </div>
+        </section>
       ) : null}
     </section>
   </main>
@@ -396,35 +406,35 @@ const excerptOf = (w: any) => {
     }
   }
 
-  /* skills */
-  .skills {
-    margin-top: 1.75rem;
-    padding-top: 1.25rem;
-    border-top: 1px solid var(--gray-800);
-  }
-
-  .skills h2 {
-    margin: 0 0 0.75rem;
-    font-size: var(--text-lg);
-    color: var(--gray-0);
-  }
-
-  .skillList {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+  .skillsRelated .skillLinks {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem;
+    gap: 0.55rem;
+    margin-top: 0.5rem;
   }
 
-  .skill {
-    border: 1px solid var(--gray-800);
+  .skillsRelated .skillPill {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.4rem 0.85rem;
     border-radius: 999px;
-    padding: 0.35rem 0.75rem;
+    border: 1px solid var(--gray-800);
     background: radial-gradient(var(--gray-900), var(--gray-800) 150%);
-    color: var(--gray-200);
+    color: var(--gray-100);
     font-size: var(--text-sm);
+    text-decoration: none;
+    transition:
+      border-color var(--theme-transition),
+      transform var(--theme-transition),
+      box-shadow var(--theme-transition);
+  }
+
+  .skillsRelated .skillPill:hover,
+  .skillsRelated .skillPill:focus-visible {
+    border-color: var(--accent-overlay);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
+    outline: none;
   }
 
   @media (max-width: 40em) {

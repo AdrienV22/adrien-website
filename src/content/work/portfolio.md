@@ -31,6 +31,9 @@ L’objectif était de construire une base technique évolutive, maintenable et 
 - Structuration des liens croisés entre compétences et réalisations.
 - Optimisation SEO, accessibilité et performance (génération statique).
 
+## Acteurs & interactions
+Projet personnel et académique : conception et développement en autonomie. Les « acteurs » sont le cadre RNCP (exigences, livrables, évaluation) et, en filigrane, les lecteurs du portfolio (recruteurs, jury). Pas d’équipe ni de commanditaire ; la structure et les liens ont été pensés pour une navigation claire et conforme aux attendus.
+
 ## Contraintes & enjeux
 
 - **Crédibilité professionnelle** : produire un rendu structuré et conforme aux exigences RNCP.

@@ -26,14 +26,5 @@ keyAchievements:
   - "Semestre d’échange académique au Japon."
   - "Développement d’une forte capacité d’analyse et de synthèse."
 
-skills:
-  - "Analyse critique"
-  - "Communication audiovisuelle"
-  - "Gestion de projet culturel"
-  - "Anglais académique"
-  - "Japonais avancé (C1)"
-
-# relatedWorks:
-#   - "siteweb--marketplace-music"
-#   - "portfolio"
+relatedSkills: ["adaptation-multi-culturel", "communication-technique", "autonomie"]
 ---

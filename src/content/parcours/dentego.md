@@ -19,6 +19,6 @@ keyAchievements:
   - "Automatisation de processus récurrents (RPA) et réduction des tâches manuelles."
   - "Fiabilisation de traitements et gestion de cas d’erreurs."
   - "Amélioration continue et documentation des flux."
-skills: ["Python", "SQL", "SSIS", "UIPath", "Git"]
 relatedWorks: [robots-rpa, etl]
+relatedSkills: ["rpa", "ETL", "communication-technique", "architecture-logicielle", "pilotagedeprojet", "developpement-back-end", "autonomie", "testqualites", "travail-en-equipe"]
 ---

@@ -91,8 +91,9 @@ const parcours = defineCollection({
     positioning: z.string().optional(),
     keyAchievements: z.array(z.string()).default([]),
 
-    skills: z.array(z.string()).default([]),
     relatedWorks: z.array(z.string()).default([]),
+    /** Slugs des compétences rattachées (liens vers /competences/[slug]). Pour parcours internationaux (Tokyo, Secrétaire général…), privilégier les compétences humaines. */
+    relatedSkills: z.array(z.string()).default([]),
   }),
 });
 
@@ -121,6 +122,9 @@ const skills = defineCollection({
     growth: z.array(z.string()).default([]),
 
     relatedWorks: z.array(z.string()).default([]),
+
+    /** Optionnel : slugs de parcours (expériences/formations) à afficher en "Parcours associés" à la place des réalisations (ex. compétence interculturelle). */
+    relatedParcours: z.array(z.string()).optional(),
   }),
 });
 

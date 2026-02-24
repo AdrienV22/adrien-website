@@ -28,11 +28,6 @@ keyAchievements:
   - "Compréhension d’articles et contenus académiques."
   - "Capacité à interagir dans un contexte professionnel."
 
-skills:
-  - "Japonais avancé (C1)"
-  - "Compréhension écrite avancée"
-  - "Analyse linguistique"
-  - "Communication interculturelle"
-
 relatedWorks: []
+relatedSkills: ["adaptation-multi-culturel"]
 ---
