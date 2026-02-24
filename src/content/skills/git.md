@@ -1,7 +1,7 @@
 ---
 title: "Git"
 type: "technique"
-level: 7
+level: 6
 summary: "Utiliser Git pour versionner le code, gérer les branches, collaborer et maintenir une historique de projet propre et exploitable."
 
 evidence:

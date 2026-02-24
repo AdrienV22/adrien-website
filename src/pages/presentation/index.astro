@@ -2,6 +2,7 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Hero from "../../components/Hero.astro";
 import ContactCTA from "../../components/ContactCTA.astro";
+import Icon from "../../components/Icon.astro";
 ---
 
 <BaseLayout
@@ -22,43 +23,66 @@ import ContactCTA from "../../components/ContactCTA.astro";
 
         <!-- Introduction -->
         <article class="block">
-          <h2>Présentation générale</h2>
+          <div class="blockHead">
+            <span class="blockIcon" aria-hidden="true">
+              <Icon icon="loupe-logo" size="1.35rem" color="var(--accent-regular)" />
+            </span>
+            <h2>Présentation générale</h2>
+          </div>
           <p>
-            Actuellement en alternance au sein de Dentego en tant que développeur informatique orienté automatisation et RPA, j’évolue dans un environnement où la fiabilisation des traitements, l’optimisation des processus et la qualité des systèmes d’information occupent une place centrale.
+            Actuellement en alternance chez Dentego, j’interviens en tant que développeur orienté automatisation et RPA, au sein d’un environnement où la fiabilisation des traitements, l’optimisation des processus et la qualité du système d’information sont des enjeux quotidiens.
           </p>
           <p>
-            Engagé dans un Mastère d’Expert en Ingénierie Logicielle, mon parcours s’inscrit dans une volonté de concevoir des solutions robustes, durables et structurées, en lien direct avec les enjeux techniques et organisationnels des entreprises.
+            En parallèle, je poursuis un diplôme d’Expert en Ingénierie Logicielle, avec l’ambition de concevoir des solutions robustes, maintenables et structurées, en phase avec les contraintes techniques et organisationnelles des entreprises.
+            Mon expérience antérieure en gestion de projet nourrit également un intérêt marqué pour des fonctions à l’interface entre technique et pilotage, notamment en contexte AMOE / MOE.
           </p>
         </article>
 
         <!-- Valeurs -->
         <article class="block">
-          <h2>Mes valeurs</h2>
+          <div class="blockHead">
+            <span class="blockIcon" aria-hidden="true">
+              <Icon icon="heart" size="1.35rem" color="var(--accent-regular)" />
+            </span>
+            <h2>Mes valeurs</h2>
+          </div>
           <p>
-            L’ingénierie logicielle ne se limite pas à produire du code fonctionnel. Elle implique une responsabilité : concevoir des systèmes fiables, maintenables et compréhensibles.
+            Au fil de mes expériences, qu’elles soient dans l’univers de la tech ou ailleurs, j’ai eu à cœur de transmettre avec rigueur et clarté les enjeux techniques aux équipes métier, et de construire un pont serein entre les exigences techniques et la logique métier.
           </p>
           <p>
-            La rigueur, la clarté des architectures et la recherche d’amélioration continue structurent ma manière de travailler. La dimension humaine demeure essentielle : collaborer efficacement, documenter et sécuriser les processus sont des éléments fondamentaux d’un système durable.
+            La rigueur, la clarté des architectures et la recherche d’amélioration continue structurent ma manière de travailler. La dimension humaine demeure essentielle : collaborer efficacement, documenter et sécuriser les processus en sont le socle. Je suis soucieux de créer un lien solide, durable et de qualité entre les équipes métier et les équipes techniques.
           </p>
         </article>
 
         <!-- Projet professionnel -->
         <article class="block">
-          <h2>Projet professionnel</h2>
+          <div class="blockHead">
+            <span class="blockIcon" aria-hidden="true">
+              <Icon icon="rocket-launch" size="1.35rem" color="var(--accent-regular)" />
+            </span>
+            <h2>Projet professionnel</h2>
+          </div>
           <p>
             Mon projet professionnel s’oriente vers une expertise approfondie en ingénierie logicielle, avec un intérêt particulier pour l’automatisation des processus, l’architecture des systèmes et la fiabilisation des flux de données.
+
+            Mon appétence pour l’AMOE m’amène également à envisager des postes intégrant des responsabilités de coordination ou de pilotage de projets MOE.
+
+            À moyen terme, je souhaite renforcer mes compétences en conception d’architectures logicielles robustes et évoluer dans des environnements techniques exigeants, où la qualité, la performance et la sécurité constituent des enjeux structurants. Sur un plan plus personnel, je souhaite également approfondir mes connaissances en cybersécurité.
+
           </p>
           <p>
-            À moyen terme, je souhaite renforcer mes compétences en conception d’architectures logicielles robustes et évoluer dans des environnements techniques exigeants où la qualité et la performance sont structurantes.
-          </p>
-          <p>
-            L’ouverture internationale, notamment en lien avec le Japon, constitue également un axe cohérent de mon parcours.
+            Enfin, l’ouverture à l’international — notamment en lien avec le Japon — s’inscrit comme un axe cohérent et motivant de mon parcours professionnel.
           </p>
         </article>
 
         <!-- Qualités humaines -->
         <article class="block">
-          <h2>Qualités humaines</h2>
+          <div class="blockHead">
+            <span class="blockIcon" aria-hidden="true">
+              <Icon icon="boite-outil" size="1.35rem" color="var(--accent-regular)" />
+            </span>
+            <h2>Qualités humaines</h2>
+          </div>
           <ul class="list">
             <li>Autonomie et sens des responsabilités dans la conduite de projets.</li>
             <li>Capacité d’analyse et de structuration face à des problématiques complexes.</li>
@@ -69,16 +93,56 @@ import ContactCTA from "../../components/ContactCTA.astro";
 
         <!-- Centres d’intérêt -->
         <article class="block">
-          <h2>Centres d’intérêt</h2>
-          <p>
-            La musique occupe une place importante : pratique de la guitare et passion pour la MAO (musique assistée par ordinateur), où la composition, l’arrangement et le travail des pistes rejoignent une logique de structuration et de flux qui m’est familière en développement.
-          </p>
-          <p>
-            Les langues et l’ouverture internationale me tiennent à cœur — japonais, anglais, échanges interculturels. J’ai pris part à cette dynamique en tant que secrétaire général d’une association d’échange linguistique, ce qui a renforcé mon goût pour la communication et la diversité des contextes.
-          </p>
-          <p>
-            Le cinéma est un autre domaine qui me passionne, du cinéma de genre (science-fiction, thriller, fantastique) au cinéma dans son ensemble : récits, mise en scène et construction des histoires.
-          </p>
+          <div class="blockHead">
+            <span class="blockIcon" aria-hidden="true">
+              <Icon icon="list" size="1.35rem" color="var(--accent-regular)" />
+            </span>
+            <h2>Centres d’intérêt</h2>
+          </div>
+          <div class="interestList">
+            <div class="interestItem">
+              <div class="interestHead">
+                <span class="interestIcon" aria-hidden="true">
+                  <Icon icon="guitar-logo" size="1.35rem" color="var(--accent-regular)" />
+                </span>
+                <h3 class="interestTitle">Musique</h3>
+              </div>
+              <div class="interestBody">
+                <p>
+                  La musique occupe une place importante dans mon parcours et dans ma manière d’aborder le travail : pratique de la guitare et passion pour la MAO (musique assistée par ordinateur), où la composition, l’arrangement et le travail des pistes font écho à des logiques de structuration, d’architecture et de flux que je retrouve en développement.
+                </p>
+                <p>
+                  Mon intégration au sein du club de jazz de la Tokyo University of Foreign Studies a renforcé ma conviction que la collaboration, l’écoute et l’interaction sont essentielles, tant sur le plan artistique que professionnel.
+                </p>
+              </div>
+            </div>
+            <div class="interestItem">
+              <div class="interestHead">
+                <span class="interestIcon" aria-hidden="true">
+                  <Icon icon="language-logo" size="1.35rem" color="var(--accent-regular)" />
+                </span>
+                <h3 class="interestTitle">Langues & ouverture internationale</h3>
+              </div>
+              <div class="interestBody">
+                <p>
+                  Les langues et l’ouverture internationale constituent également un axe fort de mon parcours — japonais, anglais et échanges interculturels. Mon engagement en tant que secrétaire général d’une association d’échange linguistique a consolidé mon goût pour la communication, la coordination et la diversité des contextes.
+                </p>
+              </div>
+            </div>
+            <div class="interestItem">
+              <div class="interestHead">
+                <span class="interestIcon" aria-hidden="true">
+                  <Icon icon="movie-logo" size="1.35rem" color="var(--accent-regular)" />
+                </span>
+                <h3 class="interestTitle">Cinéma</h3>
+              </div>
+              <div class="interestBody">
+                <p>
+                  Le cinéma représente enfin un autre centre d’intérêt majeur, du cinéma de genre (science-fiction, thriller, fantastique).
+                </p>
+              </div>
+            </div>
+          </div>
         </article>
 
       </section>
@@ -143,8 +207,27 @@ import ContactCTA from "../../components/ContactCTA.astro";
   border-color: var(--accent-overlay);
 }
 
+.blockHead {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-bottom: 0.75rem;
+}
+
+.blockIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.blockIcon :global(svg) {
+  width: 1.35rem;
+  height: 1.35rem;
+}
+
 .block h2 {
-  margin: 0 0 0.75rem;
+  margin: 0;
   font-size: clamp(1.15rem, 2vw, 1.4rem);
   letter-spacing: -0.02em;
   color: var(--gray-0);
@@ -155,6 +238,63 @@ import ContactCTA from "../../components/ContactCTA.astro";
   line-height: 1.75;
   color: var(--gray-200);
   max-width: 78ch;
+}
+
+/* Centres d’intérêt — liste premium avec icônes */
+.interestList {
+  display: grid;
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.interestItem {
+  display: grid;
+  gap: 0.6rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--gray-800);
+}
+
+.interestItem:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.interestHead {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.interestIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.interestIcon :global(svg) {
+  width: 1.35rem;
+  height: 1.35rem;
+}
+
+.interestTitle {
+  margin: 0;
+  font-size: var(--text-md);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--gray-0);
+}
+
+.interestBody {
+  padding-left: calc(1.35rem + 0.65rem);
+}
+
+.interestBody p {
+  margin: 0.5rem 0 0;
+}
+
+.interestBody p:first-child {
+  margin-top: 0;
 }
 
 .list {
