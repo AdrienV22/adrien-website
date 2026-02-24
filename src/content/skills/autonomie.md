@@ -107,10 +107,3 @@ L’autonomie ne doit pas conduire à l’isolement décisionnel. Elle gagne en 
 - Approfondir la gestion des risques et la documentation formelle  
 
 ---
-
-## Réalisations associées
-
-- [Application de gestion de projet](/projets/application-gestion-de-projet/)
-- [Robots d'automatisation RPA](/projets/robots-rpa/)
-- [Projets ELT & Traitement de données](/projets/etl/)
-

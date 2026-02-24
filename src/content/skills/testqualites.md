@@ -107,8 +107,4 @@ Je dois approfondir les tests d’intégration, les tests contractuels et les st
 
 ---
 
-## Réalisations associées
 
-- Application de gestion de projet  
-- Refonte d’architecture API & Système de recommandation  
-- Portfolio technique modulaire avec Astro

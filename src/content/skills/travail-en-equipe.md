@@ -8,8 +8,8 @@ evidence:
   - title: "Collaboration avec les équipes métiers – projets RPA"
     context: "Conception et maintenance de robots RPA en environnement professionnel, dans un contexte soumis à des exigences de confidentialité et de données de santé."
     result: "Échanges en mode Agile avec les équipes métiers, affinage des processus selon leurs besoins, stabilisation des flux et continuité de service."
-  - title: "Coordination inter-équipes – projets ELT / données"
-    context: "Conception et maintenance de pipelines ELT en environnement professionnel, avec des enjeux de qualité, traçabilité et gouvernance des données."
+  - title: "Coordination inter-équipes – projets ETL / données"
+    context: "Conception et maintenance de pipelines ETL en environnement professionnel, avec des enjeux de qualité, traçabilité et gouvernance des données."
     result: "Clarification des règles métier, documentation partagée, amélioration des processus via échanges techniques avec les parties prenantes."
 
 growth:
@@ -54,10 +54,10 @@ Capacité à intervenir sur des systèmes critiques en s’appuyant sur une coll
 
 ---
 
-### Coordination inter-équipes – projets ELT / données
+### Coordination inter-équipes – projets ETL / données
 
 **Contexte**  
-Conception et maintenance de pipelines ELT en environnement professionnel, avec des enjeux de qualité des données, traçabilité et gouvernance. Les flux alimentent des processus comptables et métiers dépendant de plusieurs parties prenantes.
+Conception et maintenance de pipelines ETL en environnement professionnel, avec des enjeux de qualité des données, traçabilité et gouvernance. Les flux alimentent des processus comptables et métiers dépendant de plusieurs parties prenantes.
 
 **Problématique**  
 Garantir la cohérence des règles métier, la compréhension partagée des transformations et la réactivité face aux incidents ou évolutions des sources de données.
@@ -102,7 +102,5 @@ Je souhaite encore renforcer ma capacité à challenger techniquement en réunio
 
 ---
 
-## Réalisations associées
 
 - Robots d’automatisation RPA  
-- Projets ELT & Traitement de données (SSIS & Python)

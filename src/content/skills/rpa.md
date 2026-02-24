@@ -87,6 +87,5 @@ La principale valeur ajoutée réside dans la fiabilité et la stabilité des so
 
 ---
 
-## Réalisations associées
 
 - Robots d’automatisation RPA
