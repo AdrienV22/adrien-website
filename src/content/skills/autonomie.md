@@ -17,7 +17,7 @@ growth:
   - "Développer davantage la coordination avec des équipes pluridisciplinaires"
   - "Approfondir la gestion des risques et la documentation formelle"
 
-relatedWorks: []
+relatedWorks: ["portfolio", "application-gestion-de-projet", "robots-rpa", "etl"]
 ---
 
 ## Définition et contexte professionnel

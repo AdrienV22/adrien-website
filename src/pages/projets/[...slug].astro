@@ -26,16 +26,6 @@ if (!entry) throw new Error(`Work entry not found for slug: ${slug}`);
 const { Content, headings } = await entry.render();
 const toc = (headings ?? []).filter((h: any) => h.depth >= 2 && h.depth <= 3);
 
-const type = (entry.data as any)?.type as string | undefined;
-const typeLabel =
-  type === "projet" ? "Projet" :
-  type === "etude" ? "Étude" :
-  type === "rpa" ? "Automatisation" :
-  type === "dev" ? "Développement" :
-  type === "slide" ? "Présentation" :
-  type ? "Autre" : null;
-
-const tagline = typeLabel ?? "";
 
 const gallery = (entry.data as any)?.gallery as { src: string; alt?: string }[] | undefined;
 
@@ -84,7 +74,7 @@ const isConfidentialProject = String(entry.slug) === "robots-rpa" || String(entr
       <Icon icon="arrow-left" /> Retour aux réalisations
     </a>
 
-    <Hero title={entry.data.title} tagline={tagline || undefined} align="start">
+    <Hero title={entry.data.title} align="start">
       {entry.data.description ? <p class="lead">{entry.data.description}</p> : null}
     </Hero>
 
@@ -175,13 +165,6 @@ const isConfidentialProject = String(entry.slug) === "robots-rpa" || String(entr
           <h2 class="sideTitle">Résumé</h2>
 
           {entry.data.description ? <p class="sideText">{entry.data.description}</p> : null}
-
-          {typeLabel ? (
-            <dl class="facts" aria-label="Fiche projet">
-              <dt>Nature</dt>
-              <dd>{typeLabel}</dd>
-            </dl>
-          ) : null}
 
           {entry.data.tags?.length ? (
             <>
@@ -657,11 +640,12 @@ const isConfidentialProject = String(entry.slug) === "robots-rpa" || String(entr
     }
   }
 
-  /* CONTENT — blocks premium */
+  /* CONTENT — blocks premium, utilisent la largeur dispo sans laisser de bande vide */
   .content {
     display: grid;
     gap: 1.25rem;
-    max-width: 78ch;
+    width: 100%;
+    max-width: min(88ch, 100%);
     min-width: 0;
   }
 
@@ -741,7 +725,6 @@ const isConfidentialProject = String(entry.slug) === "robots-rpa" || String(entr
     margin: 0.65rem 0;
     line-height: 1.75;
     color: var(--gray-200);
-    max-width: 78ch;
   }
 
   .content :global(.mdBlock ul),
@@ -752,7 +735,6 @@ const isConfidentialProject = String(entry.slug) === "robots-rpa" || String(entr
     display: grid;
     gap: 0.55rem;
     color: var(--gray-200);
-    max-width: 78ch;
   }
 
   .content :global(.mdBlock li) {

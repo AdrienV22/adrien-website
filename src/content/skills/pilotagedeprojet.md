@@ -17,7 +17,7 @@ growth:
   - "Approfondir les méthodes d'estimation et d'indicateurs simples"
   - "Renforcer la dimension collaborative et l'animation d'équipe"
 
-relatedWorks: ["portfolio", "project-management-tool"]
+relatedWorks: ["portfolio", "application-gestion-de-projet", "robots-rpa", "etl"]
 ---
 
 ## Définition et contexte professionnel
@@ -26,7 +26,6 @@ L’organisation et le pilotage consistent à transformer un objectif global en 
 
 Dans un projet logiciel, cette compétence est déterminante pour éviter la dispersion, limiter la dette technique et garantir une progression mesurable. Elle implique une vision d’ensemble, une capacité d’arbitrage et une rigueur dans la structuration des livrables.
 
----
 
 ## Éléments de preuve
 
@@ -54,7 +53,6 @@ Capacité à maintenir une trajectoire claire malgré la complexité technique.
 
 Voir la réalisation associée : *Project Management Tool*
 
----
 
 ### Structuration relationnelle du portfolio RNCP
 
@@ -79,7 +77,6 @@ Approche orientée produit et conformité, sans surcharge visuelle inutile.
 
 Voir la réalisation associée : *Portfolio technique modulaire avec Astro*
 
----
 
 ## Auto-évaluation
 
@@ -94,7 +91,6 @@ Compétence centrale, héritée de mon expérience passée en gestion de projet 
 **Recul critique**  
 Je dois veiller à maintenir un équilibre entre rigueur organisationnelle et flexibilité, notamment lorsque le contexte évolue rapidement.
 
----
 
 ## Évolution
 
@@ -103,10 +99,3 @@ Je dois veiller à maintenir un équilibre entre rigueur organisationnelle et fl
 - Formaliser davantage la gestion des risques et des dépendances  
 - Approfondir les méthodes d’estimation et d’indicateurs simples  
 - Renforcer la dimension collaborative et l’animation d’équipe  
-
----
-
-## Réalisations associées
-
-- Portfolio technique modulaire avec Astro  
-- Project Management Tool

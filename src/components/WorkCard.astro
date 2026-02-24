@@ -242,6 +242,7 @@ const safeAlt = imageAlt || `Aperçu du projet ${title}`;
   .excerpt {
     position: relative;
     z-index: 1;
+    pointer-events: none; /* laisse le hover/clic à l’overlay cardLink sur toute la carte */
   }
 
   /* ===== Media ===== */

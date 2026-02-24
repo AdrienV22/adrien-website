@@ -15,6 +15,7 @@ relatedSkills:
   - autonomie
   - testqualites
   - pilotagedeprojet
+  - git
 ---
 
 ## Définition

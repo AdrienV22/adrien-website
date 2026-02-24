@@ -11,6 +11,7 @@ relatedSkills:
   - testqualites
   - pilotagedeprojet
   - communication-technique
+  - git
 ---
 
 ## Définition
