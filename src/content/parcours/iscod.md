@@ -20,7 +20,7 @@ about: "Établissement spécialisé dans la formation d’experts en ingénierie
 
 mission: "Approfondir les compétences en conception, développement et sécurisation d’applications modernes, avec une forte dimension projet et méthodologique."
 
-positioning: "Parcours en alternance permettant d’articuler théorie académique et mise en pratique directe en entreprise."
+positioning: "Parcours en alternance permettant d’articuler théorie académique et mise en pratique directe en entreprise. Les enseignements (architecture logicielle, qualité, sécurité) sont mis à l’épreuve au quotidien chez Dentego ; les projets réalisés en formation (gestion de projet, refonte d’architecture, portfolio) illustrent cette complémentarité et alimentent un profil d’expert ingénierie logicielle."
 
 keyAchievements:
   - "Conception et modélisation d’architectures logicielles."

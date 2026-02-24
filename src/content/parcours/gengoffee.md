@@ -20,7 +20,7 @@ about: "Gengoffee est une association d’échanges linguistiques visant à favo
 
 mission: "Participer à la structuration, à l’organisation et à la coordination d’événements linguistiques et interculturels."
 
-positioning: "Responsabilité organisationnelle impliquant coordination d’équipe, communication et gestion opérationnelle."
+positioning: "Responsabilité organisationnelle impliquant coordination d’équipe, communication et gestion opérationnelle. En tant que secrétaire général, je participe à la structuration des événements linguistiques et au lien entre les membres et les partenaires. Ce rôle nourrit une posture à l’interface entre pilotage associatif et animation de communauté, dans un cadre interculturel (français, japonais, anglais)."
 
 keyAchievements:
   - "Organisation et coordination d’événements d’échanges linguistiques."

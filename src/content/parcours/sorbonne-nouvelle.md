@@ -18,7 +18,7 @@ about: "Université publique spécialisée en lettres, arts et sciences humaines
 
 mission: "Formation approfondie en analyse filmique, communication audiovisuelle et culture médiatique, avec une dimension internationale."
 
-positioning: "Parcours construit entre rigueur académique, sens critique et ouverture internationale."
+positioning: "Parcours construit entre rigueur académique, sens critique et ouverture internationale. L’analyse filmique et la culture médiatique ont développé une capacité de synthèse et de prise de recul. Le semestre d’échange au Japon (TUFS) a renforcé l’autonomie et l’adaptation en contexte interculturel, en lien avec un intérêt durable pour le Japon et les projets franco-japonais."
 
 keyAchievements:
   - "Réalisation et analyse de projets audiovisuels."

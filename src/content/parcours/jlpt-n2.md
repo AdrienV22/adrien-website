@@ -20,7 +20,7 @@ about: "Le JLPT est un examen officiel reconnu internationalement, évaluant les
 
 mission: "Valider officiellement un niveau avancé de compréhension écrite et orale en japonais."
 
-positioning: "Certification renforçant un parcours académique et international orienté Japon."
+positioning: "Certification renforçant un parcours académique et international orienté Japon. Elle valide un niveau opérationnel en lecture et en compréhension, utile pour des échanges professionnels ou une poursuite d’études dans un contexte japonais. Elle s’inscrit dans la continuité du séjour à la TUFS et des engagements associatifs (Gengoffee, Kinotayo)."
 
 keyAchievements:
   - "Validation d’un niveau avancé en lecture et compréhension écrite."

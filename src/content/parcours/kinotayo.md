@@ -14,7 +14,7 @@ highlight: "Coordination de projets culturels et communication autour d’un év
 url: "https://kinotayo.fr/"
 about: "Festival annuel dédié au cinéma japonais contemporain, favorisant les échanges culturels entre le Japon et la France."
 mission: "Coordonner des actions liées à l’organisation du festival et piloter la communication auprès du public et des partenaires."
-positioning: "Rôle transversal à l’interface entre l’équipe organisatrice, les partenaires culturels et le public."
+positioning: "Rôle transversal à l’interface entre l’équipe organisatrice, les partenaires culturels et le public. J’ai piloté des actions de programmation et de communication tout en adaptant le discours aux différents interlocuteurs. Cette expérience bénévole sur plusieurs éditions a renforcé mes compétences en gestion de projet culturel et en communication en contexte franco-japonais."
 keyAchievements:
   - "Coordination de projets liés à la programmation et à la communication du festival."
   - "Création et diffusion de supports de communication (réseaux sociaux, contenus éditoriaux)."
