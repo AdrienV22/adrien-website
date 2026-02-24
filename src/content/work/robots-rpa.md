@@ -14,6 +14,7 @@ relatedSkills:
   - developpement-back-end
   - autonomie
   - testqualites
+  - travail-en-equipe
 ---
 
 ## Définition
@@ -44,11 +45,14 @@ Ces automatisations visaient à fiabiliser, accélérer et sécuriser des proces
 
 Ces projets ont renforcé ma capacité à intervenir sur des systèmes critiques avec rigueur et prudence.
 
+J’ai également apprécié échanger en mode Agile avec les équipes métiers et affiner les processus en fonction de leurs besoins.
+
 ## Auto-évaluation
-Niveau **9/10**.  
+Niveau **8/10**.
+
 Ma progression a été particulièrement marquée sur la robustesse, la gestion des erreurs et la responsabilité professionnelle.
 
-La principale valeur ajoutée réside dans la fiabilité et la stabilité des solutions mises en production.
+La principale valeur ajoutée réside dans la fiabilité et la stabilité des solutions mises en production, notamment grâce à l’implémentation d’un nouveau framework UiPath (Robotic Enterprise Framework) focalisé sur la gestion des exceptions et des erreurs lors des process d’automatisation.
 
 ## Évolution
 - Formalisation accrue des architectures RPA (diagrammes et patterns réutilisables).

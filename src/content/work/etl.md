@@ -15,6 +15,7 @@ relatedSkills:
   - autonomie
   - testqualites
   - pilotagedeprojet
+  - travail-en-equipe
   - git
 ---
 
@@ -27,7 +28,7 @@ Ces projets s’inscrivaient dans une logique d’industrialisation des flux de 
 - Analyse des sources de données (bases relationnelles, exports métiers, fichiers externes).
 - Conception de flux SSIS pour l’orchestration des extractions et chargements.
 - Implémentation de transformations métier (normalisation, déduplication, enrichissement).
-- Nettoyage et validation des données via scripts Python (contrôles qualité, cohérence).
+- Nettoyage et validation des données via scripts Python ou Powershell (contrôles qualité, cohérence).
 - Mise en place de mécanismes de journalisation et gestion d’erreurs.
 - Optimisation des performances sur des volumes importants.
 - Documentation technique et structuration des flux pour assurer leur maintenabilité.
@@ -48,7 +49,7 @@ Ces projets s’inscrivaient dans une logique d’industrialisation des flux de 
 Ces projets ont renforcé ma compréhension des problématiques de gouvernance et de qualité des données.
 
 ## Auto-évaluation
-Niveau **8,5/10**.  
+Niveau **7.5/10**.  
 La dimension technique est solide, notamment sur la robustesse et la structuration des flux.
 
 La principale valeur ajoutée réside dans la capacité à transformer des flux complexes en pipelines stables, lisibles et maintenables.
