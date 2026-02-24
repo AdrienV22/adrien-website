@@ -7,6 +7,9 @@ type: projet
 img: "/assets/gamesup/architecture-cover.png"
 img_alt: "Schéma d'architecture API Spring et service Python ML"
 
+links:
+  repo: "https://github.com/AdrienV22/gamesup"
+
 relatedSkills:
   - architecture-logicielle
   - developpement-back-end

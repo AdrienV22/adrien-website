@@ -4,8 +4,13 @@ publishDate: 2023-09-22
 description: "Conception et maintenance de robots RPA en environnement professionnel, dans un contexte sensible soumis à des contraintes de confidentialité et de protection des données de santé."
 type: projet
 cardBadge: "Projet d'entreprise"
-img: "/assets/music_shop/main.png"
+img: "/assets/rpa/main.png"
 img_alt: "Illustration symbolique d'automatisation"
+
+gallery:
+  - src: "/assets/rpa/main.png"
+    alt: "Illustration extraite d'un PDD d'automatisation RPA"
+
 relatedSkills:
   - rpa
   - communication-technique
@@ -36,6 +41,30 @@ Ces automatisations visaient à fiabiliser, accélérer et sécuriser des proces
 - **Fiabilité** : exécution quotidienne sans interruption.
 - **Traçabilité** : journalisation et suivi des incidents.
 - **Responsabilité** : impact direct sur des processus critiques.
+
+## Vue technique : déroulement d’un process RPA de base
+
+Un process RPA typique suit une séquence définie, de la récupération des données à traiter jusqu’à la clôture et la traçabilité. Voici les étapes d’un déroulement de base.
+
+**Déclenchement**  
+Le robot est lancé selon un planning (tâche planifiée) ou par un événement (fichier déposé, message en file, API). Une fois démarré, il charge sa configuration et les paramètres d’exécution (environnement, chemins, comptes).
+
+**Connexion et ouverture des applications**  
+Le process ouvre les applications cibles (navigateur, client lourd, portail web) et s’y connecte si nécessaire (authentification, session). Cette phase inclut des attentes explicites (éléments visibles, délais) pour garantir la stabilité face aux temps de chargement.
+
+**Lecture des données sources**  
+Le robot récupère les données à traiter : lecture d’un fichier (Excel, CSV), d’une base, d’une liste en entrée ou extraction depuis une interface. Les données sont structurées en mémoire pour la suite du flux.
+
+**Actions métier (saisie, clics, navigation)**  
+C’est le cœur du process : le robot reproduit les actions d’un opérateur. Il navigue dans les écrans, remplit des formulaires, clique sur des boutons, sélectionne des options, en s’appuyant sur des sélecteurs (attributs, position, image selon l’outil). Chaque action est conçue pour être répétable et, idéalement, paramétrable.
+
+**Contrôles et gestion d’erreurs**  
+À chaque étape critique, des vérifications sont effectuées (présence d’un élément, cohérence d’une valeur, message d’erreur affiché). En cas d’anomalie, le process peut réessayer (retry), basculer dans une branche de secours, ou s’arrêter de façon contrôlée en remontant une erreur et en laissant un état exploitable pour la reprise.
+
+**Logs et clôture**  
+Tout au long de l’exécution, des logs sont écrits (début/fin d’étapes, données traitées, erreurs). En fin de process, les ressources sont libérées (fermeture des applications, déconnexion), un rapport ou un statut est produit, et l’orchestrateur (Orchestrator, scheduler) est informé du succès ou de l’échec.
+
+*En résumé : un process RPA de base enchaîne déclenchement → connexion aux applications → lecture des données → actions métier automatisées → contrôles et gestion d’erreurs → logs et clôture, le tout dans un cadre reproductible et traçable.*
 
 ## Résultats
 - Automatisation de processus à forte volumétrie.
