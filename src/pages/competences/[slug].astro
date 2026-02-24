@@ -117,7 +117,7 @@ function getExcerpt(markdown: string, length = 220) {
                 {ev.result ? <p>{ev.result}</p> : null}
                 {ev.link ? (
                   <p class="linkRow">
-                    <a class="link" href={ev.link}>Voir le lien</a>
+                    <a class="link" href={ev.link}>Voir la réalisation</a>
                   </p>
                 ) : null}
               </li>
@@ -126,10 +126,10 @@ function getExcerpt(markdown: string, length = 220) {
         </section>
       ) : null}
 
-      {/* Auto-évaluation */}
+      {/* Mon autocritique */}
       {d.selfCritique ? (
-        <section class="block" aria-label="Auto-évaluation">
-          <h2>Auto-évaluation</h2>
+        <section class="block" aria-label="Mon autocritique">
+          <h2>Mon autocritique</h2>
           <p>{d.selfCritique}</p>
         </section>
       ) : null}
@@ -202,6 +202,7 @@ function getExcerpt(markdown: string, length = 220) {
       ["mise en pratique", "tools"],
       ["auto-evaluation", "check"],
       ["auto-évaluation", "check"],
+      ["mon autocritique", "check"],
       ["evolution", "arrow"],
       ["évolution", "arrow"],
     ]);

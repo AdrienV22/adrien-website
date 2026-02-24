@@ -9,7 +9,7 @@ evidence:
     context: "Architecture logicielle & pilotage de projet"
     result: "Documents structurés, argumentés, avec justification des choix techniques et analyse des risques."
   - title: "Présentation de projets full-stack"
-    context: "Project Management Tool & Portfolio"
+    context: "Application de gestion de projet et Portfolio"
     result: "Capacité à expliquer l’architecture, les décisions techniques et les arbitrages réalisés."
 
 selfCritique: >

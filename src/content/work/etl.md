@@ -28,6 +28,7 @@ relatedSkills:
   - testqualites
   - pilotagedeprojet
   - travail-en-equipe
+  - adaptation-multi-culturel
   - git
 ---
 
@@ -78,7 +79,7 @@ Des contrôles qualité sont exécutés (nombre de lignes lues/écrites, contrô
 
 Ces projets ont renforcé ma compréhension des problématiques de gouvernance et de qualité des données.
 
-## Auto-évaluation
+## Mon autocritique
 Niveau **7.5/10**.  
 La dimension technique est solide, notamment sur la robustesse et la structuration des flux.
 

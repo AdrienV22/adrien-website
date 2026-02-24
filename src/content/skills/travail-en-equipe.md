@@ -77,7 +77,7 @@ Contribution à la fiabilité des systèmes d’information en plaçant la colla
 
 ---
 
-## Auto-évaluation
+## Mon autocritique
 
 **Niveau de maîtrise :** 8/10  
 

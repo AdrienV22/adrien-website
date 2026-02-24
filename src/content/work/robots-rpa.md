@@ -20,6 +20,7 @@ relatedSkills:
   - autonomie
   - testqualites
   - travail-en-equipe
+  - adaptation-multi-culturel
 ---
 
 ## Définition
@@ -76,7 +77,7 @@ Ces projets ont renforcé ma capacité à intervenir sur des systèmes critiques
 
 J’ai également apprécié échanger en mode Agile avec les équipes métiers et affiner les processus en fonction de leurs besoins.
 
-## Auto-évaluation
+## Mon autocritique
 Niveau **8/10**.
 
 Ma progression a été particulièrement marquée sur la robustesse, la gestion des erreurs et la responsabilité professionnelle.

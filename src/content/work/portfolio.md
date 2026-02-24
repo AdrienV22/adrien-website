@@ -8,6 +8,7 @@ img_alt: "Aperçu du portfolio développé avec Astro"
 
 relatedSkills:
   - architecture-logicielle
+  - developpement-back-end
   - testqualites
   - pilotagedeprojet
   - communication-technique
@@ -46,7 +47,7 @@ L’objectif était de construire une base technique évolutive, maintenable et 
 
 Sur le plan personnel, le projet a renforcé ma rigueur architecturale et ma capacité à structurer un projet frontend centré sur la lisibilité et la clarté.
 
-## Auto-évaluation
+## Mon autocritique
 
 Niveau **7/10**.
 

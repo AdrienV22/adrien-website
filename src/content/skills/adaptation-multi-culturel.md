@@ -67,7 +67,7 @@ Projets académiques et veille professionnelle à dimension internationale.
 
 ---
 
-## Auto-évaluation
+## Mon autocritique
 
 **Niveau de maîtrise :** 7/10  
 
@@ -94,4 +94,5 @@ Mon expérience reste en grande partie préparatoire. Une immersion professionne
 
 ## Réalisations associées
 
-Projets à dimension internationale (préparation et veille) ; réalisations formalisées à venir au fil de l’expérience.
+- Robots d’automatisation RPA (projet d’entreprise, dimension technique et collaborative)  
+- Projets ELT & Traitement de données (SSIS & Python) (projet d’entreprise)

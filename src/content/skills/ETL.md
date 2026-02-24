@@ -5,12 +5,18 @@ level: 7.5
 summary: "Concevoir, fiabiliser et superviser des flux de données (ELT/ETL) garantissant cohérence, qualité et traçabilité."
 
 evidence:
-  - title: "Pipelines ETL SSIS et scripts Python/Powershell – ADENTAL GROUP"
-    context: "Conception et maintenance de pipelines ELT en environnement professionnel, collecte et fiabilisation de données issues de systèmes hétérogènes."
-    result: "Pipelines robustes et industrialisés, amélioration de la qualité et de la cohérence des données, stabilisation des flux critiques."
-  - title: "Nettoyage, validation et optimisation des flux"
-    context: "Contrôles qualité, journalisation, gestion d’erreurs et optimisation sur volumes importants."
-    result: "Réduction des traitements manuels et des erreurs, traçabilité claire, maintenabilité des flux."
+  - title: "Conception et mise en production de pipelines SSIS pour des flux critiques"
+    context: "Chez ADENTAL GROUP, j’ai conçu et maintenu des pipelines ELT (SSIS + scripts Python/Powershell) alimentant des processus comptables et métiers, avec des sources hétérogènes et des exigences fortes de stabilité et traçabilité."
+    result: "Les pipelines ont été industrialisés ; la qualité et la cohérence des données se sont améliorées et les flux quotidiens/hebdomadaires critiques sont stabilisés. Les traitements manuels et les erreurs associées ont diminué."
+    link: "/projets/etl/"
+  - title: "Nettoyage, validation et optimisation des flux existants"
+    context: "J’ai repris des flux existants présentant des échecs ponctuels ou des temps d’exécution élevés. J’ai mis en place des contrôles qualité, une journalisation claire et des optimisations (transformations, requêtes SQL, gestion d’erreurs)."
+    result: "Diminution des échecs de traitement, réduction des temps d’exécution et meilleure stabilité globale des pipelines. La documentation et la gouvernance data ont été renforcées."
+    link: "/projets/etl/"
+  - title: "Structuration et documentation des flux pour la maintenabilité"
+    context: "Pour éviter des flux monolithiques difficiles à modifier, j’ai structuré les packages SSIS, documenté les règles métier et les transformations, et mis en place une traçabilité exploitable pour le diagnostic et la reprise."
+    result: "Les flux sont désormais lisibles, maintenables et reproductibles. La chaîne de données est sécurisée et la continuité d’activité est mieux garantie."
+    link: "/projets/etl/"
 
 growth:
   - "Formalisation plus systématique des schémas de données en amont"
@@ -22,7 +28,7 @@ relatedWorks: ["etl"]
 
 ## Définition et contexte professionnel
 
-Conception et maintenance de pipelines ETL (Extract, Transforme, Load) en environnement professionnel, visant à collecter, nettoyer, transformer et fiabiliser des données issues de systèmes hétérogènes.
+Conception et maintenance de pipelines ETL (Extract, Transform, Load) en environnement professionnel, visant à collecter, nettoyer, transformer et fiabiliser des données issues de systèmes hétérogènes.
 
 Ces projets s’inscrivaient dans une logique d’industrialisation des flux de données, avec des exigences fortes de stabilité, traçabilité et performance.
 
@@ -32,56 +38,31 @@ Dans un contexte d’entreprise, l’intégration de données constitue un maill
 
 ## Éléments de preuve
 
-### Pipelines ETL SSIS et scripts Python/Powershell
+### Anecdote 1 : Conception et mise en production de pipelines SSIS pour des flux critiques
 
-**Contexte**  
-Conception et maintenance de pipelines ELT en environnement professionnel : analyse des sources (bases relationnelles, exports métiers, fichiers externes), orchestration des extractions et chargements via SSIS, transformations métier (normalisation, déduplication, enrichissement), nettoyage et validation via scripts Python ou Powershell.
+Chez ADENTAL GROUP, j’ai conçu et maintenu des pipelines ELT (SSIS + scripts Python/Powershell) alimentant des processus comptables et métiers, avec des sources hétérogènes et des exigences fortes de stabilité et traçabilité. La compétence ETL a été mise en œuvre par l’analyse des sources, l’orchestration des extractions et chargements, les transformations métier (normalisation, déduplication, enrichissement) et la mise en place de contrôles qualité et de journalisation. **Résultat** : les pipelines ont été industrialisés ; la qualité et la cohérence des données se sont améliorées et les flux quotidiens/hebdomadaires critiques sont stabilisés. **Ma valeur ajoutée** : j’ai résolu le problème de fiabilité des données et de charge manuelle en livrant des flux maîtrisés, documentés et supervisés, ce qui a renforcé ma compréhension de la gouvernance et de la qualité des données.
 
-**Problématique**  
-Garantir la cohérence et la fiabilité des données, traiter des volumes significatifs sans dégradation des temps d’exécution, assurer la maintenabilité des flux et la sécurité des données sensibles dans un cadre réglementé.
-
-**Actions mises en œuvre**
-- Conception de flux SSIS pour l’orchestration des extractions et chargements  
-- Implémentation de transformations métier et contrôles qualité  
-- Mise en place de mécanismes de journalisation et de gestion d’erreurs  
-- Optimisation des performances sur des volumes importants  
-- Documentation technique et structuration des flux  
-
-**Résultats**
-- Mise en place de pipelines ELT robustes et industrialisés  
-- Amélioration de la qualité et de la cohérence des données  
-- Réduction des traitements manuels et des erreurs associées  
-- Stabilisation des flux quotidiens et hebdomadaires critiques  
-
-**Valeur ajoutée**  
-Ces projets ont renforcé ma compréhension des problématiques de gouvernance et de qualité des données.
+Voir la réalisation associée : [Projets ELT & Traitement de données (SSIS & Python)](/projets/etl/).
 
 ---
 
-### Nettoyage, validation et optimisation des flux
+### Anecdote 2 : Nettoyage, validation et optimisation des flux existants
 
-**Contexte**  
-Amélioration de flux existants : contrôles qualité, cohérence des données, optimisation des temps d’exécution et lisibilité des traitements.
+J’ai repris des flux existants présentant des échecs ponctuels ou des temps d’exécution élevés. J’ai mis en place des contrôles qualité, une journalisation claire et des optimisations (transformations, requêtes SQL, gestion d’erreurs). La compétence a été mise en œuvre par l’analyse des goulots d’étranglement, le renforcement des mécanismes de gestion d’erreurs et la structuration des flux. **Résultat** : diminution des échecs de traitement, réduction des temps d’exécution et meilleure stabilité globale des pipelines. **Ma valeur ajoutée** : j’ai atteint l’objectif de fiabilité en sécurisant la chaîne de données et en contribuant à la continuité d’activité, avec une documentation et une gouvernance data renforcées.
 
-**Problématique**  
-Éviter les flux monolithiques difficiles à modifier, garantir une traçabilité claire des traitements et des erreurs.
-
-**Actions mises en œuvre**
-- Nettoyage et validation des données via scripts Python ou Powershell  
-- Renforcement des mécanismes de gestion d’erreurs et de journalisation  
-- Structuration des flux pour assurer leur maintenabilité  
-
-**Résultats**
-- Diminution des échecs de traitement  
-- Meilleure stabilité globale des pipelines  
-- Documentation et gouvernance data renforcées  
-
-**Valeur ajoutée**  
-Contribution à la fiabilité des systèmes d’information en sécurisant la chaîne de données.
+Voir la réalisation associée : [Projets ELT & Traitement de données (SSIS & Python)](/projets/etl/).
 
 ---
 
-## Auto-évaluation
+### Anecdote 3 : Structuration et documentation des flux pour la maintenabilité
+
+Pour éviter des flux monolithiques difficiles à modifier, j’ai structuré les packages SSIS, documenté les règles métier et les transformations, et mis en place une traçabilité exploitable pour le diagnostic et la reprise. La compétence a été mise en œuvre par la séparation des responsabilités dans les flux, la standardisation des patterns et la transmission des bonnes pratiques. **Résultat** : les flux sont désormais lisibles, maintenables et reproductibles. **Ma valeur ajoutée** : j’ai résolu le problème de maintenabilité en passant d’une logique de flux fonctionnels à une logique de flux maîtrisés et documentés, facilitant les évolutions futures et la reprise par d’autres.
+
+Voir la réalisation associée : [Projets ELT & Traitement de données (SSIS & Python)](/projets/etl/).
+
+---
+
+## Mon autocritique
 
 **Niveau de maîtrise :** 7.5/10  
 

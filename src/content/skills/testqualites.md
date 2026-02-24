@@ -17,7 +17,7 @@ growth:
   - "Automatiser davantage les contrôles qualité en CI/CD"
   - "Approfondir les approches de tests contractuels et de validation d'API"
 
-relatedWorks: ["project-management-tool", "gamesup", "portfolio"]
+relatedWorks: ["application-gestion-de-projet", "refonte-architecture", "portfolio"]
 ---
 
 ## Définition et contexte professionnel
@@ -53,7 +53,7 @@ Risque de régression lors des évolutions et difficulté à valider systématiq
 **Valeur ajoutée**  
 Renforcement de la robustesse globale du système sans complexifier inutilement l’architecture.
 
-Voir la réalisation associée : *Project Management Tool*
+Voir la réalisation associée : [Application de gestion de projet](/projets/application-gestion-de-projet/)
 
 ---
 
@@ -78,11 +78,11 @@ Absence d’indicateur fiable sur les zones critiques non testées.
 **Valeur ajoutée**  
 Passage d’une logique déclarative de qualité à une logique mesurable et pilotée par indicateurs.
 
-Voir la réalisation associée : *GamesUP API*
+Voir la réalisation associée : [Refonte d’architecture API & Système de recommandation](/projets/refonte-architecture/)
 
 ---
 
-## Auto-évaluation
+## Mon autocritique
 
 **Niveau de maîtrise :** 6.5/10  
 
@@ -109,6 +109,6 @@ Je dois approfondir les tests d’intégration, les tests contractuels et les st
 
 ## Réalisations associées
 
-- Project Management Tool  
-- GamesUP API  
+- Application de gestion de projet  
+- Refonte d’architecture API & Système de recommandation  
 - Portfolio technique modulaire avec Astro

@@ -112,7 +112,7 @@ const skills = defineCollection({
           title: z.string(),
           context: z.string().optional(),
           result: z.string().optional(),
-          link: z.string().url().optional(),
+          link: z.string().optional(), /* URL absolue ou chemin relatif vers une réalisation (/projets/...) */
         })
       )
       .default([]),

@@ -54,7 +54,7 @@ Multiplicité des couches techniques et nécessité de maintenir une cohérence 
 **Valeur ajoutée**  
 Démonstration d’une capacité à porter un projet technique de bout en bout.
 
-Voir la réalisation associée : *Project Management Tool*
+Voir la réalisation associée : [Application de gestion de projet](/projets/application-gestion-de-projet/)
 
 ---
 
@@ -79,11 +79,11 @@ Incidents critiques nécessitant diagnostic rapide et correction fiable.
 **Valeur ajoutée**  
 Capacité à intervenir efficacement sur des systèmes existants en assumant l’impact opérationnel.
 
-Voir la réalisation associée : *Automatisation multi-portails santé*
+Voir la réalisation associée : [Robots d'automatisation RPA](/projets/robots-rpa/)
 
 ---
 
-## Auto-évaluation
+## Mon autocritique
 
 **Niveau de maîtrise :** 7.5/10  
 
@@ -107,4 +107,11 @@ L’autonomie ne doit pas conduire à l’isolement décisionnel. Elle gagne en 
 - Approfondir la gestion des risques et la documentation formelle  
 
 ---
+
+## Réalisations associées
+
+- [Portfolio technique modulaire avec Astro](/projets/portfolio/)
+- [Application de gestion de projet](/projets/application-gestion-de-projet/)
+- [Robots d'automatisation RPA](/projets/robots-rpa/)
+- [Projets ELT & Traitement de données](/projets/etl/)
 

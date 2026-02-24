@@ -8,7 +8,7 @@ img: "/assets/gamesup/architecture-cover.png"
 img_alt: "Schéma d'architecture API Spring et service Python ML"
 
 links:
-  repo: "https://github.com/AdrienV22/gamesup"
+  repo: "https://github.com/AdrienV22/GamesUP"
 
 relatedSkills:
   - architecture-logicielle
@@ -60,7 +60,7 @@ L’objectif était de reprendre un code existant défaillant, de redéfinir ent
 
 Ce projet démontre une capacité à intervenir sur une architecture dégradée pour la transformer en système cohérent et industrialisable.
 
-## Auto-évaluation
+## Mon autocritique
 
 Niveau **7/10**.
 

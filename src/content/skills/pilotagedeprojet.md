@@ -51,7 +51,7 @@ Risque de complexité croissante et de perte de cohérence entre les différente
 **Valeur ajoutée**  
 Capacité à maintenir une trajectoire claire malgré la complexité technique.
 
-Voir la réalisation associée : *Project Management Tool*
+Voir la réalisation associée : [Application de gestion de projet](/projets/application-gestion-de-projet/)
 
 
 ### Structuration relationnelle du portfolio RNCP
@@ -75,10 +75,10 @@ Assurer cohérence, conformité aux exigences et lisibilité globale.
 **Valeur ajoutée**  
 Approche orientée produit et conformité, sans surcharge visuelle inutile.
 
-Voir la réalisation associée : *Portfolio technique modulaire avec Astro*
+Voir la réalisation associée : [Portfolio technique modulaire avec Astro](/projets/portfolio/)
 
 
-## Auto-évaluation
+## Mon autocritique
 
 **Niveau de maîtrise :** 7.5/10  
 

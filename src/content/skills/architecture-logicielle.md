@@ -52,7 +52,7 @@ Capacité à poser des bases techniques stables facilitant les évolutions futur
 
 ---
 
-## Auto-évaluation
+## Mon autocritique
 
 **Niveau de maîtrise :** 6/10  
 

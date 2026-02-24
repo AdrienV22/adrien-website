@@ -5,12 +5,18 @@ level: 8
 summary: "Concevoir, fiabiliser et industrialiser des automatisations robustes afin d’optimiser des processus métiers critiques."
 
 evidence:
-  - title: "Robots d’automatisation en production – ADENTAL GROUP"
-    context: "Conception, développement et maintenance de robots RPA en environnement professionnel, dans un contexte soumis à des exigences fortes de confidentialité et de protection des données de santé."
-    result: "Automatisation de processus à forte volumétrie, réduction des erreurs humaines, gain de temps opérationnel, stabilisation des flux métier sensibles."
-  - title: "Gestion des erreurs, logs et maintenance évolutive"
-    context: "Robots intégrant contrôles d’erreurs, logs et mécanismes de reprise ; maintenance corrective et évolutive, documentation technique interne."
-    result: "Fiabilité et stabilité des solutions en production, notamment grâce à l’implémentation d’un framework (UiPath Robotic Enterprise Framework) focalisé sur la gestion des exceptions."
+  - title: "Déploiement d’un robot en production sur un processus métier sensible"
+    context: "Dans le cadre de mon alternance chez ADENTAL GROUP, j’ai conçu et mis en production un robot RPA sur un processus à forte volumétrie, soumis à des exigences de confidentialité (données de santé) et de fiabilité quotidienne."
+    result: "Le processus a été automatisé de bout en bout ; les erreurs humaines ont chuté et les équipes ont gagné plusieurs heures par jour. Le flux métier concerné est désormais stabilisé et traçable."
+    link: "/projets/robots-rpa/"
+  - title: "Mise en place du framework REF pour la gestion des exceptions"
+    context: "Face à des incidents récurrents sur des robots déjà en production (changements d’interface, données inattendues), j’ai introduit le Robotic Enterprise Framework (UiPath) pour standardiser la gestion des erreurs et les reprises."
+    result: "Le nombre d’incidents en production a diminué et le temps de diagnostic a été réduit. Les robots sont devenus maintenables et documentés, avec une vraie continuité de service."
+    link: "/projets/robots-rpa/"
+  - title: "Collaboration avec les équipes métiers pour affiner les processus"
+    context: "En mode Agile, j’ai échangé régulièrement avec les équipes métiers pour clarifier les cas limites, valider les scénarios d’erreur et faire évoluer les processus en fonction de leurs retours terrain."
+    result: "Les automatisations correspondent mieux aux usages réels ; la confiance entre équipes technique et métier s’est renforcée et les processus ont pu être affinés avant chaque mise en production."
+    link: "/projets/robots-rpa/"
 
 growth:
   - "Formalisation accrue des architectures RPA (diagrammes et patterns réutilisables)"
@@ -32,55 +38,31 @@ La RPA permet de sécuriser et d’optimiser des processus sans refonte lourde d
 
 ## Éléments de preuve
 
-### Robots d’automatisation en production
+### Anecdote 1 : Déploiement d’un robot en production sur un processus métier sensible
 
-**Contexte**  
-Conception, développement et maintenance de robots RPA en environnement professionnel : analyse des processus existants, identification des tâches automatisables, conception d’architectures RPA robustes et maintenables.
+Dans le cadre de mon alternance chez ADENTAL GROUP, j’ai conçu et mis en production un robot RPA sur un processus à forte volumétrie, soumis à des exigences de confidentialité (données de santé) et de fiabilité quotidienne. La compétence RPA a été mise en œuvre concrètement : analyse du processus existant, conception de l’architecture du robot, développement avec contrôles d’erreurs et logs, tests en environnement contrôlé puis déploiement. **Résultat** : le processus a été automatisé de bout en bout ; les erreurs humaines ont chuté et les équipes ont gagné plusieurs heures par jour. **Ma valeur ajoutée** : j’ai résolu le problème de charge opérationnelle et de risque d’erreurs manuelles en livrant une solution stable et traçable, tout en respectant les contraintes de confidentialité.
 
-**Problématique**  
-Confidentialité (données de santé), robustesse (cas limites, erreurs réseau, changements d’interface), fiabilité (exécution quotidienne sans interruption), traçabilité et responsabilité sur des processus critiques.
-
-**Actions mises en œuvre**
-- Développement de robots intégrant contrôles d’erreurs, logs et mécanismes de reprise  
-- Tests en environnement contrôlé avant mise en production  
-- Maintenance corrective et évolutive des robots existants  
-- Documentation technique interne pour assurer la continuité  
-
-**Résultats**
-- Automatisation de processus à forte volumétrie  
-- Réduction significative des erreurs humaines  
-- Gain de temps opérationnel pour les équipes  
-- Stabilisation de flux métier sensibles  
-
-**Valeur ajoutée**  
-Ces projets ont renforcé ma capacité à intervenir sur des systèmes critiques avec rigueur et prudence. J’ai également apprécié échanger en mode Agile avec les équipes métiers et affiner les processus en fonction de leurs besoins.
+Voir la réalisation associée : [Robots d’automatisation RPA](/projets/robots-rpa/).
 
 ---
 
-### Gestion des erreurs et maintenance
+### Anecdote 2 : Mise en place du framework REF pour la gestion des exceptions
 
-**Contexte**  
-Implémentation d’un framework (UiPath Robotic Enterprise Framework) focalisé sur la gestion des exceptions et des erreurs lors des process d’automatisation ; maintenance évolutive face aux changements d’interfaces et de données.
+Face à des incidents récurrents sur des robots déjà en production (changements d’interface, données inattendues), j’ai introduit le Robotic Enterprise Framework (UiPath) pour standardiser la gestion des erreurs et les reprises. La compétence a été mise en œuvre par la conception de blocs réutilisables, le logging standardisé et l’harmonisation des patterns. **Résultat** : le nombre d’incidents en production a diminué et le temps de diagnostic a été réduit. **Ma valeur ajoutée** : j’ai atteint l’objectif de fiabilité en transformant des scripts fragiles en solutions maintenables et documentées, inscrites dans une logique de continuité de service.
 
-**Problématique**  
-Incidents récurrents, dépendance aux interfaces externes et aux évolutions métier, nécessité de solutions maintenables et documentées.
-
-**Actions mises en œuvre**
-- Mise en place d’un logging standardisé et de blocs de gestion d’exception  
-- Harmonisation des patterns d’automatisation  
-- Documentation et transmission des bonnes pratiques  
-
-**Résultats**
-- Diminution du nombre d’incidents en production  
-- Réduction du temps moyen de diagnostic  
-- Fiabilité et stabilité des solutions mises en production  
-
-**Valeur ajoutée**  
-Transformation de scripts fragiles en solutions maintenables et documentées, inscrites dans une logique de continuité de service.
+Voir la réalisation associée : [Robots d’automatisation RPA](/projets/robots-rpa/).
 
 ---
 
-## Auto-évaluation
+### Anecdote 3 : Collaboration avec les équipes métiers pour affiner les processus
+
+En mode Agile, j’ai échangé régulièrement avec les équipes métiers pour clarifier les cas limites, valider les scénarios d’erreur et faire évoluer les processus en fonction de leurs retours terrain. La compétence a été mise en œuvre par l’écoute des besoins, la formalisation des règles métier et l’itération sur les automatisations. **Résultat** : les automatisations correspondent mieux aux usages réels et la confiance entre équipes technique et métier s’est renforcée. **Ma valeur ajoutée** : j’ai résolu le décalage entre la vision technique et les attentes métier en intégrant leurs retours dès la conception, ce qui a limité les corrections en production.
+
+Voir la réalisation associée : [Robots d’automatisation RPA](/projets/robots-rpa/).
+
+---
+
+## Mon autocritique
 
 **Niveau de maîtrise :** 8/10  
 

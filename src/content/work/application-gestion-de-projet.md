@@ -55,7 +55,7 @@ Une application web de gestion de projet pensée comme un socle « produit » : 
 - Structure de code maintenable (contrats API, organisation claire, séparation front/back).
 - Qualité renforcée par les tests et la couverture, et exécution reproductible via Docker.
 
-## Auto-évaluation
+## Mon autocritique
 
 Niveau **7/10**. La base est cohérente : architecture claire, industrialisation en place, et logique « produit » assumée. Le point fort principal est la capacité à livrer un ensemble fonctionnel + testable + déployable, sans sur-ingénierie, tout en gardant une lecture simple.
 
