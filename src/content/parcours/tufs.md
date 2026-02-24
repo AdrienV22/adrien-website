@@ -16,7 +16,7 @@ logo: "/assets/logos/tufs.jpeg"
 
 highlight: "Immersion académique et culturelle au Japon dans un environnement universitaire international."
 
-url: "[https://www.tufs.ac.jp/english/](https://www.tufs.ac.jp/english/)"
+url: "https://www.tufs.ac.jp/english/"
 
 about: "Université japonaise spécialisée dans les langues, les relations internationales et les études culturelles."
 
@@ -31,6 +31,6 @@ keyAchievements:
 - "Participation à des activités étudiantes locales."
 - "Renforcement significatif des compétences linguistiques."
 
-## relatedWorks: []
+relatedWorks: []
 relatedSkills: ["adaptation-multi-culturel", "travail-en-equipe", "autonomie"]
 

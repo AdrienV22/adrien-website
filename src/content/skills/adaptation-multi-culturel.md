@@ -11,6 +11,9 @@ evidence:
   - title: "Travail sur projets à dimension internationale"
     context: "Projets académiques et veille professionnelle à dimension internationale."
     result: "Meilleure capacité d'ajustement contextuel, communication plus professionnelle et maîtrisée."
+  - title: "Chef de projet et communication au festival Kinotayo"
+    context: "Festival du cinéma japonais contemporain : coordination et communication à l'interface entre équipe organisatrice, partenaires culturels et public franco-japonais."
+    result: "Adaptation du discours selon les publics et les partenaires ; renforcement de la gestion de projet en contexte interculturel sur plusieurs éditions."
 
 growth:
   - "Acquérir une expérience professionnelle concrète en contexte international"
@@ -49,6 +52,22 @@ Association d'échanges linguistiques et interculturels (Gengoffee) : rôle de s
 
 **Valeur ajoutée**  
 Renforcement du dialogue interculturel et de la coordination dans un cadre associatif multilingue ; mise en pratique concrète de l'adaptation en environnement international.
+
+---
+
+### Chef de projet et communication au festival Kinotayo
+
+**Contexte**  
+Festival du cinéma japonais contemporain (Kinotayo) : rôle de chef de projet et chargé de communication à l'interface entre l'équipe organisatrice, les partenaires culturels et le public. Contexte franco-japonais et pluriel.
+
+**Actions mises en œuvre**
+- Pilotage d'actions de programmation et de communication
+- Adaptation du discours selon les interlocuteurs (équipe, partenaires, publics)
+- Coordination sur plusieurs éditions du festival
+
+**Résultats**
+- Renforcement de la gestion de projet culturel en contexte interculturel
+- Mise en pratique de l'adaptation de la communication selon les publics
 
 ---
 

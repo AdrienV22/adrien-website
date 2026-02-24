@@ -77,7 +77,7 @@ Tout au long de l’exécution, des logs sont écrits (début/fin d’étapes, d
 
 Ces projets ont renforcé ma capacité à intervenir sur des systèmes critiques avec rigueur et prudence.
 
-J’ai également apprécié échanger en mode Agile avec les équipes métiers et affiner les processus en fonction de leurs besoins.
+J’ai également apprécié échanger en mode Agile avec les équipes métier et affiner les processus en fonction de leurs besoins.
 
 ## Mon autocritique
 Niveau **8/10**.

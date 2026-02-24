@@ -10,6 +10,7 @@ const currentYear = new Date().getFullYear();
 			<span aria-hidden="true"> · </span>
 			<a href="/about/">À propos / CV</a>
 		</p>
+		<p class="tagline">Portfolio · Expert en ingénierie logicielle</p>
 		<p>&copy; {currentYear} Adrien Valo</p>
 	</div>
 	<p class="socials">
@@ -44,6 +45,12 @@ const currentYear = new Date().getFullYear();
 		display: flex;
 		flex-direction: column;
 		gap: 0.5rem;
+	}
+
+	.tagline {
+		color: var(--gray-500);
+		font-size: 0.8125rem;
+		margin: 0;
 	}
 
 	.socials {
